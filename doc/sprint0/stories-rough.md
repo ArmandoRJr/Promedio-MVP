@@ -1,1 +1,4 @@
-## User Stories - Format: [User Story Title] [Points] [Assigned To]
+## User Stories
+### Format: [User Story] [Points] [Assigned To]
+
+
