@@ -11,12 +11,9 @@ const NavbarContainer = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
-    background-color: ${({ theme }) => theme.colors.primary};
+    background-color: ${({ theme }) => theme.colors.white};
     height: 60px;
     width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
     z-index: 100;
 `;
 
@@ -37,7 +34,7 @@ const NavbarRight = styled.div`
 `;
 
 const NavbarLink = styled(Link)`
-    color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.black};
     text-decoration: none;
     font-size: 1.2rem;
     margin: 0 10px;
@@ -54,15 +51,21 @@ const MainLink = styled(NavbarLink)`
     }
 `;
 
-export const Navbar = () => {
+export const Navbar = ({ isLoggedIn }) => {
     return (
         <NavbarContainer>
             <NavbarLeft>
-                <MainLink to="/">Promedio</MainLink>
+                <MainLink to="/">Promedio.</MainLink>
             </NavbarLeft>
             <NavbarRight>
-                <NavbarLink to="/login">Login</NavbarLink>
-                <NavbarLink to="/signup">Signup</NavbarLink>
+                {isLoggedIn ? (
+                    <div>Welcome</div>
+                ) : (
+                    <>
+                        <NavbarLink to="/login">Login</NavbarLink>
+                        <NavbarLink to="/signup">Signup</NavbarLink>
+                    </>
+                )}
             </NavbarRight>
         </NavbarContainer>
     );
