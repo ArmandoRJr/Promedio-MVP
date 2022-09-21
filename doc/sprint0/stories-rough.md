@@ -22,4 +22,4 @@ Academic categories -> "Assignments", "Tests", "Quizzes", etc.
 17. As a user I should be able to share my course to a public URL to share with friends [20SP]
 18. As a user, I should be able to toggle between light and dark mode to help my eyes in the nighttime [15SP]
 19. As a user I should be able to export to csv, Google Sheets, or Excel to help me use the power of third-party tools [12SP]
-20. As user I should be able to graph all of my grades by course or semester to help me see where I need to improve in the long run
+20. As user I should be able to graph all of my grades by course or semester to help me see where I need to improve in the long run [10 SP]
