@@ -3,6 +3,9 @@
 const express = require('express')
 const dotenv = require('dotenv').config() // .env file
 const server_port = process.env.SERVER_PORT || 5000
+const { connectDatabase } = require('./config/database')
+
+//connectDatabase()    Don't do it here, do it somewhere in frontend to showcase functionality
 
 const app = express()
 
