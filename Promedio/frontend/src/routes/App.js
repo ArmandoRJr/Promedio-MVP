@@ -1,12 +1,17 @@
-import '../styles/App.css';
+import styled from 'styled-components'
+
+const AppContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">Promedio
-      </header>
+    <AppContainer>
       <h1>Promedio</h1>
-    </div>
+    </AppContainer>
   );
 }
 
