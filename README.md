@@ -7,7 +7,9 @@ As university students, we are always stressed over our grades, trying to comput
 
 ## Installation
 **Front-end:** [React]
+
 **Back-end:** [Node.js]
+
 **DB:** [MongoDB] -- Will not require any additional installation by the user once we've set it up.
 
 ## Contribution
