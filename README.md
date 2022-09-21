@@ -1,5 +1,4 @@
 # Promedio
-### by Armando, Tegh, Preyansh, Gabe, Alejandro, Maaz
 
 ● Motivation: As an University student, we are always stressed over our grades trying to compute what mark we would need on the assignments, midterm, 
 final in order to get the desired outcome (whether it's passing or getting a certain GPA). Promedio is an application built around this emotion and
