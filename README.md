@@ -10,7 +10,7 @@ As university students, we are always stressed over our grades, trying to comput
 **Back-end:** [Node.js]
 **DB:** [MongoDB] -- Will not require any additional installation by the user once we've set it up.
 
-# Contribution
+## Contribution
 To contribute to this project, we will follow GitFlow and implement continuous integration continuous deployment: [Inspired by C01 Tutorial Notes] 
   1) The master branch stores the release history and the develop branch is used to integrate features.
   2) Feature branches are merged into develop.
