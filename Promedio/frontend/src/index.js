@@ -1,17 +1,37 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+} from 'react-router-dom';
+import App from "./routes/App";
+import Login from "./routes/Login";
+import Signup from "./routes/Signup";
+import Home from "./routes/Home";
+import Welcome from "./routes/Welcome";
+import "./styles/globals.css";
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import Globals from './styles/globals.css';
+import theme from './styles/theme.js';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+const GlobalStyle = createGlobalStyle`${Globals}`;
+
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      {/* Router rested in here */}
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<App />}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/welcome" element={<Welcome />} />
+              <Route path="/home" element={<Home />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+    </ThemeProvider>
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
