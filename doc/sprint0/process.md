@@ -24,6 +24,6 @@ For the most part, we generally agreed to a consensus for most user stories. We 
 ### How frequently did you meet?
 We have arranged two mandatory meetings every week (Tuesdays 9:30pm-10:00pm and Thursdays 3:00pm-4:00pm) as well as an optional meeting on Sundays. We also have frequent calls together (outside these set-up mandatory/optional meetings), though we technically meet up for a **minimum of 2-3 times per week.**
 
-## Lessons:
+## Next Phase
 ### What lessons should you take forward to the next phase?
 Make general consensuses early regarding major structural technologies (such as the tech stack and other technologies we want to utilize). We've had a lot of back and forth on some topics, such as deciding whether to use MERN or introduce a python-based backend (Flask or Django) with a relational database management system. This is very good, though we haven't applied this for everything (i.e. we were using npm to install packages such as express and body-parser, and only later on decided to start using yarn). We haven't been abiding towards the "engineers plan and make all the necessary calculations before building a bridge" lesson very well (covered in class), and have definitely realized we should incorporate this later on within our next sprints.
