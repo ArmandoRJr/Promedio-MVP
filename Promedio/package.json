@@ -4,6 +4,7 @@
   "description": "Main webdev application for calculation of academic performance",
   "main": "server.js",
   "scripts": {
+	  "setup": "yarn && yarn --cwd ./frontend",
     "start": "node backend/server.js",
     "server": "nodemon backend/server.js",
     "client": "yarn --cwd ./frontend start",
