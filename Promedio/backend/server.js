@@ -10,6 +10,7 @@ const { connectDatabase } = require('./config/database')
 //connectDatabase()    Don't do it here, do it somewhere in frontend to showcase functionality
 
 const app = express()
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
