@@ -6,7 +6,7 @@ We pre-arranged a team of 6 approximately 2 weeks prior to the start of classes 
 ### Which tools did you use, if any?
 We mainly use Discord as our main form of communcation. We've divided our text channels into sections as follows:
 - General - All general discussions regarding the project are here (this is where 85%+ of our communcation takes place)
-- Important Stuff - For important announcements, such as the times for which we've agreed upon to meet every week, the official link to our GitHub repository, etc... 
+- Important Stuff - For important announcements, such as the times for which we've agreed upon to meet every week, the official link to our GitHub repository, deadline reminders, etc... 
 - Sprints - This is divided into a sub-category for each sprint (i.e. sprint-0). This is where most of our remaining 15%+ of our communcation takes place, usually for discussing important information specific to that specific sprint (i.e. deciding which tasks each member will complete, such as myself \[Alejandro\] tasked with creating this process.md file!)
 We've also discussed which tools we plan on using for certain technologies (i.e. Figma for UI design and the MERN stack to abide by the Three-tier Architecture), though this is more relevant for future sprints.
 
