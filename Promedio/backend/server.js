@@ -1,6 +1,8 @@
 //console.log("Hello, Promedio")
 
 const express = require('express')
+const bodyParser = require("body-parser");
+
 const dotenv = require('dotenv').config() // .env file
 const server_port = process.env.SERVER_PORT || 5000
 const { connectDatabase } = require('./config/database')
