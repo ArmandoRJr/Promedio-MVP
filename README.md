@@ -1,3 +1,4 @@
+
 # Promedio
 
 ## Motivation
@@ -6,11 +7,36 @@ As university students, we are always stressed over our grades, trying to comput
 *Promedio* is an application built around this emotion and the problems that this emotion causes (i.e. computation problems). The application strives to solve this by providing an extensive tool that takes the brains out of the computational part of figuring out what mark a student would need for a particular GPA, and even allows students to get a graphical understanding of their past semester grades to figure out any trends that may be beneficial.
 
 ## Installation
-**Front-end:** [React]
+- **Back-end:** Node.js [(Installation instructions available here)](https://nodejs.org/en/download/)
+- **Front-end:** React
+- **Database:** MongoDB
 
-**Back-end:** [Node.js]
+Verify you have a working version of Node.js using:
+```sh
+node -v
+```
+Install/update yarn using:
+```sh
+npm install --global yarn
+```
+Clone the repository by running:
+```sh
+git clone https://github.com/UTSCCSCC01/finalprojectf22-team-promedio.git
+```
+Travel to the main project folder and install all the dependencies using:
+```sh
+cd finalprojectf22-team-promedio/
+cd Promedio
+yarn setup
+```
+Add the .env file required for the project to the `Promedio` folder (not present in this repository, out of security).
+Start the development backend server and the frontend website using:
+```sh
+yarn dev
+```
+(Or alternatively, run `yarn server` in one terminal, and `yarn client` on another.)
 
-**DB:** [MongoDB] -- Will not require any additional installation by the user once we've set it up.
+The backend server should start under port 5000, with the website under port 3000. The MongoDB database should be showcased as working under the server initialization terminal.
 
 ## Contribution
 To contribute to this project, we will follow GitFlow and implement continuous integration continuous deployment: [Inspired by C01 Tutorial Notes] 
