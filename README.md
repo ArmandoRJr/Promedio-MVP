@@ -15,6 +15,12 @@ Verify you have a working version of Node.js using:
 ```sh
 node -v
 ```
+Install version 18.0.0 of Node for consistency:
+```
+sudo npm install -g n
+sudo n 18.0.0
+```
+
 Install/update yarn using:
 ```sh
 npm install --global yarn
