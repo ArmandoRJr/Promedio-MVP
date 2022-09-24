@@ -1,22 +1,22 @@
 //console.log("Hello, Promedio")
 
-const express = require('express')
+const express = require("express");
 const bodyParser = require("body-parser");
 
-const dotenv = require('dotenv').config() // .env file
-const server_port = process.env.SERVER_PORT || 5000
-const { connectDatabase } = require('./config/database')
+const dotenv = require("dotenv").config(); // .env file
+const server_port = process.env.SERVER_PORT || 5000;
+const { connectDatabase } = require("./config/database");
+const authRoute = require("./routes/authRoute");
+connectDatabase();
 
-connectDatabase()
+const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
 
-const app = express()
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-app.use(express.json())
-app.use(express.urlencoded({extended: false}))
-
-app.use('/api/sheets', require('./routes/sheetRoutes'))
-
+app.use("/api/sheets", require("./routes/sheetRoutes"));
+app.use("/api", authRoute);
 app.listen(server_port, () => {
-    console.log(`Server started on port ${server_port}`)
-})
+  console.log(`Server started on port ${server_port}`);
+});
