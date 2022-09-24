@@ -31,6 +31,42 @@ const register = (req, res, next) => {
   });
 };
 
+const login = (req, res, next) => {
+  var username = req.body.username;
+  var password = req.body.password;
+
+  user.findOne({ $or: [{ email: username }, { name: username }] }).then(
+    (user) => {
+      if (user) {
+        bcrypt.compare(password, user.password, function(err, result) {
+          if (err) {
+            res.json({
+              error: err,
+            });
+          }
+          if (result) {
+            let token = jwt.sign({ email: user.email }, "verySecretValue", {
+              expiresIn: "1h",
+            });
+            res.json({
+              message: "Login successful!",
+              token,
+            });
+          } else {
+            res.json({
+              message: "Password does not match!",
+            });
+          }
+        });
+      } else {
+        res.json({
+          message: "No user found!",
+        });
+      }
+    }
+  );
+};
+
 module.exports = {
-  register,
+  register, login
 };
