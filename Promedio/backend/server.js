@@ -15,6 +15,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+const cors = require("cors");
+const corsOptions = {
+  origin: "*",
+  credentials: true,
+  optionSuccessStatus: 200,
+  SERVER_PORT: 4000,
+};
+
+app.use(cors(corsOptions));
 app.use("/api/sheets", require("./routes/sheetRoutes"));
 app.use("/api", authRoute);
 app.listen(server_port, () => {

@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+import axios from "axios";
 
 const FullWidthDiv = styled.div`
   width: 100%;
@@ -83,11 +84,23 @@ function Signup() {
     pass = event.target.value;
   };
 
+  var jsonData = {
+    name: name,
+    email: email,
+    gpa: gpa,
+    password: pass,
+  };
+
   function handleClick() {
-    console.log(email);
-    console.log(name);
-    console.log(pass);
-    console.log(gpa);
+    console.log("clicked");
+    axios.post("http://localhost:4000/api/register", jsonData).then(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   return (
