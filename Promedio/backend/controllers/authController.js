@@ -47,8 +47,7 @@ const login = (req, res, next) => {
           }
           if (result) {
             let token = jwt.sign({ email: user.email }, "promediosecretkey", {
-              algorithm: "RS256",
-              expiresIn: "12h",
+              expiresIn: "1h",
             });
             res.json({
               message: "Login successful!",

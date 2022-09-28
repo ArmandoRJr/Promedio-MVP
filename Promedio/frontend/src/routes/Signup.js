@@ -67,32 +67,37 @@ function Signup() {
   let email = "";
   let name = "";
   let pass = "";
-  const getGPAValue = (event) => {
-    // show the user input value to console
-    gpa = event.target.value;
-  };
-  const getEmailValue = (event) => {
-    // show the user input value to console
-    email = event.target.value;
-  };
-  const getNameValue = (event) => {
-    // show the user input value to console
-    name = event.target.value;
-  };
-  const getPassValue = (event) => {
-    // show the user input value to console
-    pass = event.target.value;
-  };
 
-  var jsonData = {
+  let jsonData = {
     name: name,
     email: email,
     gpa: gpa,
     password: pass,
   };
 
+  const getGPAValue = (event) => {
+    // show the user input value to console
+    gpa = event.target.value;
+    jsonData.gpa = gpa;
+  };
+  const getEmailValue = (event) => {
+    // show the user input value to console
+    email = event.target.value;
+    jsonData.email = email;
+  };
+  const getNameValue = (event) => {
+    // show the user input value to console
+    name = event.target.value;
+    jsonData.name = name;
+  };
+  const getPassValue = (event) => {
+    // show the user input value to console
+    pass = event.target.value;
+    jsonData.password = pass;
+  };
+
   function handleClick() {
-    console.log("clicked");
+    console.log(jsonData);
     axios.post("http://localhost:4000/api/register", jsonData).then(
       (response) => {
         console.log(response);
