@@ -43,6 +43,11 @@ const NavbarLink = styled(Link)`
     }
 `;
 
+const Logo = styled.img`
+    height: 30px;
+    width: 30px;
+`;
+
 const MainLink = styled(NavbarLink)`
     font-size: 1.5rem;
     font-weight: bold;
@@ -55,6 +60,7 @@ export const Navbar = ({ isLoggedIn }) => {
     return (
         <NavbarContainer>
             <NavbarLeft>
+                <Logo src="logo.png" />
                 <MainLink to="/">Promedio.</MainLink>
             </NavbarLeft>
             <NavbarRight>
