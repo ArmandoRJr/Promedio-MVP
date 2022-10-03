@@ -1,11 +1,12 @@
-import React from 'react';
-import { useOutletContext } from "react-router-dom";
-import styled from 'styled-components'
+import React from "react";
+import { useOutletContext } from "react-router";
+import styled from "styled-components";
+import { post } from '../../src/api/index';
 
 const FullWidthDiv = styled.div`
   width: 100%;
-  background-color: ${({theme}) => theme.colors.primary};
-  color: ${({theme}) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.white};
   padding: 100px 40px;
   display: flex;
   flex-direction: column;
@@ -62,8 +63,32 @@ const Label = styled.label`
 
 function Login() {
   const context = useOutletContext();
-
   const {setIsLoggedIn} = context;
+  const [formState, setFormState] = React.useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChangeFormState = (event) => {
+    setFormState({
+      ...formState,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  function handleClick() {
+    // TODO: Add validation
+    post(`login`, formState).then(
+      (response) => {
+        if (setIsLoggedIn && typeof setIsLoggedIn === 'function') {
+          setIsLoggedIn(true)
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 
   return (
     <FullWidthDiv>
@@ -73,20 +98,20 @@ function Login() {
         <FormInput
           type="text"
           placeholder="john.doe@mail.utoronto.ca"
+          onChange={handleChangeFormState}
+          name="email"
         />
       </InputContainer>
       <InputContainer>
         <Label>Password</Label>
         <FormInput
           type="password"
+          onChange={handleChangeFormState}
+          name="password"
         />
       </InputContainer>
       <MarginTopRow>
-        <LoginButton onClick={() => {
-          if (setIsLoggedIn && typeof setIsLoggedIn === 'function') {
-            setIsLoggedIn(true)
-          }
-        }}>Login</LoginButton>
+        <LoginButton onClick={handleClick}>Login</LoginButton>
       </MarginTopRow>
     </FullWidthDiv>
   );

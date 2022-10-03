@@ -62,45 +62,25 @@ const Label = styled.label`
 `;
 
 function Signup() {
-  let gpa = "";
-  let email = "";
-  let name = "";
-  let pass = "";
   const context = useOutletContext();
   const {setIsLoggedIn} = context;
+  const [formState, setFormState] = React.useState({
+    gpa: "",
+    email: "",
+    name: "",
+    password: "",
+  });
 
-
-  let jsonData = {
-    name: name,
-    email: email,
-    gpa: gpa,
-    password: pass,
-  };
-
-  const getGPAValue = (event) => {
-    // show the user input value to console
-    gpa = event.target.value;
-    jsonData.gpa = gpa;
-  };
-  const getEmailValue = (event) => {
-    // show the user input value to console
-    email = event.target.value;
-    jsonData.email = email;
-  };
-  const getNameValue = (event) => {
-    // show the user input value to console
-    name = event.target.value;
-    jsonData.name = name;
-  };
-  const getPassValue = (event) => {
-    // show the user input value to console
-    pass = event.target.value;
-    jsonData.password = pass;
+  const handleChangeFormState = (event) => {
+    setFormState({
+      ...formState,
+      [event.target.name]: event.target.value,
+    });
   };
 
   function handleClick() {
-    console.log(jsonData);
-    post(`register`, jsonData).then(
+    // TODO: Add validation
+    post(`register`, formState).then(
       (response) => {
         if (setIsLoggedIn && typeof setIsLoggedIn === 'function') {
           setIsLoggedIn(true)
@@ -117,23 +97,38 @@ function Signup() {
       <h1>Signup.</h1>
       <InputContainer>
         <Label>Name</Label>
-        <FormInput type="text" placeholder="John Doe" onChange={getNameValue} />
+        <FormInput
+          type="text"
+          name="name"
+          placeholder="John Doe"
+          onChange={handleChangeFormState}
+        />
       </InputContainer>
       <InputContainer>
         <Label>Email</Label>
         <FormInput
           type="text"
           placeholder="john.doe@mail.utoronto.ca"
-          onChange={getEmailValue}
+          onChange={handleChangeFormState}
+          name="email"
         />
       </InputContainer>
       <InputContainer>
         <Label>Gpa</Label>
-        <FormInput type="text" placeholder="3.4" onChange={getGPAValue} />
+        <FormInput
+          type="text"
+          placeholder="3.4"
+          onChange={handleChangeFormState}
+          name="gpa"
+        />
       </InputContainer>
       <InputContainer>
         <Label>Password</Label>
-        <FormInput type="password" onChange={getPassValue} />
+        <FormInput
+          type="password"
+          onChange={handleChangeFormState}
+          name="password"
+        />
       </InputContainer>
       <MarginTopRow>
         <SignupButton onClick={handleClick}>Signup</SignupButton>

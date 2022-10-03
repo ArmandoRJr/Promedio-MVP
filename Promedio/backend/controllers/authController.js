@@ -29,7 +29,7 @@ const register = (req, res, next) => {
 };
 
 const login = (req, res, next) => {
-  var username = req.body.username;
+  var username = req.body.email;
   var password = req.body.password;
 
   user
@@ -38,7 +38,7 @@ const login = (req, res, next) => {
       if (user) {
         bcrypt.compare(password, user.password, function (err, result) {
           if (err) {
-            res.status(500).send("Unable to compare passwords");
+            next(err);
           }
           if (result) {
             let token = jwt.sign({ email: user.email }, "promediosecretkey", {
@@ -49,13 +49,20 @@ const login = (req, res, next) => {
               token,
             });
           } else {
-            res.json({
-              message: "Password does not match!",
+            next({
+              message: "Incorrect password.",
+              status: 500,
+              stack: "Incorrect password.",
             });
           }
         });
       } else {
-        next();
+        // throw error with next
+        next({
+          message: "User not found",
+          status: 500,
+          stack: "User not found",
+        });
       }
     });
 };
