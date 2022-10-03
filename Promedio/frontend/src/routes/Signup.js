@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import axios from "axios";
+import { post } from '../../src/api/index';
 
 const FullWidthDiv = styled.div`
   width: 100%;
@@ -98,7 +98,7 @@ function Signup() {
 
   function handleClick() {
     console.log(jsonData);
-    axios.post("http://localhost:4000/api/register", jsonData).then(
+    post(`register`, jsonData).then(
       (response) => {
         console.log(response);
       },
