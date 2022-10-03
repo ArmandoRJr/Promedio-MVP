@@ -21,7 +21,7 @@ const MarginTopRow = styled.div`
 `;
 
 const LoginButton = styled.button`
-  background-color: ${({theme}) => theme.colors.tertiary};
+  background-color: ${({theme}) => theme.colors.secondary};
   color: ${({theme}) => theme.colors.white};
   cursor: pointer;
   padding: 10px 20px;

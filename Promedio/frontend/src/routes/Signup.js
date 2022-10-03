@@ -22,8 +22,8 @@ const MarginTopRow = styled.div`
 `;
 
 const SignupButton = styled.button`
-  background-color: ${({ theme }) => theme.colors.tertiary};
-  color: ${({ theme }) => theme.colors.white};
+  background-color: ${({theme}) => theme.colors.secondary};
+  color: ${({theme}) => theme.colors.white};
   cursor: pointer;
   padding: 10px 20px;
   border: none;
