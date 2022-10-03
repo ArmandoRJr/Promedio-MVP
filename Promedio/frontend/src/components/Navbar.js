@@ -39,27 +39,30 @@ const NavbarLink = styled(Link)`
     font-size: 1.2rem;
     margin: 0 10px;
     &:hover {
-        color: ${({ theme }) => theme.colors.tertiary};
+        color: ${({ theme }) => theme.colors.secondary};
     }
+`;
+
+const Logo = styled.img`
+    height: 25px;
+    width: 25px;
 `;
 
 const MainLink = styled(NavbarLink)`
     font-size: 1.5rem;
     font-weight: bold;
-    &:hover {
-        color: ${({ theme }) => theme.colors.white};
-    }
 `;
 
-export const Navbar = ({ isLoggedIn }) => {
+export const Navbar = ({ isLoggedIn, logout }) => {
     return (
         <NavbarContainer>
             <NavbarLeft>
+                <Logo src="logo.png" />
                 <MainLink to="/">Promedio.</MainLink>
             </NavbarLeft>
             <NavbarRight>
                 {isLoggedIn ? (
-                    <div>Welcome</div>
+                    <div onClick={logout}>Logout</div>
                 ) : (
                     <>
                         <NavbarLink to="/login">Login</NavbarLink>

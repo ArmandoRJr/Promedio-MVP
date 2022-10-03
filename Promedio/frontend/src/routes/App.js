@@ -10,47 +10,25 @@ const AppContainer = styled.div`
   justify-content: center;
 `;
 
-const FullWidthDiv = styled.div`
-  width: 100%;
-  height: 500px;
-  background-color: ${({theme}) => theme.colors.primary};
-  color: ${({theme}) => theme.colors.white};
-  padding: 40px;
-`;
-
-const MarginTopRow = styled.div`
-  margin-top: 20px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-`;
-
-const LoginButton = styled.button`
-  background-color: ${({theme}) => theme.colors.tertiary};
-  color: ${({theme}) => theme.colors.white};
-  padding: 10px 20px;
-  margin-right: 20px;
-  border: none;
-  border-radius: 5px;
-  &:hover {
-    background-color: ${({theme}) => theme.colors.secondary};
-  }
-`;
-
 function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const navigate = useNavigate();
+
   React.useEffect(() => {
-    if (!isLoggedIn) {
+    console.log(window.location.pathname)
+    if (!isLoggedIn && !window.location.pathname.includes('login') && !window.location.pathname.includes('signup')) {
       navigate('/welcome');
+    } else if (isLoggedIn) {
+      navigate('/home');
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, navigate]);
 
   return (
     <AppContainer>
-      <Navbar />
-      <Outlet />
+      <Navbar isLoggedIn={isLoggedIn} logout={() => {
+        setIsLoggedIn(false);
+      }}/>
+      <Outlet context={{setIsLoggedIn}} />
     </AppContainer>
   );
 }

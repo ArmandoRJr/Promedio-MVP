@@ -1,58 +1,144 @@
-import React from 'react';
-import { useNavigate } from 'react-router';
-import styled from 'styled-components'
+import { React } from "react";
+import { useNavigate } from "react-router";
+import styled from "styled-components";
+import Typewriter from "typewriter-effect";
+import { Card } from "../components/Card";
 
-const FullWidthDiv = styled.div`
+const PageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  height: 500px;
-  background-color: ${({theme}) => theme.colors.primary};
-  color: ${({theme}) => theme.colors.white};
-  padding: 40px;
 `;
 
-const MarginTopRow = styled.div`
-  margin-top: 20px;
+const FullWidthDivTop = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 55vh;
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.white};
+  h1 {
+    font-size: calc(90px + 1vw);
+  }
+
+  h3 {
+    font-size: 30px;
+  }
+`;
+
+const FullWidthDivBottom = styled(FullWidthDivTop)`
+  background-color: ${({ theme }) => theme.colors.primary_light};
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+
+  h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(50px + 1vw);
+  }
+`;
+
+const CardsContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-around;
+  padding: 50px;
+`;
+
+const LeftColumnDiv = styled.div`
+  flex: 0.5;
+  padding: 60px;
+`;
+
+const RightColumnDiv = styled.div`
+  flex: 0.5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+
+  &:hover {
+    img {
+      transition: 0.3s opacity ease-in;
+      opacity: 0.3;
+    }
+  }
+`;
+
+const BGImage = styled.img`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
 `;
 
 const LoginButton = styled.button`
-  background-color: ${({theme}) => theme.colors.tertiary};
-  color: ${({theme}) => theme.colors.white};
+  position: absolute;
+  top: 25%;
+  background-color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.white};
+  width: 15rem;
+  height: 4rem;
   cursor: pointer;
-  padding: 10px 20px;
-  margin-right: 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   &:hover {
-    opacity: 0.8;
+    transition: 0.2s background ease-in;
+    background-color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.black};
   }
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: bold;
 `;
 
 const SignupButton = styled(LoginButton)`
-  background-color: ${({theme}) => theme.colors.white};
+  top: 35%;
+  background-color: transparent;
+  color: ${({ theme }) => theme.colors.white};
   &:hover {
-    opacity: 0.8;
+    background-color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.black};
   }
-  color: ${({theme}) => theme.colors.black};
-  margin-right: 0;
+  border: 2px solid ${({ theme }) => theme.colors.white};
 `;
+
 function Welcome() {
   const navigate = useNavigate();
 
   return (
-    <FullWidthDiv>
-      <h1>Promedio.</h1>
-      <h3>The best way to calculate your GPA.</h3>
-      <MarginTopRow>
-        <LoginButton onClick={() => navigate('/login')}>Login</LoginButton>
-        <SignupButton onClick={() => navigate('/signup')}>Signup</SignupButton>
-      </MarginTopRow>
-    </FullWidthDiv>
+    <PageContainer>
+      <FullWidthDivTop>
+        <LeftColumnDiv>
+          <h1>Promedio.</h1>
+          <h3>
+            <Typewriter
+              options={{
+                strings: ['Your average planner.', 'Your average grade calculator.', 'Your average course organizer.', 'Your average progress tracker.'],
+                autoStart: true,
+                loop: true,
+              }}
+            />
+          </h3>
+        </LeftColumnDiv>
+        <RightColumnDiv>
+          <BGImage src="bg.jpg" />
+          <LoginButton onClick={() => navigate("/login")}>Login</LoginButton>
+          <SignupButton onClick={() => navigate("/signup")}>Signup</SignupButton>
+        </RightColumnDiv>
+      </FullWidthDivTop>
+      <FullWidthDivBottom>
+          <h1>What we offer?</h1>
+          <CardsContainer>
+            <Card title="Lorem Ipsum" desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."/>
+            <Card title="Lorem Ipsum" desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."/>
+            <Card title="Lorem Ipsum" desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."/>
+          </CardsContainer>
+      </FullWidthDivBottom>
+    </PageContainer>
   );
 }
 
