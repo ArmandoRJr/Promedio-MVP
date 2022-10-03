@@ -5,9 +5,7 @@ const user = require("../models/user");
 const register = (req, res, next) => {
   bcrypt.hash(req.body.password, 10, function (err, hashedPass) {
     if (err) {
-      res.json({
-        error: err,
-      });
+      next(err);
     }
     let newUser = new user({
       name: req.body.name,
@@ -21,12 +19,11 @@ const register = (req, res, next) => {
       .then((newUser) => {
         res.json({
           message: "User added successfully.",
+          user: newUser,
         });
       })
-      .catch((error) => {
-        res.json({
-          message: "An error occured!",
-        });
+      .catch((err) => {
+        next(err);
       });
   });
 };
@@ -41,9 +38,7 @@ const login = (req, res, next) => {
       if (user) {
         bcrypt.compare(password, user.password, function (err, result) {
           if (err) {
-            res.json({
-              error: err,
-            });
+            res.status(500).send("Unable to compare passwords");
           }
           if (result) {
             let token = jwt.sign({ email: user.email }, "promediosecretkey", {
@@ -60,9 +55,7 @@ const login = (req, res, next) => {
           }
         });
       } else {
-        res.json({
-          message: "No user found!",
-        });
+        next();
       }
     });
 };

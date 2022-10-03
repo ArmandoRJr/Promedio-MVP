@@ -26,6 +26,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use("/api/sheets", require("./routes/sheetRoutes"));
 app.use("/api", authRoute);
+const { logErrors, errorHandler, clientErrorHandler } = require("./middleware/errorMiddleware");
+app.use(logErrors);
+app.use(clientErrorHandler);
+app.use(errorHandler);
 app.listen(server_port, () => {
   console.log(`Server started on port ${server_port}`);
 });
