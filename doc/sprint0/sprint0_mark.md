@@ -222,5 +222,5 @@
    
 ---
 ## Total Mark  
-Sprint 0 Total Mark : 45 / 48
+Sprint 0 Total Mark : 48 / 48
 	
