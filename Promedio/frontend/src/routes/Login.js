@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router';
+import { useOutletContext } from "react-router-dom";
 import styled from 'styled-components'
 
 const FullWidthDiv = styled.div`
@@ -61,7 +61,9 @@ const Label = styled.label`
 `;
 
 function Login() {
-  const navigate = useNavigate();
+  const context = useOutletContext();
+
+  const {setIsLoggedIn} = context;
 
   return (
     <FullWidthDiv>
@@ -80,7 +82,11 @@ function Login() {
         />
       </InputContainer>
       <MarginTopRow>
-        <LoginButton onClick={() => navigate('/home')}>Login</LoginButton>
+        <LoginButton onClick={() => {
+          if (setIsLoggedIn && typeof setIsLoggedIn === 'function') {
+            setIsLoggedIn(true)
+          }
+        }}>Login</LoginButton>
       </MarginTopRow>
     </FullWidthDiv>
   );

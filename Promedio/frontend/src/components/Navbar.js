@@ -53,7 +53,7 @@ const MainLink = styled(NavbarLink)`
     font-weight: bold;
 `;
 
-export const Navbar = ({ isLoggedIn }) => {
+export const Navbar = ({ isLoggedIn, logout }) => {
     return (
         <NavbarContainer>
             <NavbarLeft>
@@ -62,7 +62,7 @@ export const Navbar = ({ isLoggedIn }) => {
             </NavbarLeft>
             <NavbarRight>
                 {isLoggedIn ? (
-                    <div>Welcome</div>
+                    <div onClick={logout}>Logout</div>
                 ) : (
                     <>
                         <NavbarLink to="/login">Login</NavbarLink>

@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router";
+import { useOutletContext } from "react-router";
 import styled from "styled-components";
 import { post } from '../../src/api/index';
 
@@ -62,11 +62,13 @@ const Label = styled.label`
 `;
 
 function Signup() {
-  const navigate = useNavigate();
   let gpa = "";
   let email = "";
   let name = "";
   let pass = "";
+  const context = useOutletContext();
+  const {setIsLoggedIn} = context;
+
 
   let jsonData = {
     name: name,
@@ -100,7 +102,9 @@ function Signup() {
     console.log(jsonData);
     post(`register`, jsonData).then(
       (response) => {
-        console.log(response);
+        if (setIsLoggedIn && typeof setIsLoggedIn === 'function') {
+          setIsLoggedIn(true)
+        }
       },
       (error) => {
         console.log(error);

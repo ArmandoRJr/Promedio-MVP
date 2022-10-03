@@ -13,16 +13,22 @@ const AppContainer = styled.div`
 function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const navigate = useNavigate();
+
   React.useEffect(() => {
-    if (!isLoggedIn) {
+    console.log(window.location.pathname)
+    if (!isLoggedIn && !window.location.pathname.includes('login') && !window.location.pathname.includes('signup')) {
       navigate('/welcome');
+    } else if (isLoggedIn) {
+      navigate('/home');
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, navigate]);
 
   return (
     <AppContainer>
-      <Navbar />
-      <Outlet />
+      <Navbar isLoggedIn={isLoggedIn} logout={() => {
+        setIsLoggedIn(false);
+      }}/>
+      <Outlet context={{setIsLoggedIn}} />
     </AppContainer>
   );
 }
