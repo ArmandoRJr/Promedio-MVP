@@ -2,22 +2,50 @@ import { React } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import Typewriter from "typewriter-effect";
+import { Card } from "../components/Card";
 
-const FullWidthDiv = styled.div`
+const PageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+const FullWidthDivTop = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 50vh;
+  height: 55vh;
   background-color: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.white};
-
   h1 {
     font-size: calc(90px + 1vw);
   }
 
   h3 {
-    font-size: 25px;
+    font-size: 30px;
   }
+`;
+
+const FullWidthDivBottom = styled(FullWidthDivTop)`
+  background-color: ${({ theme }) => theme.colors.primary_light};
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+
+  h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(50px + 1vw);
+  }  
+`;
+
+const CardsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  aligh-items: center;
+  justify-content: space-around;
+  padding: 50px;
 `;
 
 const LeftColumnDiv = styled.div`
@@ -34,7 +62,7 @@ const RightColumnDiv = styled.div`
 
   &:hover {
     img {
-      transition: .3s opacity ease-in;
+      transition: 0.3s opacity ease-in;
       opacity: 0.3;
     }
   }
@@ -51,7 +79,7 @@ const BGImage = styled.img`
 const LoginButton = styled.button`
   position: absolute;
   top: 25%;
-  background-color: ${({ theme }) => theme.colors.tertiary};
+  background-color: ${({ theme }) => theme.colors.secondary};
   color: ${({ theme }) => theme.colors.white};
   width: 15rem;
   height: 4rem;
@@ -59,7 +87,7 @@ const LoginButton = styled.button`
   border: none;
   border-radius: 50px;
   &:hover {
-    transition: .2s background ease-in;
+    transition: 0.2s background ease-in;
     background-color: ${({ theme }) => theme.colors.white};
     color: ${({ theme }) => theme.colors.black};
   }
@@ -82,29 +110,35 @@ function Welcome() {
   const navigate = useNavigate();
 
   return (
-    <FullWidthDiv>
-      <LeftColumnDiv>
-        <h1>Promedio.</h1>
-        <h3>
-          <Typewriter
-            onInit={(typewriter) => {
-              typewriter.typeString("Your average ").pauseFor(2000)
-              .typeString("planner.").pauseFor(2000).deleteChars(8)
-              .typeString("grade calculator.").pauseFor(2000).deleteChars(17)
-              .typeString("course organizer.").pauseFor(2000).deleteChars(17)
-              .typeString("progress tracker.").pauseFor(2000).deleteChars(17)
-              .typeString("planner.")
-              .start();
-            }}
-          />
-        </h3>
-      </LeftColumnDiv>
-      <RightColumnDiv>
+    <PageContainer>
+      <FullWidthDivTop>
+        <LeftColumnDiv>
+          <h1>Promedio.</h1>
+          <h3>
+            <Typewriter
+              options={{
+                strings: ['Your average planner.', 'Your average grade calculator.', 'Your average course organizer.', 'Your average progress tracker.'],
+                autoStart: true,
+                loop: true,
+              }}
+            />
+          </h3>
+        </LeftColumnDiv>
+        <RightColumnDiv>
           <BGImage src="bg.jpg" />
           <LoginButton onClick={() => navigate("/login")}>Login</LoginButton>
           <SignupButton onClick={() => navigate("/signup")}>Signup</SignupButton>
-      </RightColumnDiv>
-    </FullWidthDiv>
+        </RightColumnDiv>
+      </FullWidthDivTop>
+      <FullWidthDivBottom>
+          <h1>What we offer?</h1>
+          <CardsContainer>
+            <Card title="Lorem Ipsum" desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."/>
+            <Card title="Lorem Ipsum" desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."/>
+            <Card title="Lorem Ipsum" desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."/>
+          </CardsContainer>
+      </FullWidthDivBottom>
+    </PageContainer>
   );
 }
 
