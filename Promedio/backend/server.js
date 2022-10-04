@@ -7,6 +7,7 @@ const dotenv = require("dotenv").config(); // .env file
 const server_port = process.env.SERVER_PORT || 5000;
 const { connectDatabase } = require("./config/database");
 const authRoute = require("./routes/authRoute");
+const updateRoute = require("./routes/updateRoute");
 connectDatabase();
 
 const app = express();
@@ -26,6 +27,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use("/api/sheets", require("./routes/sheetRoutes"));
 app.use("/api", authRoute);
+app.use("/api", updateRoute);
 const { logErrors, errorHandler, clientErrorHandler } = require("./middleware/errorMiddleware");
 app.use(logErrors);
 app.use(clientErrorHandler);
