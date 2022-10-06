@@ -1,11 +1,12 @@
-import React from 'react';
-import { useNavigate } from 'react-router';
-import styled from 'styled-components'
+import React from "react";
+import { useOutletContext } from "react-router";
+import styled from "styled-components";
+import { post } from '../../src/api/index';
 
 const FullWidthDiv = styled.div`
   width: 100%;
-  background-color: ${({theme}) => theme.colors.primary};
-  color: ${({theme}) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.white};
   padding: 100px 40px;
   display: flex;
   flex-direction: column;
@@ -21,7 +22,7 @@ const MarginTopRow = styled.div`
 `;
 
 const SignupButton = styled.button`
-  background-color: ${({theme}) => theme.colors.tertiary};
+  background-color: ${({theme}) => theme.colors.secondary};
   color: ${({theme}) => theme.colors.white};
   cursor: pointer;
   padding: 10px 20px;
@@ -61,7 +62,35 @@ const Label = styled.label`
 `;
 
 function Signup() {
-  const navigate = useNavigate();
+  const context = useOutletContext();
+  const {setIsLoggedIn} = context;
+  const [formState, setFormState] = React.useState({
+    gpa: "",
+    email: "",
+    name: "",
+    password: "",
+  });
+
+  const handleChangeFormState = (event) => {
+    setFormState({
+      ...formState,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  function handleClick() {
+    // TODO: Add validation
+    post(`register`, formState).then(
+      (response) => {
+        if (setIsLoggedIn && typeof setIsLoggedIn === 'function') {
+          setIsLoggedIn(true)
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 
   return (
     <FullWidthDiv>
@@ -70,7 +99,9 @@ function Signup() {
         <Label>Name</Label>
         <FormInput
           type="text"
+          name="name"
           placeholder="John Doe"
+          onChange={handleChangeFormState}
         />
       </InputContainer>
       <InputContainer>
@@ -78,16 +109,29 @@ function Signup() {
         <FormInput
           type="text"
           placeholder="john.doe@mail.utoronto.ca"
+          onChange={handleChangeFormState}
+          name="email"
+        />
+      </InputContainer>
+      <InputContainer>
+        <Label>Gpa</Label>
+        <FormInput
+          type="text"
+          placeholder="3.4"
+          onChange={handleChangeFormState}
+          name="gpa"
         />
       </InputContainer>
       <InputContainer>
         <Label>Password</Label>
         <FormInput
           type="password"
+          onChange={handleChangeFormState}
+          name="password"
         />
       </InputContainer>
       <MarginTopRow>
-        <SignupButton onClick={() => navigate('/home')}>Signup</SignupButton>
+        <SignupButton onClick={handleClick}>Signup</SignupButton>
       </MarginTopRow>
     </FullWidthDiv>
   );
