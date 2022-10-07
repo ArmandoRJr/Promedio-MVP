@@ -11,7 +11,7 @@ Maaz Hashmi, Tegh Mehta, Preyansh Dutta, Gabriel Ethan Vainer, Armando Rojas, Al
 - Frequent Sprint meetings.
 - Frequent communication of progress over Discord text channels/calls.
 - Peer review of pull requests.
-- Organization through Jira issues (or some other Kanban board equivalent).
+- Organization through Jira issues (or some other Kanban board equivalent, i.e. Trello).
 - Quick distribution of user stories at the beginning of each Sprint.
 - Frequent rebasing on feature branches prior to pull request(s) being merged into development branch, to avoid conflict when merging.
 
@@ -22,8 +22,9 @@ Maaz Hashmi, Tegh Mehta, Preyansh Dutta, Gabriel Ethan Vainer, Armando Rojas, Al
 - Addition of ticket numbers to the beginning of commit messages.
 - Testing of product a day before deadline.
 
-# What are (if any) harmful practices you should stop using during next sprint 
+## What are (if any) harmful practices you should stop using during next sprint 
 - Last-minute changes to standup times.
+- Non-hotfix commits to main (should be only to feature branches, which are then to be merged into development).
 
 ## Best Experiences of Sprint 1:
 - Quick integration and usage of technologies such as React and MongoDB.
