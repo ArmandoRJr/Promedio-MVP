@@ -24,9 +24,11 @@ const FullWidthDivTop = styled.div`
   h3 {
     font-size: 30px;
   }
+  flex-wrap: wrap;
 `;
 
 const FullWidthDivBottom = styled(FullWidthDivTop)`
+  height: 100%;
   background-color: ${({ theme }) => theme.colors.primary_light};
   display: flex;
   flex-direction: column;
@@ -46,6 +48,8 @@ const CardsContainer = styled.div`
   align-items: center;
   justify-content: space-around;
   padding: 50px;
+  flex-wrap: wrap;
+  gap: 30px;
 `;
 
 const LeftColumnDiv = styled.div`
@@ -133,9 +137,9 @@ function Welcome() {
       <FullWidthDivBottom>
           <h1>What we offer?</h1>
           <CardsContainer>
-            <Card title="Lorem Ipsum" desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."/>
-            <Card title="Lorem Ipsum" desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."/>
-            <Card title="Lorem Ipsum" desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."/>
+            <Card title="Track" desc="Keep track of your current grades with ease of streamlined spreadsheets. Also stay up to date with your progress and goals."/>
+            <Card title="Plan" desc="Plan out your semester with proper course organization. Create subsets of courses and perform various evalutations on them."/>
+            <Card title="Visualize" desc="Clearly visualize your data with our appealing user interface. Export data into various formats and even generate graphs with your grades/cGPA."/>
           </CardsContainer>
       </FullWidthDivBottom>
     </PageContainer>
