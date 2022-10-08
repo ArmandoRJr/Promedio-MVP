@@ -1,11 +1,11 @@
 ## Documentation for Meeting: 
 
-The release planning meeting is being held on October 6th, 2022 over Discord. All of our team members attended the release planning meeting. We discussed release goals, accomplishments per sprint, user stories corresponding to key features of the application.
+The release planning meeting was held on October 6th, 2022 over Discord. All of our team members attended the release planning meeting. We discussed release goals, accomplishments per sprint, user stories corresponding to key features of the application.
 
 ---
 ## Release Goal: 
 
-For our release goal, we want to complete all or most of our user stories defined in sprint0. We want to deliver a polished application with fully working key functionality and little to no bugs. We also want our software to have an appealing user interface that is easy to navigate alongwith a few additional features as outlined by our sprint0 user stories.
+For our release goal, we want to complete all or most of our user stories defined in sprint0. We want to deliver a polished application with fully working key functionality and little to no bugs. We also want our software to have an appealing user interface that is easy to navigate along with a few additional features as outlined by our sprint0 user stories.
 
 ---
 ## Scope:
