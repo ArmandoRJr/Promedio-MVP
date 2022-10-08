@@ -79,15 +79,15 @@ The table below displays who worked on which task during this sprint.
 
 | Ticket Number    | Description     | Assigned to:    |
 | ------------- | ------------- | -------- |
-| PROM-1-1 | Landing page should contain a basic introduction to the application as a whole, including purpose and functionality of the app. | Maaz Hashmi
-| PROM-1-2 | Landing page should contain a navigation bar at the top of the screen, with quick access to the login page for returning users and access to the registration page for incoming first-time users. | Maaz Hashmi
-| PROM-2-1 | The signup page should ask the user for their name, email, their current GPA and their password. | Preyansh Dutta, Gabriel Ethan Vainer
-| PROM-2-2 | The signup page should interact with the backend, adding users to the MongoDB database. | Preyansh Dutta, Gabriel Ethan Vainer, Tegh Mehta
-| PROM-3-1 | The login page should only require the email and password of the user to log them in. | Tegh Mehta
-| PROM-3-2 | The login page should interact with the backend, retrieving user information as required. | Preyansh Dutta, Gabriel Ethan Vainer, Tegh Mehta
-| PROM-4-1 | Users can quickly log out through some button in the webpage. | Tegh Mehta
-| PROM-7-1 | Semesters should pair together courses (to be fully developed in a later sprint) so that the user can categorize them quickly. | Alejandro Iglesias Llobet, Armando Rojas
-| PROM-7-1 | Some frontend feature, such as a sidebar or a list, will act as the user's main method of interacting with semesters. | Alejandro Iglesias Llobet
+| PROM-28 (PROM-1-1) | Landing page should contain a basic introduction to the application as a whole, including purpose and functionality of the app. | Tegh Mehta, Maaz Hashmi
+| PROM-29 (PROM-1-2) | Landing page should contain a navigation bar at the top of the screen, with quick access to the login page for returning users and access to the registration page for incoming first-time users. | Maaz Hashmi
+| PROM-30 (PROM-2-1) | The signup page should ask the user for their name, email, their current GPA and their password. | Preyansh Dutta, Gabriel Ethan Vainer
+| PROM-31 (PROM-2-2) | The signup page should interact with the backend, adding users to the MongoDB database. | Preyansh Dutta, Gabriel Ethan Vainer, Tegh Mehta
+| PROM-32 (-PROM-3-1) | The login page should only require the email and password of the user to log them in. | Tegh Mehta
+| PROM-33 (PROM-3-2) | The login page should interact with the backend, retrieving user information as required. | Preyansh Dutta, Gabriel Ethan Vainer, Tegh Mehta
+| PROM-34 (PROM-4-1) | Users can quickly log out through some button in the webpage. | Tegh Mehta
+| PROM-35 (PROM-7-1) | Semesters should pair together courses (to be fully developed in a later sprint) so that the user can categorize them quickly. | Alejandro Iglesias Llobet, Armando Rojas
+| PROM-36 (PROM-7-2) | Some frontend feature, such as a sidebar or a list, will act as the user's main method of interacting with semesters. | Alejandro Iglesias Llobet
 
 --- 
 **Spikes Recorded:**
