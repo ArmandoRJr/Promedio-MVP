@@ -7,7 +7,7 @@ const CardContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 18rem;
+    width: 20rem;
     height: 25rem;
     border: 1px solid rgba(0, 0, 0, 0.5);
     border-radius: 30px;
@@ -17,6 +17,7 @@ const CardContainer = styled.div`
         box-shadow: 0 0 10px 0 ${({ theme }) => theme.colors.black};
     }
     padding: 5px;
+    cursor: default;
 `;
 
 const CardHeader = styled.div`
