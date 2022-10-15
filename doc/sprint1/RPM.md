@@ -20,30 +20,32 @@ Sprint 1:
 
 
 Sprint 2:
-
-- Users are able to add/edit and delete courses. `(PROM-6)`
-- Users are able to see how much of a course they have completed. `(PROM-11)`
-- Users are able to edit and customize my user details. `(PROM-5)`
-- Users are able to view courses in 2 different views (All/By Semester). `(PROM-12)`
-- Users are able to calculate current average grade for each course. `(PROM-14)`
-
+- Users are able to view my user details. `(PROM-5)`
+- Users are able to edit my user details. `(PROM-19)`
+- Users are able to add/edit/delete courses. `(PROM-6)`
+- Users are able to view details of each course `(PROM-18)`
+- Users are able to view courses by Semester `(PROM-12)`
 
 Sprint 3:
-
-- Users are able to input grades into specific sheets. `(PROM-9)`
-- Users are able to preview the sheet before adding a new category. `(PROM-10)`
-- Users are able set a mark goal. `(PROM-17)`
-- Users are able to calculate their GPA throughout all/some courses. `(PROM-15)`
-- Users are able to select a subset of courses and perform evalation on them. `(PROM-16)`
+- Users are able to view courses in a list of all courses `(PROM-20)`
+- Users are able to add & view the preview of the sheet before adding a new category. `(PROM-10)`
+- Users are able to edit/delete categories. `(PROM-8)`
+- Users are able to add/edit/delete grades into specific sheets. `(PROM-9)`
+- Users are able set a mark goal for a course. `(PROM-17)`
 
 
 Sprint 4:
-
-- Users are able to add/edit/delete categories. `(PROM-8)`
+- Users are able to view current average grade for each course. `(PROM-14)`
+- Users are able to view GPA for a select subset of courses. `(PROM-16)`
+- Users are able to view GPA for all courses or by semester. `(PROM-15)`
+- Users are able to view how much of a course they have completed. `(PROM-11)`
 - Users are able to graph their average grades by course/semester. `(PROM-21)`
-- Users are able share their progress in a course through URLs. `(PROM-18)`
-- Users are able to export sheets as raw CSV/Google Sheets/Excel files. `(PROM-20)`
-- Users are able to toggle between light/dark theme. `(PROM-19)`
+
+
+To be deleted
+- Users are able to toggle between light/dark theme. 
+- Users are able share their progress in a course through URLs. 
+- Users are able to export sheets as raw CSV/Google Sheets/Excel files. 
 
 ---
 ## Participants: 
