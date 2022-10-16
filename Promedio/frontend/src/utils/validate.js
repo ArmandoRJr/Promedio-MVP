@@ -1,18 +1,18 @@
-export const isAuthUserValid = (response) => {
-    if (!response || !response.data || !response.data.user || !response.data.token) {
+export const isUserResponseValid = (response) => {
+    if (!(response && response.data)) {
         return false;
     }
-    const authUser = response.data.user;
-    if (!authUser) {
+    const user = response.data.user;
+    if (!user) {
         return false;
     }
-    if (!authUser.email) {
+    if (!user.email) {
         return false;
     }
-    if (!authUser._id) {
+    if (!user._id) {
         return false;
     }
-    if (!authUser.name) {
+    if (!user.name) {
         return false;
     }
     return true;

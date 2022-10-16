@@ -2,6 +2,7 @@ import React from "react";
 import { useOutletContext } from "react-router";
 import styled from "styled-components";
 import { post } from '../api/index';
+import { isUserResponseValid } from "../utils/validate";
 
 const FullWidthDiv = styled.div`
   width: 100%;
@@ -47,27 +48,22 @@ const FormInput = styled.input`
   width: 500px;
 `;
 
-const InputContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  margin: 20px 0;
+const Heading = styled.h2`
+  margin: 0;
 `;
 
-const Label = styled.label`
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 5px;
+const InfoContainer = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
 `;
 
 function User() {
   const context = useOutletContext();
   const {setAuthUser, authUser} = context;
   const [formState, setFormState] = React.useState({
-    email: authUser.email ?? '',
-    name: authUser.password ?? '',
-    password: authUser ?? '',
+    email: authUser?.email ?? '',
+    name: authUser?.name ?? '',
   });
   const [isEditable, setIsEditable] = React.useState(false);
 
@@ -80,10 +76,15 @@ function User() {
 
   function handleClick() {
     // TODO: Add validation
-    post(`register`, formState).then(
+    post(`editUser`, formState).then(
       (response) => {
-        if (setAuthUser && typeof setAuthUser === 'function') {
-          setAuthUser(true)
+        if (setAuthUser && typeof setAuthUser === 'function' && isUserResponseValid(response)) {
+          setAuthUser(response.data.user);
+          setFormState({
+            email: response.data.user.email,
+            name: response.data.user.name,
+          });
+          setIsEditable(false)
         }
       },
       (error) => {
@@ -93,66 +94,50 @@ function User() {
   }
 
   if (!isEditable) {
-    <FullWidthDiv>
-      <h1>User Profile.</h1>
-      <InputContainer>
-        <Label>Name</Label>
-        <h3>{}</h3>
-      </InputContainer>
-      <InputContainer>
-        <Label>Email</Label>
-        <FormInput
-          type="text"
-          placeholder="john.doe@mail.utoronto.ca"
-          onChange={handleChangeFormState}
-          name="email"
-        />
-      </InputContainer>
-      <InputContainer>
-        <Label>Password</Label>
-        <FormInput
-          type="password"
-          onChange={handleChangeFormState}
-          name="password"
-        />
-      </InputContainer>
-      <MarginTopRow>
-        <UserButton onClick={handleClick}>Save</UserButton>
-      </MarginTopRow>
-    </FullWidthDiv>
+    return (
+      <FullWidthDiv>
+        <h1>User Profile.</h1>
+        <InfoContainer>
+          <Heading>Name</Heading>
+          <h3>{formState.name}</h3>
+        </InfoContainer>
+        <InfoContainer>
+          <Heading>Email</Heading>
+          <h3>{formState.email}</h3>
+        </InfoContainer>
+        <MarginTopRow>
+          <UserButton onClick={() => setIsEditable(true)}>Edit</UserButton>
+        </MarginTopRow>
+      </FullWidthDiv>
+    )
   }
 
   return (
     <FullWidthDiv>
       <h1>User Profile.</h1>
-      <InputContainer>
-        <Label>Name</Label>
+      <InfoContainer>
+        <Heading>Name</Heading>
         <FormInput
           type="text"
           name="name"
           placeholder="John Doe"
+          value={formState.name}
           onChange={handleChangeFormState}
         />
-      </InputContainer>
-      <InputContainer>
-        <Label>Email</Label>
+      </InfoContainer>
+      <InfoContainer>
+        <Heading>Email</Heading>
         <FormInput
           type="text"
           placeholder="john.doe@mail.utoronto.ca"
           onChange={handleChangeFormState}
+          value={formState.email}
           name="email"
         />
-      </InputContainer>
-      <InputContainer>
-        <Label>Password</Label>
-        <FormInput
-          type="password"
-          onChange={handleChangeFormState}
-          name="password"
-        />
-      </InputContainer>
+      </InfoContainer>
       <MarginTopRow>
         <UserButton onClick={handleClick}>Save</UserButton>
+        <UserButton onClick={() => setIsEditable(false)}>Cancel</UserButton>
       </MarginTopRow>
     </FullWidthDiv>
   );

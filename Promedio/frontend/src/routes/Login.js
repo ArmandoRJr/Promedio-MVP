@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate, useOutletContext } from "react-router";
 import styled from "styled-components";
 import { post } from '../../src/api/index';
-import { isAuthUserValid } from "../utils/validate";
+import { isUserResponseValid } from "../utils/validate";
 
 const FullWidthDiv = styled.div`
   width: 100%;
@@ -82,7 +82,7 @@ function Login() {
     // TODO: Add validation
     post(`login`, formState).then(
       (response) => {
-        if (setAuthUser && typeof setAuthUser === 'function' && isAuthUserValid(response)) {
+        if (setAuthUser && typeof setAuthUser === 'function' && isUserResponseValid(response)) {
           setAuthUser(response.data.user)
           navigate('/home');
         }

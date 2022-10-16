@@ -69,6 +69,7 @@ export const Navbar = ({ authUser, logout }) => {
             <NavbarRight>
                 {!!authUser ? (
                     <>
+                        <NavbarLink to="/home">Home</NavbarLink>
                         <NavbarLink to="/user">Profile</NavbarLink>
                         <Logout onClick={logout}>Logout</Logout>
                     </>
