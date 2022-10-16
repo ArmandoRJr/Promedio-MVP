@@ -1,8 +1,7 @@
 import React from "react";
-import { useNavigate, useOutletContext } from "react-router";
+import { useOutletContext } from "react-router";
 import styled from "styled-components";
-import { post } from '../../src/api/index';
-import { isAuthUserValid } from "../utils/validate";
+import { post } from '../api/index';
 
 const FullWidthDiv = styled.div`
   width: 100%;
@@ -22,7 +21,7 @@ const MarginTopRow = styled.div`
   justify-content: flex-end;
 `;
 
-const SignupButton = styled.button`
+const UserButton = styled.button`
   background-color: ${({theme}) => theme.colors.secondary};
   color: ${({theme}) => theme.colors.white};
   cursor: pointer;
@@ -62,15 +61,15 @@ const Label = styled.label`
   margin-bottom: 5px;
 `;
 
-function Signup() {
+function User() {
   const context = useOutletContext();
-  const navigate = useNavigate();
-  const {setAuthUser} = context;
+  const {setAuthUser, authUser} = context;
   const [formState, setFormState] = React.useState({
-    email: "",
-    name: "",
-    password: "",
+    email: authUser.email ?? '',
+    name: authUser.password ?? '',
+    password: authUser ?? '',
   });
+  const [isEditable, setIsEditable] = React.useState(false);
 
   const handleChangeFormState = (event) => {
     setFormState({
@@ -83,9 +82,8 @@ function Signup() {
     // TODO: Add validation
     post(`register`, formState).then(
       (response) => {
-        if (setAuthUser && typeof setAuthUser === 'function' && isAuthUserValid(response)) {
-          setAuthUser(response.user)
-          navigate('/home');
+        if (setAuthUser && typeof setAuthUser === 'function') {
+          setAuthUser(true)
         }
       },
       (error) => {
@@ -94,9 +92,39 @@ function Signup() {
     );
   }
 
+  if (!isEditable) {
+    <FullWidthDiv>
+      <h1>User Profile.</h1>
+      <InputContainer>
+        <Label>Name</Label>
+        <h3>{}</h3>
+      </InputContainer>
+      <InputContainer>
+        <Label>Email</Label>
+        <FormInput
+          type="text"
+          placeholder="john.doe@mail.utoronto.ca"
+          onChange={handleChangeFormState}
+          name="email"
+        />
+      </InputContainer>
+      <InputContainer>
+        <Label>Password</Label>
+        <FormInput
+          type="password"
+          onChange={handleChangeFormState}
+          name="password"
+        />
+      </InputContainer>
+      <MarginTopRow>
+        <UserButton onClick={handleClick}>Save</UserButton>
+      </MarginTopRow>
+    </FullWidthDiv>
+  }
+
   return (
     <FullWidthDiv>
-      <h1>Signup.</h1>
+      <h1>User Profile.</h1>
       <InputContainer>
         <Label>Name</Label>
         <FormInput
@@ -124,10 +152,10 @@ function Signup() {
         />
       </InputContainer>
       <MarginTopRow>
-        <SignupButton onClick={handleClick}>Signup</SignupButton>
+        <UserButton onClick={handleClick}>Save</UserButton>
       </MarginTopRow>
     </FullWidthDiv>
   );
 }
 
-export default Signup;
+export default User;

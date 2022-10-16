@@ -11,24 +11,24 @@ const AppContainer = styled.div`
 `;
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [authUser, setAuthUser] = React.useState(undefined);
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    console.log(window.location.pathname)
-    if (!isLoggedIn && !window.location.pathname.includes('login') && !window.location.pathname.includes('signup')) {
+    if (!authUser && !window.location.pathname.includes('login') && !window.location.pathname.includes('signup')) {
       navigate('/welcome');
-    } else if (isLoggedIn) {
-      navigate('/home');
     }
-  }, [isLoggedIn, navigate]);
+  }, [authUser, navigate]);
 
   return (
     <AppContainer>
-      <Navbar isLoggedIn={isLoggedIn} logout={() => {
-        setIsLoggedIn(false);
+      <Navbar authUser={authUser} logout={() => {
+        setAuthUser(undefined);
       }}/>
-      <Outlet context={{setIsLoggedIn}} />
+      <Outlet context={{
+        setAuthUser: setAuthUser,
+        authUser: authUser
+      }} />
     </AppContainer>
   );
 }

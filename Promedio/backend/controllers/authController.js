@@ -17,9 +17,15 @@ const register = (req, res, next) => {
     newUser
       .save()
       .then((newUser) => {
+
+        let token = jwt.sign({ email: newUser.email }, "promediosecretkey", {
+          expiresIn: "1h",
+        });
+
         res.json({
           message: "User added successfully.",
           user: newUser,
+          token,
         });
       })
       .catch((err) => {
@@ -47,6 +53,7 @@ const login = (req, res, next) => {
             res.json({
               message: "Login successful!",
               token,
+              user,
             });
           } else {
             next({
