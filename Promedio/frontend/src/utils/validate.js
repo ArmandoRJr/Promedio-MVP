@@ -1,8 +1,4 @@
-export const isUserResponseValid = (response) => {
-    if (!(response && response.data)) {
-        return false;
-    }
-    const user = response.data.user;
+export const isUserValid = (user) => {
     if (!user) {
         return false;
     }
@@ -15,5 +11,21 @@ export const isUserResponseValid = (response) => {
     if (!user.name) {
         return false;
     }
+    return true;
+}
+
+export const isResponseValid = (response) => {
+    return response && response.data;
+}
+
+export const isAuthUserValid = (user) => {
+    if (!isUserValid(user)) {
+        return false;
+    }
+
+    if (!user.token) {
+        return false;
+    }
+
     return true;
 }
