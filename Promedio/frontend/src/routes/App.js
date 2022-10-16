@@ -16,6 +16,7 @@ function App() {
 
   React.useEffect(() => {
     if (!authUser && !window.location.pathname.includes('login') && !window.location.pathname.includes('signup')) {
+      console.log(authUser)
       navigate('/welcome');
     }
   }, [authUser, navigate]);
