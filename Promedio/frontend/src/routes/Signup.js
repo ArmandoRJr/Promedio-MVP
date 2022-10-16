@@ -65,7 +65,6 @@ function Signup() {
   const context = useOutletContext();
   const {setIsLoggedIn} = context;
   const [formState, setFormState] = React.useState({
-    gpa: "",
     email: "",
     name: "",
     password: "",
@@ -111,15 +110,6 @@ function Signup() {
           placeholder="john.doe@mail.utoronto.ca"
           onChange={handleChangeFormState}
           name="email"
-        />
-      </InputContainer>
-      <InputContainer>
-        <Label>Gpa</Label>
-        <FormInput
-          type="text"
-          placeholder="3.4"
-          onChange={handleChangeFormState}
-          name="gpa"
         />
       </InputContainer>
       <InputContainer>
