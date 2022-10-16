@@ -19,7 +19,7 @@ const MarginTopRow = styled.div`
 `;
 
 const LoginButton = styled.button`
-  background-color: ${({theme}) => theme.colors.tertiary};
+  background-color: ${({theme}) => theme.colors.secondary};
   color: ${({theme}) => theme.colors.white};
   cursor: pointer;
   padding: 10px 20px;
@@ -33,14 +33,6 @@ const LoginButton = styled.button`
   font-weight: bold;
 `;
 
-const SignupButton = styled(LoginButton)`
-  background-color: ${({theme}) => theme.colors.white};
-  &:hover {
-    opacity: 0.8;
-  }
-  color: ${({theme}) => theme.colors.black};
-  margin-right: 0;
-`;
 function Welcome() {
   const navigate = useNavigate();
 
@@ -48,6 +40,7 @@ function Welcome() {
     <FullWidthDiv>
       <h1>CSCA48.</h1>
       <MarginTopRow>
+        <LoginButton onClick={() => navigate('/courses')}>Add Course</LoginButton>
       </MarginTopRow>
     </FullWidthDiv>
   );
