@@ -1,8 +1,4 @@
-export const isUserResponseValid = (response) => {
-    if (!(response && response.data)) {
-        return false;
-    }
-    const user = response.data.user;
+export const isUserValid = (user) => {
     if (!user) {
         return false;
     }
@@ -18,28 +14,38 @@ export const isUserResponseValid = (response) => {
     return true;
 }
 
-export const isCourseResponseValid = (response) => {
-    if (!(response && response.data)) {
+export const isCourseValid = (course) => {
+    if (!course) {
         return false;
     }
 
-    if (!response.data.course) {
+    if (!course._id) {
         return false;
     }
 
-    if (!response.data.course._id) {
+    if (!course.name) {
         return false;
     }
 
-    if (!response.data.course.name) {
+    if (!course.description) {
         return false;
     }
 
-    if (!response.data.course.description) {
+    if (!course.markGoal) {
+        return false;
+    }
+}
+
+export const isResponseValid = (response) => {
+    return response && response.data;
+}
+
+export const isAuthUserValid = (user) => {
+    if (!isUserValid(user)) {
         return false;
     }
 
-    if (!response.data.course.markGoal) {
+    if (!user.token) {
         return false;
     }
 

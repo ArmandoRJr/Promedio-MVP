@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
 import { get, patch, post } from '../api/index';
-import { isCourseResponseValid } from "../utils/validate";
+import { isCourseValid, isResponseValid } from "../utils/validate";
 
 const FullWidthDiv = styled.div`
   width: 100%;
@@ -91,7 +91,7 @@ function Courses() {
   React.useEffect(() => {
     if (id) {
       get(`/courses/${id}`).then((response) => {
-        if (isCourseResponseValid(response)) {
+        if (isResponseValid(response) && isCourseValid(response.data.course)) {
           setFormState({
             ...formState,
             ...response.data,
@@ -109,7 +109,7 @@ function Courses() {
     // TODO: Add validation
     if (id) {
       post(`/courses/${id}`, formState).then((response) => {
-        if (isCourseResponseValid(response)) {
+        if (isResponseValid(response) && isCourseValid(response.data.course)) {
           setFormState({
             ...formState,
             ...response.data,
@@ -118,7 +118,7 @@ function Courses() {
       });
     } else {
       patch('/courses', formState).then((response) => {
-        if (isCourseResponseValid(response)) {
+        if (isResponseValid(response) && isCourseValid(response.data.course)) {
           setFormState({
             ...formState,
             ...response.data,

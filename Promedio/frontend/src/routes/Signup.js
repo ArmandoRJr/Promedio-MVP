@@ -1,8 +1,8 @@
 import React from "react";
-import { useNavigate, useOutletContext } from "react-router";
+import { useOutletContext } from "react-router";
 import styled from "styled-components";
 import { post } from '../../src/api/index';
-import { isUserResponseValid } from "../utils/validate";
+import { isAuthUserValid, isResponseValid } from "../utils/validate";
 
 const FullWidthDiv = styled.div`
   width: 100%;
@@ -64,7 +64,6 @@ const Label = styled.label`
 
 function Signup() {
   const context = useOutletContext();
-  const navigate = useNavigate();
   const {setAuthUser} = context;
   const [formState, setFormState] = React.useState({
     email: "",
@@ -83,9 +82,13 @@ function Signup() {
     // TODO: Add validation
     post(`register`, formState).then(
       (response) => {
-        if (setAuthUser && typeof setAuthUser === 'function' && isUserResponseValid(response)) {
-          setAuthUser(response.user)
-          navigate('/home');
+        if (
+          setAuthUser &&
+          typeof setAuthUser === 'function' &&
+          isResponseValid(response) &&
+          isAuthUserValid(response.data.user)
+        ) {
+          setAuthUser(response.data.user)
         }
       },
       (error) => {

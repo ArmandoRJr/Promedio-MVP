@@ -2,7 +2,7 @@ import React from "react";
 import { useOutletContext } from "react-router";
 import styled from "styled-components";
 import { post } from '../api/index';
-import { isUserResponseValid } from "../utils/validate";
+import { isUserValid } from "../utils/validate";
 
 const FullWidthDiv = styled.div`
   width: 100%;
@@ -78,7 +78,7 @@ function User() {
     // TODO: Add validation
     post(`editUser`, formState).then(
       (response) => {
-        if (setAuthUser && typeof setAuthUser === 'function' && isUserResponseValid(response)) {
+        if (setAuthUser && typeof setAuthUser === 'function' && isUserValid(response)) {
           setAuthUser(response.data.user);
           setFormState({
             email: response.data.user.email,
