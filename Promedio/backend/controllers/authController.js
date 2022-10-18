@@ -10,7 +10,6 @@ const register = (req, res, next) => {
     let newUser = new user({
       name: req.body.name,
       email: req.body.email,
-      gpa: req.body.gpa,
       password: hashedPass,
     });
 
