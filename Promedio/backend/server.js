@@ -7,7 +7,7 @@ const dotenv = require("dotenv").config(); // .env file
 const server_port = process.env.SERVER_PORT || 5000;
 const { connectDatabase } = require("./config/database");
 const authRoute = require("./routes/authRoute");
-// const updateRoute = require("./routes/updateRoute");
+const updateRoute = require("./routes/updateRoute");
 connectDatabase();
 
 const app = express();
