@@ -24,14 +24,14 @@ Sprint 2:
 - Users are able to edit my user details. `(PROM-19)`
 - Users are able to add/edit/delete courses. `(PROM-6)`
 - Users are able to view details of each course `(PROM-18)`
-- Users are able to view courses by Semester `(PROM-12)`
+- Users are able set a mark goal for a course. `(PROM-17)`
 
 Sprint 3:
 - Users are able to view courses in a list of all courses `(PROM-20)`
+- Users are able to view courses by Semester `(PROM-12)`
 - Users are able to add & view the preview of the sheet before adding a new category. `(PROM-10)`
 - Users are able to edit/delete categories. `(PROM-8)`
 - Users are able to add/edit/delete grades into specific sheets. `(PROM-9)`
-- Users are able set a mark goal for a course. `(PROM-17)`
 
 
 Sprint 4:

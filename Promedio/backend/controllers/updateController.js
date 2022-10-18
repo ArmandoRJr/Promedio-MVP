@@ -20,5 +20,3 @@ const userUpdate = (req, res, next) => {
 module.exports = {
   userUpdate,
 };
-
-// Test branch

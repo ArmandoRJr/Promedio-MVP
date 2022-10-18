@@ -28,7 +28,11 @@ app.use(cors(corsOptions));
 app.use("/api/sheets", require("./routes/sheetRoutes"));
 app.use("/api", authRoute);
 app.use("/api", updateRoute);
-const { logErrors, errorHandler, clientErrorHandler } = require("./middleware/errorMiddleware");
+const {
+  logErrors,
+  errorHandler,
+  clientErrorHandler,
+} = require("./middleware/errorMiddleware");
 app.use(logErrors);
 app.use(clientErrorHandler);
 app.use(errorHandler);
