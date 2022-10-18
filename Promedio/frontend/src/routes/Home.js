@@ -1,13 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components'
+import Sidebar from '../components/Sidebar';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 const FullWidthDiv = styled.div`
   width: 100%;
   height: 500px;
   background-color: ${({theme}) => theme.colors.primary};
   color: ${({theme}) => theme.colors.white};
-  padding: 40px;
+  padding: 0px;
 `;
 
 const MarginTopRow = styled.div`
@@ -38,10 +40,12 @@ function Welcome() {
 
   return (
     <FullWidthDiv>
-      <h1>CSCA48.</h1>
+    <Sidebar />
+      {/* <h1>CSCA48.</h1>
       <MarginTopRow>
         <LoginButton onClick={() => navigate('/courses')}>Add Course</LoginButton>
-      </MarginTopRow>
+      </MarginTopRow> */}
+      
     </FullWidthDiv>
   );
 }
