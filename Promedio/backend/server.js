@@ -27,7 +27,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use("/api/sheets", require("./routes/sheetRoutes"));
 app.use("/api", authRoute);
-// app.use("/api", updateRoute);
+app.use("/api", updateRoute);
 const {
   logErrors,
   errorHandler,
