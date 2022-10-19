@@ -17,10 +17,25 @@ const register = (req, res, next) => {
     newUser
       .save()
       .then((newUser) => {
-        res.json({
-          message: "User added successfully.",
-          user: newUser,
-        });
+        if (newUser) {
+          let token = jwt.sign({ email: newUser.email }, "promediosecretkey", {
+            expiresIn: "1h",
+          });
+
+          res.json({
+            message: "User added successfully.",
+            user: {
+              ...newUser.toObject(),
+              token,
+            },
+          });
+        } else {
+          next({
+            message: "User not added.",
+            status: 500,
+            stack: "User not added.",
+          });
+        }
       })
       .catch((err) => {
         next(err);
@@ -46,7 +61,10 @@ const login = (req, res, next) => {
             });
             res.json({
               message: "Login successful!",
-              token,
+              user: {
+                ...user.toObject(),
+                token,
+              },
             });
           } else {
             next({

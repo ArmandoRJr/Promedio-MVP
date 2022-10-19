@@ -1,7 +1,8 @@
 import React from "react";
-import { useOutletContext } from "react-router";
+import { useNavigate, useOutletContext } from "react-router";
 import styled from "styled-components";
 import { post } from '../../src/api/index';
+import { isResponseValid, isAuthUserValid } from "../utils/validate";
 
 const FullWidthDiv = styled.div`
   width: 100%;
@@ -63,7 +64,7 @@ const Label = styled.label`
 
 function Login() {
   const context = useOutletContext();
-  const {setIsLoggedIn} = context;
+  const {setAuthUser} = context;
   const [formState, setFormState] = React.useState({
     email: "",
     password: "",
@@ -80,8 +81,13 @@ function Login() {
     // TODO: Add validation
     post(`login`, formState).then(
       (response) => {
-        if (setIsLoggedIn && typeof setIsLoggedIn === 'function') {
-          setIsLoggedIn(true)
+        if (
+          setAuthUser &&
+          typeof setAuthUser === 'function' &&
+          isResponseValid(response) &&
+          isAuthUserValid(response.data.user)
+        ) {
+          setAuthUser(response.data.user)
         }
       },
       (error) => {
