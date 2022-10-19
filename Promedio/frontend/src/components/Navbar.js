@@ -57,6 +57,7 @@ const Logout = styled.div`
     color: ${({ theme }) => theme.colors.secondary_light};
     font-size: 1.2rem;
     margin-left: 20px;
+    cursor: pointer;
 `;
 
 export const Navbar = ({ authUser, logout }) => {
