@@ -23,29 +23,32 @@ const MarginTopRow = styled.div`
 `;
 
 const SignupButton = styled.button`
-  background-color: ${({theme}) => theme.colors.secondary};
-  color: ${({theme}) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.white};
+  width: 8rem;
+  height: 3rem;
   cursor: pointer;
-  padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   &:hover {
-    opacity: 0.8;
+    transition: 0.2s background ease-in;
+    background-color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.black};
   }
   font-size: 1.2rem;
-  font-weight: bold;
 `;
 
 const FormInput = styled.input`
   padding: 10px;
   border: none;
-  border-radius: 5px;
+  border-radius: 20px;
   font-size: 1.2rem;
   width: 100%;
   &:focus {
     outline: none;
   }
   width: 500px;
+  margin: 10px 0;
 `;
 
 const InputContainer = styled.div`
