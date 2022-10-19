@@ -10,6 +10,7 @@ const userUpdate = (req, res, next) => {
   user.findByIdAndUpdate(
     id,
     { $set: { email: email, name: name } },
+    { new: true },
     (err, doc) => {
       if (err) return console.log(err);
       res.json(doc);

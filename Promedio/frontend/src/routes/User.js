@@ -62,6 +62,7 @@ function User() {
   const context = useOutletContext();
   const {setAuthUser, authUser} = context;
   const [formState, setFormState] = React.useState({
+    id: authUser?._id ?? '',
     email: authUser?.email ?? '',
     name: authUser?.name ?? '',
   });
@@ -75,15 +76,16 @@ function User() {
   };
 
   function handleClick() {
-    // TODO: Add validation
-    post(`editUser`, formState).then(
+    post(`update`, formState).then(
       (response) => {
-        if (setAuthUser && typeof setAuthUser === 'function' && isUserValid(response)) {
-          setAuthUser(response.data.user);
+        if (setAuthUser && typeof setAuthUser === 'function' && isUserValid(response.data)) {
+          setAuthUser(response.data);
           setFormState({
-            email: response.data.user.email,
-            name: response.data.user.name,
+            id: response.data._id,
+            email: response.data.email,
+            name: response.data.name
           });
+          console.log('User updated successfully');
           setIsEditable(false)
         }
       },
