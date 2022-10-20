@@ -3,6 +3,7 @@ import { useNavigate, useOutletContext } from "react-router";
 import styled from "styled-components";
 import { post } from '../../src/api/index';
 import { isAuthUserValid, isResponseValid } from "../utils/validate";
+import { Toaster, toast } from "react-hot-toast";
 
 const FullWidthDiv = styled.div`
   width: 100%;
@@ -91,10 +92,12 @@ function Signup() {
           isResponseValid(response) &&
           isAuthUserValid(response.data.user)
         ) {
-          setAuthUser(response.data.user)
+          setAuthUser(response.data.user);
+          toast.success('Successfully registered');
         }
       },
       (error) => {
+        toast.error('An error occurred while registering user');
         console.log(error);
       }
     );
@@ -102,6 +105,10 @@ function Signup() {
 
   return (
     <FullWidthDiv>
+      <Toaster
+        position="bottom-center"
+        reverseOrder={false}
+      />
       <h1>Signup.</h1>
       <InputContainer>
         <Label>Name</Label>

@@ -3,6 +3,7 @@ import { useOutletContext } from "react-router";
 import styled from "styled-components";
 import { post } from '../api/index';
 import { isUserValid } from "../utils/validate";
+import { Toaster, toast } from "react-hot-toast";
 
 const FullWidthDiv = styled.div`
   width: 100%;
@@ -19,7 +20,6 @@ const MarginTopRow = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-end;
   gap: 20px;
 `;
 
@@ -58,9 +58,11 @@ const Heading = styled.h2`
 
 const InfoContainer = styled.div`
   display: flex;
-  width: 100%;
   flex-direction: column;
-  margin-top: 20px;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 20px 0;
+  width: 500px;
   h3 {
     color: ${({ theme }) => theme.colors.primary_light};
   }
@@ -93,11 +95,13 @@ function User() {
             email: response.data.email,
             name: response.data.name
           });
+          setIsEditable(false);
+          toast.success('User updated successfully');
           console.log('User updated successfully');
-          setIsEditable(false)
         }
       },
       (error) => {
+        toast.error('An error occurred while updating user');
         console.log(error);
       }
     );
@@ -114,6 +118,10 @@ function User() {
   if (!isEditable) {
     return (
       <FullWidthDiv>
+        <Toaster
+          position="bottom-center"
+          reverseOrder={false}
+        />
         <h1>User Profile.</h1>
         <InfoContainer>
           <Heading>Name</Heading>
@@ -132,6 +140,10 @@ function User() {
 
   return (
     <FullWidthDiv>
+      <Toaster
+        position="bottom-center"
+        reverseOrder={false}
+      />
       <h1>User Profile.</h1>
       <InfoContainer>
         <Heading>Name</Heading>

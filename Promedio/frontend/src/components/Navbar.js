@@ -31,6 +31,7 @@ const NavbarRight = styled.div`
     align-items: center;
     justify-content: flex-end;
     flex: 2;
+    height: 100%;
 `;
 
 const NavbarLink = styled(Link)`
@@ -54,10 +55,18 @@ const MainLink = styled(NavbarLink)`
 `;
 
 const Logout = styled.div`
-    color: ${({ theme }) => theme.colors.secondary_light};
+    color: red;
     font-size: 1.2rem;
-    margin-left: 20px;
     cursor: pointer;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:hover {
+        background-color: red;
+        color: white;
+    }
+    width: 90px;
 `;
 
 export const Navbar = ({ authUser, logout }) => {
