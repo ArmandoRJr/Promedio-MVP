@@ -31,6 +31,7 @@ const NavbarRight = styled.div`
     align-items: center;
     justify-content: flex-end;
     flex: 2;
+    height: 100%;
 `;
 
 const NavbarLink = styled(Link)`
@@ -53,7 +54,22 @@ const MainLink = styled(NavbarLink)`
     font-weight: bold;
 `;
 
-export const Navbar = ({ isLoggedIn, logout }) => {
+const Logout = styled.div`
+    color: red;
+    font-size: 1.2rem;
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:hover {
+        background-color: red;
+        color: white;
+    }
+    width: 90px;
+`;
+
+export const Navbar = ({ authUser, logout }) => {
     return (
         <NavbarContainer>
             <NavbarLeft>
@@ -61,8 +77,12 @@ export const Navbar = ({ isLoggedIn, logout }) => {
                 <MainLink to="/">Promedio.</MainLink>
             </NavbarLeft>
             <NavbarRight>
-                {isLoggedIn ? (
-                    <div onClick={logout}>Logout</div>
+                {!!authUser ? (
+                    <>
+                        <NavbarLink to="/home">Home</NavbarLink>
+                        <NavbarLink to="/user">Profile</NavbarLink>
+                        <Logout onClick={logout}>Logout</Logout>
+                    </>
                 ) : (
                     <>
                         <NavbarLink to="/login">Login</NavbarLink>

@@ -1,7 +1,9 @@
 import React from "react";
-import { useOutletContext } from "react-router";
+import { useNavigate, useOutletContext } from "react-router";
 import styled from "styled-components";
 import { post } from '../../src/api/index';
+import { isAuthUserValid, isResponseValid } from "../utils/validate";
+import { Toaster, toast } from "react-hot-toast";
 
 const FullWidthDiv = styled.div`
   width: 100%;
@@ -22,29 +24,32 @@ const MarginTopRow = styled.div`
 `;
 
 const SignupButton = styled.button`
-  background-color: ${({theme}) => theme.colors.secondary};
-  color: ${({theme}) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.white};
+  width: 8rem;
+  height: 3rem;
   cursor: pointer;
-  padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   &:hover {
-    opacity: 0.8;
+    transition: 0.2s background ease-in;
+    background-color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.black};
   }
   font-size: 1.2rem;
-  font-weight: bold;
 `;
 
 const FormInput = styled.input`
   padding: 10px;
   border: none;
-  border-radius: 5px;
+  border-radius: 20px;
   font-size: 1.2rem;
   width: 100%;
   &:focus {
     outline: none;
   }
   width: 500px;
+  margin: 10px 0;
 `;
 
 const InputContainer = styled.div`
@@ -63,9 +68,8 @@ const Label = styled.label`
 
 function Signup() {
   const context = useOutletContext();
-  const {setIsLoggedIn} = context;
+  const {setAuthUser} = context;
   const [formState, setFormState] = React.useState({
-    gpa: "",
     email: "",
     name: "",
     password: "",
@@ -82,11 +86,18 @@ function Signup() {
     // TODO: Add validation
     post(`register`, formState).then(
       (response) => {
-        if (setIsLoggedIn && typeof setIsLoggedIn === 'function') {
-          setIsLoggedIn(true)
+        if (
+          setAuthUser &&
+          typeof setAuthUser === 'function' &&
+          isResponseValid(response) &&
+          isAuthUserValid(response.data.user)
+        ) {
+          setAuthUser(response.data.user);
+          toast.success('Successfully registered');
         }
       },
       (error) => {
+        toast.error('An error occurred while registering user');
         console.log(error);
       }
     );
@@ -94,6 +105,10 @@ function Signup() {
 
   return (
     <FullWidthDiv>
+      <Toaster
+        position="bottom-center"
+        reverseOrder={false}
+      />
       <h1>Signup.</h1>
       <InputContainer>
         <Label>Name</Label>
@@ -111,15 +126,6 @@ function Signup() {
           placeholder="john.doe@mail.utoronto.ca"
           onChange={handleChangeFormState}
           name="email"
-        />
-      </InputContainer>
-      <InputContainer>
-        <Label>Gpa</Label>
-        <FormInput
-          type="text"
-          placeholder="3.4"
-          onChange={handleChangeFormState}
-          name="gpa"
         />
       </InputContainer>
       <InputContainer>

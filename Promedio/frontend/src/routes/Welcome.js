@@ -63,6 +63,12 @@ const RightColumnDiv = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100%;
+
+  img {
+    transition: 0.3s opacity ease-in;
+    opacity: 1;
+  }
 
   &:hover {
     img {
@@ -137,9 +143,9 @@ function Welcome() {
       <FullWidthDivBottom>
           <h1>What we offer?</h1>
           <CardsContainer>
-            <Card title="Track" desc="Keep track of your current grades with ease of streamlined spreadsheets. Also stay up to date with your progress and goals."/>
-            <Card title="Plan" desc="Plan out your semester with proper course organization. Create subsets of courses and perform various evalutations on them."/>
-            <Card title="Visualize" desc="Clearly visualize your data with our appealing user interface. Export data into various formats and even generate graphs with your grades/cGPA."/>
+            <Card img="track.png" title="Track" desc="Keep track of your current grades with ease of streamlined spreadsheets. Also stay up to date with your progress and goals."/>
+            <Card img="plan.png" title="Plan" desc="Plan out your semester with proper course organization. Create subsets of courses and perform various evalutations on them."/>
+            <Card img="visualize.png" title="Visualize" desc="Clearly visualize your data with our appealing user interface. Export data into various formats and even generate graphs with your grades/cGPA."/>
           </CardsContainer>
       </FullWidthDivBottom>
     </PageContainer>

@@ -35,9 +35,15 @@ const CardImageContainer = styled.div`
     border-radius: 100%;
     width: 6rem;
     height: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 
-const CardImage = styled.img``;
+const CardImage = styled.img`
+    width: 70px;
+    height: 54px;
+`;
 
 const CardTitle = styled.h3``;
 
@@ -48,12 +54,12 @@ const CardBody = styled.div`
     text-align: center;
 `;
 
-export const Card = ({ title, desc }) => {
+export const Card = ({ img, title, desc }) => {
   return (
     <CardContainer>
         <CardHeader>
             <CardImageContainer>
-                <CardImage />
+                <CardImage src={img} />
             </CardImageContainer>
             <CardTitle>{title}</CardTitle>
         </CardHeader>

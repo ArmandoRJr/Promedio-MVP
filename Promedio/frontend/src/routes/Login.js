@@ -1,7 +1,8 @@
 import React from "react";
-import { useOutletContext } from "react-router";
+import { useNavigate, useOutletContext } from "react-router";
 import styled from "styled-components";
 import { post } from '../../src/api/index';
+import { isResponseValid, isAuthUserValid } from "../utils/validate";
 
 const FullWidthDiv = styled.div`
   width: 100%;
@@ -22,29 +23,32 @@ const MarginTopRow = styled.div`
 `;
 
 const LoginButton = styled.button`
-  background-color: ${({theme}) => theme.colors.secondary};
-  color: ${({theme}) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.white};
+  width: 8rem;
+  height: 3rem;
   cursor: pointer;
-  padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   &:hover {
-    opacity: 0.8;
+    transition: 0.2s background ease-in;
+    background-color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.black};
   }
   font-size: 1.2rem;
-  font-weight: bold;
 `;
 
 const FormInput = styled.input`
   padding: 10px;
   border: none;
-  border-radius: 5px;
+  border-radius: 20px;
   font-size: 1.2rem;
   width: 100%;
   &:focus {
     outline: none;
   }
   width: 500px;
+  margin: 10px 0;
 `;
 
 const InputContainer = styled.div`
@@ -63,7 +67,7 @@ const Label = styled.label`
 
 function Login() {
   const context = useOutletContext();
-  const {setIsLoggedIn} = context;
+  const {setAuthUser} = context;
   const [formState, setFormState] = React.useState({
     email: "",
     password: "",
@@ -80,8 +84,13 @@ function Login() {
     // TODO: Add validation
     post(`login`, formState).then(
       (response) => {
-        if (setIsLoggedIn && typeof setIsLoggedIn === 'function') {
-          setIsLoggedIn(true)
+        if (
+          setAuthUser &&
+          typeof setAuthUser === 'function' &&
+          isResponseValid(response) &&
+          isAuthUserValid(response.data.user)
+        ) {
+          setAuthUser(response.data.user)
         }
       },
       (error) => {

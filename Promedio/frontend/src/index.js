@@ -14,6 +14,7 @@ import "./styles/globals.css";
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import Globals from './styles/globals.css';
 import theme from './styles/theme.js';
+import User from "./routes/User";
 
 const GlobalStyle = createGlobalStyle`${Globals}`;
 
@@ -29,6 +30,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route path="/signup" element={<Signup />} />
               <Route path="/welcome" element={<Welcome />} />
               <Route path="/home" element={<Home />} />
+              <Route path="/user" element={<User />} />
             </Route>
           </Routes>
         </BrowserRouter>
