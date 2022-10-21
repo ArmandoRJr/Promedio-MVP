@@ -15,11 +15,14 @@ const user = require("../models/user");
     if (err) { next(err); }
     else {
       if (foundUser){
+
+        // INSERT FUNCTION HERE!!!!! 
+
       } else {
         next({
-            message: "User not found, cannot proceed with semester creation.",
+            message: "User not found, cannot proceed with semester...",
             status: 404,
-            stack: "User not found, cannot proceed with semester creation.",
+            stack: "User not found, cannot proceed with semester....",
         });
     }
     }
@@ -28,14 +31,14 @@ const user = require("../models/user");
 
 ///// Requests Targetting *** ALL *** Semesters /////
 const getAllSemesters = (req, res, next) => {
-  
-  const userId = req.body.userId;
+  const userId = req.params.userId;
+
   user.findById(userId, (err, foundUser) => {
     if (err) { next(err); }
     else {
       if (foundUser){
 
-        semester.find({user: userId}, (err, foundSemesters) => {
+        semester.find({userId: userId}, (err, foundSemesters) => {
           if (err) { next(err); }
           else
           {
@@ -56,13 +59,13 @@ const getAllSemesters = (req, res, next) => {
 
 const deleteAllCourses = (req, res, next) => {
 
-  const userId = req.body.userId;
+  const userId = req.params.userId;
   user.findById(userId, (err, foundUser) => {
     if (err) { next(err); }
     else {
       if (foundUser){
 
-        semester.deleteMany({user: userId}, (err, eventData) => {
+        semester.deleteMany({userId: userId}, (err, eventData) => {
           if (err) { next(err); }
           else
           {
@@ -97,7 +100,7 @@ const deleteAllCourses = (req, res, next) => {
 ///// Requests Targetting a *** SPECIFIC *** Semester /////
 const createSemester = (req, res, next) => {
   const semesterName = req.body.semesterName;
-  const userId = req.body.userId;
+  const userId = req.params.userId;
   
   user.findById(userId, (err, foundUser) => {
     if (err) { next(err); }
@@ -106,7 +109,7 @@ const createSemester = (req, res, next) => {
         console.log(`User found, proceeding with semester creation.`)
         let newSemester = new semester({
           name: semesterName,
-          user: userId
+          userId: userId
         });
         newSemester
           .save()
@@ -149,7 +152,7 @@ const createSemester = (req, res, next) => {
 const getSemester = (req, res, next) => {
   // Dummy code, need to ACTUALLY GET COURSE NAME!!
 
-  const userId = req.body.userId;
+  const userId = req.params.userId;
   user.findById(userId, (err, foundUser) => {
     if (err) { next(err); }
     else {
@@ -157,7 +160,7 @@ const getSemester = (req, res, next) => {
 
         const semesterName = req.params.semesterName;
 
-        semester.findOne({name: semesterName, user: userId}, (err, foundSemester) => {
+        semester.findOne({name: semesterName, userId: userId}, (err, foundSemester) => {
             if (err) { next(err); }
             else
             {
@@ -188,7 +191,7 @@ const getSemester = (req, res, next) => {
 }
 
 const updateSemester = (req, res, next) => {
-  const userId = req.body.userId;
+  const userId = req.params.userId;
   user.findById(userId, (err, foundUser) => {
     if (err) { next(err); }
     else {
@@ -200,7 +203,7 @@ const updateSemester = (req, res, next) => {
         //     // .then()
 
         semester.updateOne(
-            {name: semesterName, user: userId},
+            {name: semesterName, userId: userId},
             { $set : {name: req.body.semesterName} },
             (err, eventData) => {
                 if (err) 
@@ -248,7 +251,7 @@ const updateSemester = (req, res, next) => {
 
 const removeSemester = (req, res, next) => {
 
-  const userId = req.body.userId;
+  const userId = req.params.userId;
   user.findById(userId, (err, foundUser) => {
     if (err) { next(err); }
     else {
@@ -256,7 +259,7 @@ const removeSemester = (req, res, next) => {
 
       const semesterName = req.params.semesterName;
 
-      semester.deleteOne({name: semesterName, user: userId}, (err, eventData) => {
+      semester.deleteOne({name: semesterName, userId: userId}, (err, eventData) => {
           if (err) { next(err); }
           else
           {

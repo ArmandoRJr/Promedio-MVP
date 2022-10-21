@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const CourseController = require("../controllers/courseController");
+const CourseController = require("../controllers/courseAltController");
 
 // "/course" route is ONLY FOR TESTING (will 
 // probably become /home/<semester>/<course>)
-router.route("/course/:courseName")
+router.route("/user/:userId/semester/:semesterName/course/:courseName")
     .get(CourseController.getCourse)
     .patch(CourseController.updateCourse)
     .delete(CourseController.removeCourse)
@@ -14,7 +14,7 @@ router.route("/course/:courseName")
 // router.get("/course", )
 // router.post("/course", CourseController.createCourse);
 
-router.route("/course")
+router.route("/user/:userId/semester/:semesterName/course")
     .get(CourseController.getAllCourses)
     .post(CourseController.createCourse)
     // .delete(CourseController.deleteAllCourses) // <-- DANGEROUS... USE WITH CAUTION!

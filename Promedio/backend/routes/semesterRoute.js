@@ -3,13 +3,12 @@ const router = express.Router();
 
 const SemesterController = require("../controllers/semesterController");
 
-// 
-router.route("/semester/:semesterName")
+router.route("/user/:userId/semester/:semesterName")
     .get(SemesterController.getSemester)
     .patch(SemesterController.updateSemester)
     .delete(SemesterController.removeSemester)
     
-router.route("/semester")
+router.route("/user/:userId/semester")
     .get(SemesterController.getAllSemesters)
     .post(SemesterController.createSemester)
 
