@@ -3,7 +3,8 @@ const course = require("../models/course");
 ///// Requests Targetting *** ALL *** Courses /////
 
 const getAllCourses = (req, res, next) => {
-    course.find({}, (err, foundCourses) => {
+    const semesterId = req.body.semesterId;
+    course.find({semesterId: semesterId}, (err, foundCourses) => {
         if (err) { next(err); }
         else
         {
@@ -13,7 +14,8 @@ const getAllCourses = (req, res, next) => {
 }
 
 const deleteAllCourses = (req, res, next) => {
-    course.deleteMany({}, (err, eventData) => {
+    const semesterId = req.body.semesterId;
+    course.deleteMany({semesterId: semesterId}, (err, eventData) => {
         if (err) { next(err); }
         else
         {
@@ -44,8 +46,9 @@ const deleteAllCourses = (req, res, next) => {
 const getCourse = (req, res, next) => {
     // Dummy code, need to ACTUALLY GET COURSE NAME!!
     const courseName = req.params.courseName;
+    const semesterId = req.body.semesterId;
 
-    course.findOne({name: courseName}, (err, foundCourse) => {
+    course.findOne({semesterId: semesterId, name: courseName}, (err, foundCourse) => {
         if (err) { next(err); }
         else
         {
@@ -71,8 +74,12 @@ const createCourse = (req, res, next) => {
     const courseName = req.body.courseName;
     // const courseDescription = req.body.courseDescription;
 
+    // NEED TO FIGURE OUT WHERE semesterId ACTUALLY COMES FROM!!!
+    const semesterId = req.body.semesterId;
+
     let newCourse = new course({
         name: courseName,
+        semesterId: semesterId
     });
 
     newCourse
@@ -101,49 +108,104 @@ const createCourse = (req, res, next) => {
         })
 }
 
-const replaceCourse = (req, res, next) => {
-    // Dummy code, need to ACTUALLY GET COURSE NAME!!
-    const courseName = req.params.courseName;
+// const replaceCourse = (req, res, next) => {
+//         // Dummy code, need to ACTUALLY GET COURSE NAME!!
+//         const courseName = req.params.courseName;
+    
+//         // course.updateOne({name: courseName}, req.body).then().catch()
+//         //     // .then()
+    
+//         course.replaceOne(
+//             {name: courseName},
+//             { $set : {name: req.body.courseName} },
+//             (err, eventData) => {
+//                 if (err) 
+//                 {
+//                     next(err);
+//                     // next({
+//                     //     message: "Course not updated.",
+//                     //     status: 500,
+//                     //     stack: "Course not updated.",
+//                     // });
+//                 }
+//                 else
+//                 {
+//                     if (eventData.modifiedCount === 1)
+//                     {
+//                         // console.log(courseName, req.body.courseName, err, eventData);
+//                         res.json({
+//                             message: "Course updated successfully.",
+//                             // course: {
+//                             // ...newCourse.toObject()
+//                             // },
+//                         });
+//                     }
+//                     else if (eventData.matchedCount === 1)
+//                     {
+//                         // console.log(courseName, req.body.courseName, err, eventData);
+//                         next({
+//                             message: "Course not updated (no change to course in request)",
+//                             status: 500,
+//                             stack: "Course not updated (no change to course in request)",
+//                         });
+//                     }
+//                     else
+//                     {
+//                         // console.log(courseName, req.body.courseName, err, eventData);
+//                         next({
+//                             message: "Course not updated",
+//                             status: 500,
+//                             stack: "Course not updated",
+//                         });
+//                     }
+//                 }
+//             }
+//         );
+    
+//     // // Dummy code, need to ACTUALLY GET COURSE NAME!!
+//     // const courseName = req.params.courseName;
 
-    // course.updateOne({name: courseName}, req.body).then().catch()
-    //     // .then()
+//     // // course.updateOne({name: courseName}, req.body).then().catch()
+//     // //     // .then()
 
-    course.replaceOne(
-        {name: courseName},
-        req.body,
-        (err) => {
-            if (err) 
-            {
-                next(err);
-                // next({
-                //     message: "Course not updated.",
-                //     status: 500,
-                //     stack: "Course not updated.",
-                // });
-            }
-            else
-            {
-                console.log(courseName, req.body.courseName, err);
-                res.json({
-                    message: "Course updated successfully.",
-                    // course: {
-                    // ...newCourse.toObject()
-                    // },
-                });
-            }
-        }
-    );
-}
+//     // course.replaceOne(
+//     //     {name: courseName},
+//     //     req.body,
+//     //     (err) => {
+//     //         if (err) 
+//     //         {
+//     //             next(err);
+//     //             // next({
+//     //             //     message: "Course not updated.",
+//     //             //     status: 500,
+//     //             //     stack: "Course not updated.",
+//     //             // });
+//     //         }
+//     //         else
+//     //         {
+//     //             console.log(courseName, req.body.courseName, err);
+//     //             res.json({
+//     //                 message: "Course updated successfully.",
+//     //                 // course: {
+//     //                 // ...newCourse.toObject()
+//     //                 // },
+//     //             });
+//     //         }
+//     //     }
+//     // );
+// }
 
 const updateCourse = (req, res, next) => {
     // Dummy code, need to ACTUALLY GET COURSE NAME!!
     const courseName = req.params.courseName;
 
+    const semesterId = req.body.semesterId;
+
     // course.updateOne({name: courseName}, req.body).then().catch()
     //     // .then()
 
     course.updateOne(
-        {name: courseName},
+        {semesterId: semesterId, name: courseName},
         { $set : {name: req.body.courseName} },
         (err, eventData) => {
             if (err) 
@@ -194,7 +256,9 @@ const removeCourse = (req, res, next) => {
     // Dummy code, need to ACTUALLY GET COURSE NAME!!
     const courseName = req.params.courseName;
 
-    course.deleteOne({name: courseName}, (err, eventData) => {
+    const semesterId = req.body.semesterId;
+
+    course.deleteOne({semesterId: semesterId, name: courseName}, (err, eventData) => {
         if (err) { next(err); }
         else
         {
@@ -226,7 +290,7 @@ const removeCourse = (req, res, next) => {
 module.exports = {
     getCourse,
     updateCourse,
-    replaceCourse,
+    // replaceCourse,
     removeCourse,
     getAllCourses,
     createCourse,
