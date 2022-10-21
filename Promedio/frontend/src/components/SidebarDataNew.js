@@ -1,6 +1,6 @@
 import React from "react";
 import * as FaIcons from "react-icons/fa";
-// import * as AiIcons from "react-icons/ai";
+import * as AiIcons from "react-icons/ai";
 import * as IoIcons from "react-icons/io";
 import * as RiIcons from "react-icons/ri";
 
@@ -13,6 +13,18 @@ export const SidebarDataNew = [
         icon: <FaIcons.FaUniversity />,
         iconClosed: <RiIcons.RiArrowDownSFill />,
         iconOpened: <RiIcons.RiArrowUpSFill />,
+        // addSemester: {
+        //     title: "Add Semester",
+        //     // path: "",
+        //     icon: <AiIcons.AiFillFolderAdd />,
+        // }
+        subNav: [
+            {
+                title: "Add Semester",
+                path: "/home/add",
+                icon: <AiIcons.AiFillFolderAdd />,
+            }
+        ]
     },
     {
         title: "2020: Fall",
@@ -36,7 +48,17 @@ export const SidebarDataNew = [
                 path: "/home/f2020/mata31",
                 icon: <IoIcons.IoIosDocument />,
             },
-        ]
+            {
+                title: "Add Course",
+                path: "/home/f2020/add",
+                icon: <AiIcons.AiFillFileAdd />
+            }
+        ],
+        // addCourse: {
+        //     title: "Add Course",
+        //     path: "/home/f2020/add",
+        //     icon: <AiIcons.AiFillFileAdd />
+        // }
     },
     {
         title: "2021: Winter",
@@ -60,7 +82,17 @@ export const SidebarDataNew = [
                 path: "/home/w2021/mata37",
                 icon: <IoIcons.IoIosDocument />,
             },
-        ]
+            {
+                title: "Add Course",
+                path: "/home/f2020/add",
+                icon: <AiIcons.AiFillFileAdd />
+            },
+        ],
+        // addCourse: {
+        //     title: "Add Course",
+        //     path: "/home/w2021/add",
+        //     icon: <AiIcons.AiFillFileAdd />
+        // }
     },
     {
         title: "2021: Summer",
@@ -84,6 +116,16 @@ export const SidebarDataNew = [
                 path: "/home/s2021/cscb58",
                 icon: <IoIcons.IoIosDocument />,
             },
-        ]
+            {
+                title: "Add Course",
+                path: "/home/f2020/add",
+                icon: <AiIcons.AiFillFileAdd />
+            }
+        ],
+        // addCourse: {
+        //     title: "Add Course",
+        //     path: "/home/s2021/add",
+        //     icon: <AiIcons.AiFillFileAdd />
+        // }
     },
 ];
