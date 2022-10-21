@@ -8,7 +8,8 @@ const server_port = process.env.SERVER_PORT || 5000;
 const { connectDatabase } = require("./config/database");
 const authRoute = require("./routes/authRoute");
 const updateRoute = require("./routes/updateRoute");
-const courseRoute = require("./routes/courseRoute")
+const courseRoute = require("./routes/courseRoute");
+const semesterRoute = require("./routes/semesterRoute")
 connectDatabase();
 
 const app = express();
@@ -30,6 +31,7 @@ app.use(cors(corsOptions));
 app.use("/api", authRoute);
 app.use("/api", updateRoute);
 app.use("/api", courseRoute);
+app.use("/api", semesterRoute);
 const { logErrors, errorHandler, clientErrorHandler } = require("./middleware/errorMiddleware");
 app.use(logErrors);
 app.use(clientErrorHandler);
