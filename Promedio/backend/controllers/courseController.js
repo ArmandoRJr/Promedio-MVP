@@ -1,5 +1,4 @@
 const course = require("../models/course");
-const jwt = require("jsonwebtoken");
 
 ///// Requests Targetting *** ALL *** Courses /////
 
@@ -11,65 +10,6 @@ const getAllCourses = (req, res, next) => {
             res.send(foundCourses)
         }
     })
-}
-
-const createCourse = (req, res, next) => {
-    // Dummy code, need to ACTUALLY GET COURSE NAME && COURSE DESCRIPTION!!
-    const courseName = req.body.courseName;
-    // const courseDescription = req.body.courseDescription;
-
-    let newCourse = new course({
-        name: courseName,
-    });
-
-    newCourse
-        .save()
-        .then(newCourse => {
-            if (newCourse)
-            {
-                res.json({
-                    message: "Course added successfully.",
-                    course: {
-                    ...newCourse.toObject()
-                    },
-                });
-            }
-            else
-            {
-                next({
-                    message: "Course not added.",
-                    status: 500,
-                    stack: "Course not added.",
-                });
-            }
-        })
-        .catch(err => {
-            next(err);
-        })
-
-    // newCourse.save(err, (newCourse) => {
-    //     if (err) { next(err); }
-    //     else
-    //     {
-    //         if (newCourse) 
-    //         {
-    //             res.json({
-    //                 message: "Course added successfully.",
-    //                 course: {
-    //                 ...newCourse.toObject()
-    //                 },
-    //             });
-    //         } 
-    //         else 
-    //         {
-    //             next({
-    //                 message: "Course not added.",
-    //                 status: 500,
-    //                 stack: "Course not added.",
-    //             });
-    //         }
-    //     }
-    // })
 }
 
 const deleteAllCourses = (req, res, next) => {
@@ -124,6 +64,41 @@ const getCourse = (req, res, next) => {
             }
         }
     })
+}
+
+const createCourse = (req, res, next) => {
+    // Dummy code, need to ACTUALLY GET COURSE NAME && COURSE DESCRIPTION!!
+    const courseName = req.body.courseName;
+    // const courseDescription = req.body.courseDescription;
+
+    let newCourse = new course({
+        name: courseName,
+    });
+
+    newCourse
+        .save()
+        .then(newCourse => {
+            if (newCourse)
+            {
+                res.json({
+                    message: "Course added successfully.",
+                    course: {
+                    ...newCourse.toObject()
+                    },
+                });
+            }
+            else
+            {
+                next({
+                    message: "Course not added.",
+                    status: 500,
+                    stack: "Course not added.",
+                });
+            }
+        })
+        .catch(err => {
+            next(err);
+        })
 }
 
 const replaceCourse = (req, res, next) => {

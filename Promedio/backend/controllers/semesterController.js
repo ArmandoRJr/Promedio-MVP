@@ -1,143 +1,302 @@
+const semester = require("../models/semester");
+const user = require("../models/user");
 
+/*
+  * Wrapper for searching for userId before even doing anything.
+  * Necessary for semesters given they're inherently attached
+  * to an existing user, and should only be modified by said user.
+  * 
+  * Right now, we only check if it's existing, and NOT if the user
+  * that is being passed is the currently logged in user, but
+  * we'll fix...eventually.
 
+  const userId = req.body.userId;
+  user.findById(userId, (err, foundUser) => {
+    if (err) { next(err); }
+    else {
+      if (foundUser){
+      } else {
+        next({
+            message: "User not found, cannot proceed with semester creation.",
+            status: 404,
+            stack: "User not found, cannot proceed with semester creation.",
+        });
+    }
+    }
+  }) 
+*/ 
+
+///// Requests Targetting *** ALL *** Semesters /////
+const getAllSemesters = (req, res, next) => {
+  
+  const userId = req.body.userId;
+  user.findById(userId, (err, foundUser) => {
+    if (err) { next(err); }
+    else {
+      if (foundUser){
+
+        semester.find({user: userId}, (err, foundSemesters) => {
+          if (err) { next(err); }
+          else
+          {
+              res.send(foundSemesters)
+          }
+      })
+
+      } else {
+        next({
+            message: "User not found, cannot proceed with semester search.",
+            status: 404,
+            stack: "User not found, cannot proceed with semester search.",
+        });
+    }
+    }
+  })
+}
+
+const deleteAllCourses = (req, res, next) => {
+
+  const userId = req.body.userId;
+  user.findById(userId, (err, foundUser) => {
+    if (err) { next(err); }
+    else {
+      if (foundUser){
+
+        semester.deleteMany({user: userId}, (err, eventData) => {
+          if (err) { next(err); }
+          else
+          {
+              if (eventData.deletedCount > 0)
+              {
+                  res.json({
+                      message: `Successfully deleted (${eventData.deletedCount}) semesters.`,
+                  });
+              }
+              else
+              {
+                  next({
+                      message: "Semesters not deleted (no semesters were found to delete)",
+                      status: 500,
+                      stack: "Semesters not deleted (no semesters were found to delete)",
+                  });
+              }
+          }
+      })
+
+      } else {
+        next({
+            message: "User not found, cannot proceed with semester deletion.",
+            status: 404,
+            stack: "User not found, cannot proceed with semester deletion.",
+        });
+    }
+    }
+  })
+}
+
+///// Requests Targetting a *** SPECIFIC *** Semester /////
 const createSemester = (req, res, next) => {
-    // Create a new semester
-    // Add that semester to database via .save()
-    // frontend should be connected to this backend to have this rendered.
+  const semesterName = req.body.semesterName;
+  const userId = req.body.userId;
+  
+  user.findById(userId, (err, foundUser) => {
+    if (err) { next(err); }
+    else {
+      if (foundUser){
+        console.log(`User found, proceeding with semester creation.`)
+        let newSemester = new semester({
+          name: semesterName,
+          user: userId
+        });
+        newSemester
+          .save()
+          .then(newSemester => {
+              if (newSemester)
+              {
+                  res.json({
+                      message: "Semester added successfully.",
+                      semester: {
+                      ...newSemester.toObject()
+                      },
+                  });
+              }
+              else
+              {
+                  next({
+                      message: "Semester not added.",
+                      status: 500,
+                      stack: "Semester not added.",
+                  });
+              }
+          })
+          .catch(err => {
+              next(err);
+          }) 
+      } else {
+        next({
+            message: "User not found, cannot proceed with semester creation.",
+            status: 404,
+            stack: "User not found, cannot proceed with semester creation.",
+        });
+    }
+    }
+  })
 }
 
 
+///// Requests Targetting a *** SPECIFIC *** Course /////
 
+const getSemester = (req, res, next) => {
+  // Dummy code, need to ACTUALLY GET COURSE NAME!!
 
+  const userId = req.body.userId;
+  user.findById(userId, (err, foundUser) => {
+    if (err) { next(err); }
+    else {
+      if (foundUser){
 
+        const semesterName = req.params.semesterName;
 
-app.get("/", function(req, res) {
-
-    Course.find({}, function(err, foundCourses){
-        if (err) {
-            console.log(err);
-        } else if (foundCourses.length === 0) 
-        {
-            Course.insertMany(defaultCourses, function(err) {
-            if (err) 
+        semester.findOne({name: semesterName, user: userId}, (err, foundSemester) => {
+            if (err) { next(err); }
+            else
             {
-                console.log(err);
-            } 
-            else 
-            {
-                console.log("Successfully saved default courses to testDB.");
+                if (foundSemester)
+                {
+                    res.send(foundSemester);
+                }
+                else
+                {
+                    next({
+                        message: "Semester not found",
+                        status: 500,
+                        stack: "Semester not found",
+                    });
+                }
             }
-            });
+        })
 
-            res.redirect("/");
-        }
-        else
-        {
-            res.render("semester", {semesterTitle: "Promedio", courses: foundCourses});
-            // console.log(`foundSemester.name === ${foundSemester.name}`)
-        }
-    });
-
-// res.render("test", {semesterTitle: "Promedio", });
-
-});
-
-app.post("/", function(req, res){
-
-    const courseName = req.body.newCourse;
-    const semesterName = req.body.semester;
-  
-    const course = new Course({
-      name: courseName
-    });
-  
-    if (semesterName === "Promedio")
-    {
-      course.save();
-      res.redirect("/");
-    }
-    else
-    {
-      Semester.findOne({name: semesterName}, function(err, foundSemester){
-        foundSemester.courses.push(course);
-        foundSemester.save();
-      });
-  
-      res.redirect(`/${semesterName}`);
-    }
-});
-
-app.post("/delete", function(req, res){
-    const courseID = req.body.checkbox;
-    const semesterName = req.body.semesterName;
-  
-    if (semesterName === "Promedio")
-    {
-      Course.findByIdAndRemove(courseID, function(err){
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(`Successfully deleted checked course with id: ${courseID}`);
-        }
-      });
-  
-      res.redirect("/");
-    }
-    else
-    {
-      // $pull -- deletes item from 'items' array with query: {_id: itemID}
-      Course.findOneAndUpdate({name: semesterName}, {$pull: {courses: {_id: courseID}}}, function(err, results){
-        if (err) {
-          console.log(err);
-        } else {
-          res.redirect(`/${semesterName}`);
-        }
-      });
-    }
-});
-
-app.get("/:customSemesterName", function(req, res){
-    // res.render("list", {semesterTitle: "Work List", newListItems: workItems});
-    const customSemesterName = _.capitalize(req.params.customSemesterName);
-  
-    Semester.findOne({name: customSemesterName}, function(err, foundSemester){
-      if (err) { console.log(err); }
-      else if (!foundSemester) // foundList === null
-      {
-        // Create a new semester
-  
-        const semester = new Semester({
-          name: customSemesterName,
-          courses: []
+      } else {
+        next({
+            message: "User not found, cannot proceed with semester creation.",
+            status: 404,
+            stack: "User not found, cannot proceed with semester creation.",
         });
-  
-        semester.save();
-  
-        res.redirect(`/${customSemesterName}`);
-        // console.log("Does not exist :(");
-      }
-      else
-      {
-        // Show existing list
-        
-        res.render("semester", {semesterTitle: foundSemester.name, courses: foundSemester.courses});
-      }
-    });
-  
-    // const list = new List({
-    //   name: customListName,
-    //   items: defaultItems
-    // });
-  
-    // list.save();
-  
-  });
+    }
+    }
+  })
+}
+
+const updateSemester = (req, res, next) => {
+  const userId = req.body.userId;
+  user.findById(userId, (err, foundUser) => {
+    if (err) { next(err); }
+    else {
+      if (foundUser){
+
+        const semesterName = req.params.semesterName;
+
+        // course.updateOne({name: courseName}, req.body).then().catch()
+        //     // .then()
+
+        semester.updateOne(
+            {name: semesterName, user: userId},
+            { $set : {name: req.body.semesterName} },
+            (err, eventData) => {
+                if (err) 
+                {
+                    next(err);
+                }
+                else
+                {
+                    if (eventData.modifiedCount === 1)
+                    {
+                        res.json({
+                            message: "Semester updated successfully."
+                        });
+                    }
+                    else if (eventData.matchedCount === 1)
+                    {
+                        next({
+                            message: "Semester not updated (no change to semester in request)",
+                            status: 500,
+                            stack: "Semester not updated (no change to semester in request)",
+                        });
+                    }
+                    else
+                    {
+                        next({
+                            message: "Semester not updated",
+                            status: 500,
+                            stack: "Semester not updated",
+                        });
+                    }
+                }
+            }
+        );
+
+      } else {
+        next({
+            message: "User not found, cannot proceed with semester update.",
+            status: 404,
+            stack: "User not found, cannot proceed with semester update.",
+        });
+    }
+    }
+  })
+}
+
+const removeSemester = (req, res, next) => {
+
+  const userId = req.body.userId;
+  user.findById(userId, (err, foundUser) => {
+    if (err) { next(err); }
+    else {
+      if (foundUser){
+
+      const semesterName = req.params.semesterName;
+
+      semester.deleteOne({name: semesterName, user: userId}, (err, eventData) => {
+          if (err) { next(err); }
+          else
+          {
+              if (eventData.deletedCount === 1)
+              {
+                  // console.log(courseName, eventData);
+                  res.json({
+                      message: "Semester deleted successfully.",
+                      // course: {
+                      // ...newCourse.toObject()
+                      // },
+                  });
+              }
+              else
+              {;
+                  next({
+                      message: "Semester not deleted (no semester was found to delete)",
+                      status: 500,
+                      stack: "Semester not deleted (no semester was found to delete)",
+                  });
+              }
+          }
+      })
+
+      } else {
+        next({
+            message: "User not found, cannot proceed with semester deletion.",
+            status: 404,
+            stack: "User not found, cannot proceed with semester deletion.",
+        });
+    }
+    }
+  })
+}
 
 
 module.exports = {
-    createSemester,
-    deleteSemester,
-    changeName,
-    addCourse,
-    removeSemester,
+    getSemester,
+    updateSemester,
+    removeSemester, 
+    getAllSemesters,
+    createSemester
 };

@@ -21,13 +21,7 @@ let userSchema = new Schema(
     password: {
       type: String,
       required: true,
-    },
-    semesters: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Semester'
-      }
-    ]
+    }
   },
   { timestamps: true }
 );

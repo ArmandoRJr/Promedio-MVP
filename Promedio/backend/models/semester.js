@@ -3,12 +3,7 @@ const Schema = mongoose.Schema;
 
 const semesterSchema = new Schema({
     name: String,
-    courses: [
-        {
-            type: Schema.Types.ObjectId, 
-            ref: "Courses"
-        }
-    ]
+    user: Schema.Types.ObjectId
 });
 
 const semester = mongoose.model("Semester", semesterSchema);
