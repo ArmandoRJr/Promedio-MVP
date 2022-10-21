@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
+import theme from "../styles/theme"
 
 const SidebarLink = styled(Link)`
     display:flex;
@@ -39,11 +40,52 @@ const DropdownLink = styled(Link)`
     }
 `;
 
+const AddCourse = styled(Link)`
+    ${'' /* background: #414757; */}
+    background-color: ${({theme}) => theme.colors.primary };
+    height: 60px;
+    padding-left: 3rem;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #f5f5f5;
+    font-size: 18px;
+    &:hover {
+    background: #632ce4;
+    cursor: pointer;
+    }
+`;
+
+const AddSemester = styled(Link)`
+    ${'' /* background: #414757; */}
+    background-color: ${({theme}) => theme.colors.primary };
+    height: 60px;
+    padding-left: 3rem;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #f5f5f5;
+    font-size: 18px;
+    &:hover {
+    background: #632ce4;
+    cursor: pointer;
+    }
+`;
+
 const SubMenu = ({item}) => {
     const [subnav, setSubnav] = useState(false)
 
     const showSubnav = () => setSubnav(!subnav)
     // console.log(props);
+
+    const handleAddCourse = () => {
+        console.log("Add Course button clicked!");
+    }
+
+    const handleAddSemester = () => {
+        console.log("Add Semester button clicked!");
+    }
+
   return (
     <>
         {/* <SidebarLink to={item.path} onClick={item.subNav && showSubnav} > */}
@@ -60,14 +102,38 @@ const SubMenu = ({item}) => {
                 : null}
             </div>
         </SidebarLink>
-        {subnav && item.subNav.map((item, index) => {
+        {subnav && item.subNav.map((item, index, navArray) => {
+            {/* console.log("penis", item, index, navArray); */}
             return (
-                <DropdownLink key={index}> {/* <DropdownLink to={item.path} key={index}> */}
-                    {item.icon}
-                    <SidebarLabel>{item.title}</SidebarLabel>
-                </DropdownLink>
+                index === navArray.length - 1 ? (
+                    // Last item (for adding new course or semester)
+                    item.title === "Add Course" ? (
+                        <AddCourse key={index} onClick={handleAddCourse}> {/* <DropdownLink to={item.path} key={index}> */}
+                            {item.icon}
+                            <SidebarLabel>{item.title}</SidebarLabel>
+                        </AddCourse>
+                    ) : (
+                        <AddSemester key={index} onClick={handleAddSemester}> {/* <DropdownLink to={item.path} key={index}> */}
+                            {item.icon}
+                            <SidebarLabel>{item.title}</SidebarLabel>
+                        </AddSemester>
+                    )
+                ) : (
+                    <DropdownLink key={index}> {/* <DropdownLink to={item.path} key={index}> */}
+                        {item.icon}
+                        <SidebarLabel>{item.title}</SidebarLabel>
+                    </DropdownLink>
+                )
+                
             );
         })}
+        {/* {subnav && item.addCourse.map(item => {
+            return (
+                <AddCourse>
+                    {item.icon}
+                </AddCourse>
+            );
+        }) } */}
     </>
   )
 }
