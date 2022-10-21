@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const Semester = require("../models/semester");
+
 let userSchema = new Schema(
   {
     name: {
@@ -20,6 +22,12 @@ let userSchema = new Schema(
       type: String,
       required: true,
     },
+    semesters: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Semester'
+      }
+    ]
   },
   { timestamps: true }
 );
