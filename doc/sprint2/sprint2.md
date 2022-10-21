@@ -38,29 +38,29 @@ Maaz Hashmi, Tegh Mehta, Preyansh Dutta, Gabriel Ethan Vainer, Armando Rojas, Al
 
 **The user stories we chose to work on (and completed) are the following (with the breakdown and points assigned):**
 
-- (PROM-1) As a user, I should have a landing page where I am welcomed and able to select Login or Signup.
-    - Landing page should contain a basic introduction to the application as a whole, including purpose and functionality of the app.
-    - Landing page should contain a navigation bar at the top of the screen, with quick access to the login page for returning users and access to the registration page for incoming first-time users.
-    - **Points assigned: 5SP**
+- (PROM-5) As a user, I am able to view my user details.
+    - Make sure it is clear to see and can be accessible conviniently to the user. 
+    - **Points assigned: 10SP**
 
--  (PROM-2) As a user, I want to be able to signup for an account to save my data. 
-    - The signup page should ask the user for their name, email, their current GPA and their password.
-    - The signup page should interact with the backend, adding users to the MongoDB database.
+-  (PROM-19) As a user, I am able to edit my user details. 
+    - Make sure the backend is connected to the frontend  
     **Points assigned: 10SP**`
 
--  (PROM-3) As a user, I want to be able to login to my account to access my data. 
-    - The login page should only require the email and password of the user to log them in. 
-    - The login page should interact with the backend, retrieving user information as required.
-    - **Points assigned = 5SP**
+-  (PROM-6) As a user, I am able to edit my user details. 
+    -  Make sure the backend is connected to the frontend
+    - **Points assigned = 10SP**
 
-- (PROM-4) As a user I should be able to log out of my account if needed.
+- (PROM-7) Users are able to organize courses by semester and also create, edit, and delete semesters.
+    - Have it connected to the frontend and make sure this process is convinient with the user
+    - **Points assigned = 20 SP*
+
+- (PROM-18) As a user I should be able to view the details of my course.
     - Users can quickly log out through some button in the webpage.
     - **Points assigned = 2SP**
 
-- (PROM-7) As a user, I want to be able to organize my courses by semester so I can see only the courses I have currently. I would be able to create, edit, & delete semesters. 
-    - Semesters should pair together courses (to be fully developed in a later sprint) so that the user can categorize them quickly.
-    - Some frontend feature, such as a sidebar or a list, will act as the user's main method of interacting with semesters. 
-    - **Points assigned = 10SP**
+- (PROM-17) Users are able set a mark goal for a course.****
+    - Connect with frontend and backend and make sure they can edit this detail as many times as possible
+    - **Points assigned = 15SP**
     
 ---
 
