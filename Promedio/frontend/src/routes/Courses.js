@@ -1,4 +1,4 @@
-import React from "react";
+/*import React from "react";
 import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
 import { get, patch, post } from '../api/index';
@@ -202,4 +202,4 @@ function Courses() {
   );
 }
 
-export default Courses;
+export default Courses;*/
