@@ -108,7 +108,29 @@ const Sidebar = () => {
                 }
             })
 
-            setSemesters(semesterSidebarData);
+            setSemesters(
+                [
+                    {
+                        title: "University of Toronto",
+                        path: "/home",
+                        icon: <FaIcons.FaUniversity />,
+                        iconClosed: <RiIcons.RiArrowDownSFill />,
+                        iconOpened: <RiIcons.RiArrowUpSFill />,
+                        // addSemester: {
+                        //     title: "Add Semester",
+                        //     // path: "",
+                        //     icon: <AiIcons.AiFillFolderAdd />,
+                        // }
+                        subNav: [
+                            {
+                                title: "Add Semester",
+                                path: "/home/add",
+                                icon: <AiIcons.AiFillFolderAdd />,
+                            }
+                        ]
+                    },
+                    ...semesterSidebarData
+                ]);
             }
           ).catch((error) => {
             console.log(error);
