@@ -1,11 +1,11 @@
 ## Documentation for Meeting: 
 
-The release planning meeting was held on October 6th, 2022 over Discord. All of our team members attended the release planning meeting. We discussed release goals, accomplishments per sprint, user stories corresponding to key features of the application.
+The release planning meeting was held on October 15th, 2022 over Discord. All of our team members attended the release planning meeting. We discussed release goals, accomplishments per sprint, user stories corresponding to key features of the application.
 
 ---
 ## Release Goal: 
 
-For our release goal, we want to complete all or most of our user stories defined in sprint0. We want to deliver a polished application with fully working key functionality and little to no bugs. We also want our software to have an appealing user interface that is easy to navigate along with a few additional features as outlined by our sprint0 user stories.
+For our release goal, we want to complete all or most of our user stories defined at the beginning of the sprint2. We want to deliver a polished application with fully working key functionality and little to no bugs. We also want our software to have an appealing user interface that is easy to navigate along with a few additional features as outlined by our sprint0 user stories.
 
 ---
 ## Scope:
@@ -20,8 +20,8 @@ Sprint 1:
 
 
 Sprint 2:
-- Users are able to view my user details. `(PROM-5)`
-- Users are able to edit my user details. `(PROM-19)`
+- Users are able to view their user details. `(PROM-5)`
+- Users are able to edit their user details. `(PROM-19)`
 - Users are able to add/edit/delete courses. `(PROM-6)`
 - Users are able to view details of each course `(PROM-18)`
 - Users are able set a mark goal for a course. `(PROM-17)`
