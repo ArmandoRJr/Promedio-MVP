@@ -58,6 +58,25 @@ const SidebarNav = styled.nav`
     z-index: 10;
 `;
 
+// TEST IF BELOW CSS WORKS WITH FILLED UP NAV BAR!
+// const SidebarNav = styled.nav`
+//     background: #15171c;
+//     ${'' /* background-color: ${({theme}) => theme.colors.primary }; */}
+//     width: 250px;
+//     ${'' /* height: calc(100% - 60px); */}
+//     height: 100%;
+//     display: flex;
+//     justify-content: flex-start;
+//     position: absolute;
+//     top: 60px;
+//     overflow-y: scroll;
+//     bottom: 0;
+//     box-sizing: border-box;
+//     left: ${({ sidebar }) => (sidebar ? '0%' : '-100%')};
+//     transition: 350ms;
+//     z-index: 10;
+// `;
+
 const SidebarWrap = styled.div`
     width: 100%;
 `;
