@@ -33,6 +33,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route path="/welcome" element={<Welcome />} />
               <Route path="/home" element={<Home />} />
               <Route path="/user" element={<User />} />
+              <Route path="/courses" element={<Courses />} />
+              <Route path="/courses/:id" element={<Courses />} />
             </Route>
           </Routes>
         </BrowserRouter>

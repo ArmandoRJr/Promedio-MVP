@@ -14,6 +14,28 @@ export const isUserValid = (user) => {
     return true;
 }
 
+export const isCourseValid = (course) => {
+    if (!course) {
+        return false;
+    }
+
+    if (!course._id) {
+        return false;
+    }
+
+    if (!course.name) {
+        return false;
+    }
+
+    if (!course.description) {
+        return false;
+    }
+
+    if (!course.markGoal) {
+        return false;
+    }
+}
+
 export const isResponseValid = (response) => {
     return response && response.data;
 }
