@@ -10,7 +10,7 @@
 9. As a user, I want to be able to add individual grades (rows) to each category to help me keep track of my marks for the course.  [20SP]
 10. As a user I should be able to preview what a table will look like when editing/adding a grade [5SP]
 11. As a user, I should be to see how much of the course I have completed to analyze my grades [10SP]
-12. As a user, I should be able to view my courses in two different views, the first being by semester second being a list of all the courses, ordered by created date. [8SP]
+12. As a user, I should be able to group courses by semesters [8SP]
 13. As a user, I should be able to learn how to use the app with a tutorial [20SP]
 14. As a user, I should be able to calculate the average per course aka current mark [15SP]
 15. As a user, I should be able to calculate my cGPA for a semester & year & overall [12SP]
