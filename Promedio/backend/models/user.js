@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const Semester = require("../models/semester");
+
 let userSchema = new Schema(
   {
     name: {
@@ -19,10 +21,10 @@ let userSchema = new Schema(
     password: {
       type: String,
       required: true,
-    },
+    }
   },
   { timestamps: true }
 );
 
-const user = mongoose.model("Users", userSchema);
+const user = mongoose.model("User", userSchema);
 module.exports = user;
