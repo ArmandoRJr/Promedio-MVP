@@ -73,6 +73,40 @@ const AddSemester = styled(Link)`
     }
 `;
 
+const EditDeleteCourse = styled(Link)`
+    ${'' /* background: #414757; */}
+    ${'' /* background-color: ${({theme}) => theme.colors.secondary }; */}
+    background: #de5e68;
+    height: 60px;
+    padding-left: 3rem;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #f5f5f5;
+    font-size: 18px;
+    &:hover {
+    background: #fe5c95;
+    cursor: pointer;
+    }
+`;
+
+const EditDeleteSemester = styled(Link)`
+    ${'' /* background: #414757; */}
+    ${'' /* background-color: ${({theme}) => theme.colors.secondary }; */}
+    background: #de5e68;
+    height: 60px;
+    padding-left: 3rem;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #f5f5f5;
+    font-size: 18px;
+    &:hover {
+    background: #fe5c95;
+    cursor: pointer;
+    }
+`;
+
 const SubMenu = ({item, addNewSemester }) => {
     const [subnav, setSubnav] = useState(false)
 
@@ -149,7 +183,21 @@ const SubMenu = ({item, addNewSemester }) => {
         {subnav && item.subNav.map((item, index, navArray) => {
             {/* console.log("penis", item, index, navArray); */}
             return (
+
                 index === navArray.length - 1 ? (
+                    item.title === "Edit/Delete Course" ? (
+                        <EditDeleteCourse key={index} onClick={handleAddCourse}> {/* <DropdownLink to={item.path} key={index}> */}
+                            {item.icon}
+                            <SidebarLabel>{item.title}</SidebarLabel>
+                        </EditDeleteCourse>
+                    ) : (
+                        <EditDeleteSemester key={index} onClick={handleAddSemester}> {/* <DropdownLink to={item.path} key={index}> */}
+                            {item.icon}
+                            <SidebarLabel>{item.title}</SidebarLabel>
+                        </EditDeleteSemester>
+                    )
+                ) : (
+                index === navArray.length - 2 ? (
                     // Last item (for adding new course or semester)
                     item.title === "Add Course" ? (
                         <AddCourse key={index} onClick={handleAddCourse}> {/* <DropdownLink to={item.path} key={index}> */}
@@ -167,7 +215,7 @@ const SubMenu = ({item, addNewSemester }) => {
                         {item.icon}
                         <SidebarLabel>{item.title}</SidebarLabel>
                     </DropdownLink>
-                )
+                ))
                 
             );
         })}

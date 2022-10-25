@@ -115,7 +115,12 @@ const Sidebar = () => {
                     title: "Add Course",
                     path: `/home/${semesterData.name}/add`,
                     icon: <AiIcons.AiFillFileAdd />
-                }
+                },
+                {
+                    title: "Edit/Delete Course",
+                    path: `/home/${semesterData.name}/editDelete`,
+                    icon: <AiIcons.AiFillFileAdd />
+                },
             ];
             return {
                 title: semesterData.name,
@@ -139,6 +144,11 @@ const Sidebar = () => {
                         {
                             title: "Add Semester",
                             path: "/home/add",
+                            icon: <AiIcons.AiFillFolderAdd />,
+                        },
+                        {
+                            title: "Edit/Delete Semester",
+                            path: "/home/editDelete",
                             icon: <AiIcons.AiFillFolderAdd />,
                         }
                     ]
@@ -166,7 +176,12 @@ const Sidebar = () => {
                         title: "Add Course",
                         path: `/home/${semesterData.name}/add`,
                         icon: <AiIcons.AiFillFileAdd />
-                    }
+                    },
+                    {
+                        title: "Edit/Delete Course",
+                        path: `/home/${semesterData.name}/editDelete`,
+                        icon: <AiIcons.AiFillFileAdd />
+                    },
                 ];
                 setSidebarData([
                     ...sidebarData,
