@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 import theme from "../styles/theme"
+import FormDialog from './FormDialog';
 
 const SidebarLink = styled(Link)`
     display:flex;
@@ -72,7 +73,7 @@ const AddSemester = styled(Link)`
     }
 `;
 
-const SubMenu = ({item}) => {
+const SubMenu = ({item, addNewSemester }) => {
     const [subnav, setSubnav] = useState(false)
 
     const showSubnav = () => setSubnav(!subnav)
@@ -84,11 +85,35 @@ const SubMenu = ({item}) => {
 
     const handleAddSemester = () => {
         console.log("Add Semester button clicked!");
+        setIsOpenFDialog(true);
     }
+
+    //
+    const [isOpenFDialog, setIsOpenFDialog] = useState(false);
+
+    const handleFDClickOpen = () => {
+        setIsOpenFDialog(true);
+      };
+    
+      const handleFDClose = () => {
+        setIsOpenFDialog(false);
+      };
+
+    const handleFDAddSemester = (semesterName) => {
+        // console.log(event)
+        addNewSemester(semesterName);
+        handleFDClose();
+    };
 
   return (
     <>
         {/* <SidebarLink to={item.path} onClick={item.subNav && showSubnav} > */}
+        <FormDialog 
+            open={isOpenFDialog}
+            handleClose={handleFDClose}
+            handleClickOpen={handleFDClickOpen}
+            handleAddSemester={handleFDAddSemester}
+        />
         <SidebarLink onClick={item.subNav && showSubnav} >
             <div>
                 {item.icon}

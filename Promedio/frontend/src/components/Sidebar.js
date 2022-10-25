@@ -11,6 +11,9 @@ import { SidebarDataNew } from './SidebarDataNew';
 import { IconContext } from 'react-icons/lib';
 import { get, patch, post } from '../api/index';
 import theme from "../styles/theme"
+import { Dialog } from "@mui/material"
+
+
 
 const Nav = styled.div`
     ${'' /* background: #15171c; */}
@@ -41,33 +44,14 @@ const NavTitle = styled(Link)`
     align-items: center;
 `;
 
-const SidebarNav = styled.nav`
-    background: #15171c;
-    ${'' /* background-color: ${({theme}) => theme.colors.primary }; */}
-    width: 250px;
-    height: calc(100% - 60px);
-    display: flex;
-    justify-content: flex-start;
-    position: fixed;
-    top: 60px;
-    overflow-y: scroll;
-    bottom: 0;
-    box-sizing: border-box;
-    left: ${({ sidebar }) => (sidebar ? '0%' : '-100%')};
-    transition: 350ms;
-    z-index: 10;
-`;
-
-// TEST IF BELOW CSS WORKS WITH FILLED UP NAV BAR!
 // const SidebarNav = styled.nav`
 //     background: #15171c;
 //     ${'' /* background-color: ${({theme}) => theme.colors.primary }; */}
 //     width: 250px;
-//     ${'' /* height: calc(100% - 60px); */}
-//     height: 100%;
+//     height: calc(100% - 60px);
 //     display: flex;
 //     justify-content: flex-start;
-//     position: absolute;
+//     position: fixed;
 //     top: 60px;
 //     overflow-y: scroll;
 //     bottom: 0;
@@ -76,6 +60,25 @@ const SidebarNav = styled.nav`
 //     transition: 350ms;
 //     z-index: 10;
 // `;
+
+// TEST IF BELOW CSS WORKS WITH FILLED UP NAV BAR!
+const SidebarNav = styled.nav`
+    background: #15171c;
+    ${'' /* background-color: ${({theme}) => theme.colors.primary }; */}
+    width: 250px;
+    ${'' /* height: calc(100% - 60px); */}
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    position: absolute;
+    top: 60px;
+    overflow-y: scroll;
+    bottom: 0;
+    box-sizing: border-box;
+    left: ${({ sidebar }) => (sidebar ? '0%' : '-100%')};
+    transition: 350ms;
+    z-index: 10;
+`;
 
 const SidebarWrap = styled.div`
     width: 100%;
@@ -104,8 +107,20 @@ const Sidebar = () => {
                         icon: <IoIcons.IoIosDocument />
                     }
                 })
-    
+                
+                // ARMANDO'S CODE... COMMENT THIS RETURN TO
+                // ***HOPEFULLY*** GET THE DESIRED RESULTS!
                 return courseSidebarData
+
+                return [
+                    ...courseSidebarData,
+                    {
+                        title: "Add Course",
+                        path: `"/home/${semesterData.name}/add"`,
+                        icon: <AiIcons.AiFillFileAdd />
+                    }
+                ];
+
                 }
               ).catch((error) => {
                 console.log(error);
@@ -115,7 +130,15 @@ const Sidebar = () => {
         get(`/user/${user._id}/semester`).then((response) => {
 
             const semesterSidebarData = response.data.map((semesterData) =>{
-                const subNav = getCourses(semesterData)
+                // const subNav = getCourses(semesterData)
+                const subNav = [
+                    // ...courseSidebarData,
+                    {
+                        title: "Add Course",
+                        path: `"/home/${semesterData.name}/add"`,
+                        icon: <AiIcons.AiFillFileAdd />
+                    }
+                ];
                 console.log(`subNav`, subNav)
                 return {
                     title: semesterData.name,
@@ -155,7 +178,18 @@ const Sidebar = () => {
             console.log(error);
           });
     }
+    
+    const addSemester = (semesterName) => {
+        const user = JSON.parse(localStorage.getItem('authUser'));
 
+        post(`/user/${user._id}/semester`, {semesterName: semesterName})
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
 
     return (
         <>
@@ -173,7 +207,11 @@ const Sidebar = () => {
                             <AiIcons.AiOutlineClose onClick={showSidebar} />
                         </NavIcon>
                         {semesters.map((item, index) => {
-                            return <SubMenu item={item} key={index} />;
+                            return <SubMenu 
+                                item={item}
+                                key={index}
+                                addNewSemester={addSemester}
+                            />;
                         })}
                     </SidebarWrap>
                 </SidebarNav>
