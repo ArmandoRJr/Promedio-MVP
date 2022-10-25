@@ -9,7 +9,7 @@ import * as RiIcons from "react-icons/ri";
 import SubMenu from './SubMenu';
 import { SidebarDataNew } from './SidebarDataNew';
 import { IconContext } from 'react-icons/lib';
-import { get, patch, post } from '../api/index';
+import { get, patch, post, del} from '../api/index';
 import theme from "../styles/theme"
 import { Dialog } from "@mui/material"
 
@@ -200,6 +200,53 @@ const Sidebar = () => {
             });
     }
 
+    const editSemester = (oldSemesterName, newSemesterName) => {
+        const user = JSON.parse(localStorage.getItem('authUser'));
+
+        patch(`/user/${user._id}/semester/${oldSemesterName}`, {semesterName: newSemesterName})
+            .then((res) => {
+                setSemesters(semesters.map((semester) => {
+                    if (semester.name === oldSemesterName) {
+                        return {
+                            ...semester,
+                            name: newSemesterName
+                        }
+                    }
+                    else return semester;
+                }))
+
+                setSidebarData(sidebarData.map((sidebarData) => {
+                    if (sidebarData.title == oldSemesterName) return {
+                        ...sidebarData,
+                        title: newSemesterName,
+                    }
+                    else return sidebarData
+                }));
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
+    const deleteSemester = (semesterName) => {
+        const user = JSON.parse(localStorage.getItem('authUser'));
+
+        del(`/user/${user._id}/semester/${semesterName}`)
+            .then((res) => {
+                const semestersToSet = semesters.filter(semester =>
+                    semester.name !== semesterName)
+                setSemesters(semestersToSet)
+                const sidebarDataToSet = sidebarData.filter(siderbarData =>
+                    siderbarData.title !== semesterName)
+                setSidebarData(sidebarDataToSet)
+
+
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
     useEffect(() => {
         getSemesters();
     }, []);
@@ -224,6 +271,9 @@ const Sidebar = () => {
                                 item={item}
                                 key={index}
                                 addNewSemester={addSemester}
+                                editSemester={editSemester}
+                                deleteSemester={deleteSemester}
+                                semesterData={semesters}
                             />;
                         })}
                     </SidebarWrap>

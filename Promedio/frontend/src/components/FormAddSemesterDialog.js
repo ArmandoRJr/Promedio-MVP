@@ -9,7 +9,7 @@ import {
     DialogTitle
 } from "@mui/material";
 
-export default function FormAddSemesterDialog(props) {
+export default function FormEditDeleteSemesterDialog(props) {
 
   const [semesterName, setSemesterName] = React.useState("");
 

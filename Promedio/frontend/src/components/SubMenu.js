@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 import theme from "../styles/theme"
 import FormAddSemesterDialog from './FormAddSemesterDialog';
+import FormEditDeleteSemesterDialog from './FormEditDeleteSemesterDialog';
 
 const SidebarLink = styled(Link)`
     display:flex;
@@ -107,22 +108,23 @@ const EditDeleteSemester = styled(Link)`
     }
 `;
 
-const SubMenu = ({item, addNewSemester }) => {
+const SubMenu = ({item, addNewSemester, editSemester, deleteSemester, semesterData }) => {
     const [subnav, setSubnav] = useState(false)
 
     const showSubnav = () => setSubnav(!subnav)
 
     const handleAddCourse = () => {
         console.log("Add Course button clicked!");
+        setIsOpenEditDeleteSemFDialog(true);
     }
+
+    // *** ADD SEMESTER BUTTON STUFFS ***
+    const [isOpenAddSemFDialog, setIsOpenAddSemFDialog] = useState(false);
 
     const handleAddSemester = () => {
         console.log("Add Semester button clicked!");
         setIsOpenAddSemFDialog(true);
     }
-
-    // *** ADD SEMESTER BUTTON STUFFS ***
-    const [isOpenAddSemFDialog, setIsOpenAddSemFDialog] = useState(false);
 
     const handleAddSemFDClickOpen = () => {
         setIsOpenAddSemFDialog(true);
@@ -140,23 +142,36 @@ const SubMenu = ({item, addNewSemester }) => {
 
     // *** ADD SEMESTER BUTTON STUFFS ***
 
-    // *** EDIT SEMESTER BUTTON STUFFS ***
-    const [isOpenEditSemFDialog, setIsOpenEditSemFDialog] = useState(false);
+    // *** EDIT/DELETE SEMESTER BUTTON STUFFS ***
+    const [isOpenEditDeleteSemFDialog, setIsOpenEditDeleteSemFDialog] = useState(false);
 
-    const handleEditSemFDClickOpen = () => {
-        setIsOpenEditSemFDialog(true);
+    const handleEditDeleteSemester = () => {
+        console.log("Edit/Delete Semester button clicked!");
+        setIsOpenEditDeleteSemFDialog(true);
+    }
+
+    const handleEditDeleteSemFDClickOpen = () => {
+        setIsOpenEditDeleteSemFDialog(true);
       };
     
-      const handleEditSemFDClose = () => {
-        setIsOpenEditSemFDialog(false);
+      const handleEditDeleteSemFDClose = () => {
+        setIsOpenEditDeleteSemFDialog(false);
       };
 
-    const handleEditSemFDEditSemester = (semesterName) => {
+    const handleEditDeleteSemFDEditSemester = (oldSemesterName, newSemesterName) => {
         // console.log(event)
         //addNewSemester(semesterName);     // EDIT SEMESTER
-        handleEditSemFDClose();
+        editSemester(oldSemesterName, newSemesterName)
+        handleEditDeleteSemFDClose();
     };
-    // *** EDIT SEMESTER BUTTON STUFFS ***
+
+    const handleEditDeleteSemFDDeleteSemester = (semesterName) => {
+        // console.log(event)
+        //addNewSemester(semesterName);     // DELETE SEMESTER
+        deleteSemester(semesterName)
+        handleEditDeleteSemFDClose();
+    };
+    // *** EDIT/DELETE SEMESTER BUTTON STUFFS ***
 
   return (
     <>
@@ -166,6 +181,14 @@ const SubMenu = ({item, addNewSemester }) => {
             handleClose={handleAddSemFDClose}
             handleClickOpen={handleAddSemFDClickOpen}
             handleAddSemester={handleAddSemFDAddSemester}
+        />
+        <FormEditDeleteSemesterDialog
+            open={isOpenEditDeleteSemFDialog}
+            semesterData={semesterData}
+            handleClose={handleEditDeleteSemFDClose}
+            handleClickOpen={handleEditDeleteSemFDClickOpen}
+            handleEditSemester={handleEditDeleteSemFDEditSemester}
+            handleDeleteSemester={handleEditDeleteSemFDDeleteSemester}
         />
         <SidebarLink onClick={item.subNav && showSubnav} >
             <div>
@@ -186,12 +209,12 @@ const SubMenu = ({item, addNewSemester }) => {
 
                 index === navArray.length - 1 ? (
                     item.title === "Edit/Delete Course" ? (
-                        <EditDeleteCourse key={index} onClick={handleAddCourse}> {/* <DropdownLink to={item.path} key={index}> */}
+                        <EditDeleteCourse key={index} onClick={() => {}}> {/* <DropdownLink to={item.path} key={index}> */}
                             {item.icon}
                             <SidebarLabel>{item.title}</SidebarLabel>
                         </EditDeleteCourse>
                     ) : (
-                        <EditDeleteSemester key={index} onClick={handleAddSemester}> {/* <DropdownLink to={item.path} key={index}> */}
+                        <EditDeleteSemester key={index} onClick={handleEditDeleteSemester}> {/* <DropdownLink to={item.path} key={index}> */}
                             {item.icon}
                             <SidebarLabel>{item.title}</SidebarLabel>
                         </EditDeleteSemester>
@@ -200,7 +223,7 @@ const SubMenu = ({item, addNewSemester }) => {
                 index === navArray.length - 2 ? (
                     // Last item (for adding new course or semester)
                     item.title === "Add Course" ? (
-                        <AddCourse key={index} onClick={handleAddCourse}> {/* <DropdownLink to={item.path} key={index}> */}
+                        <AddCourse key={index} onClick={() => {}}> {/* <DropdownLink to={item.path} key={index}> */}
                             {item.icon}
                             <SidebarLabel>{item.title}</SidebarLabel>
                         </AddCourse>
