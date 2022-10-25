@@ -119,7 +119,7 @@ const Sidebar = () => {
                 {
                     title: "Edit/Delete Course",
                     path: `/home/${semesterData.name}/editDelete`,
-                    icon: <AiIcons.AiFillFileAdd />
+                    icon: <AiIcons.AiTwotoneEdit />
                 },
             ];
             return {
@@ -149,7 +149,7 @@ const Sidebar = () => {
                         {
                             title: "Edit/Delete Semester",
                             path: "/home/editDelete",
-                            icon: <AiIcons.AiFillFolderAdd />,
+                            icon: <AiIcons.AiTwotoneEdit />,
                         }
                     ]
                 },
@@ -180,7 +180,7 @@ const Sidebar = () => {
                     {
                         title: "Edit/Delete Course",
                         path: `/home/${semesterData.name}/editDelete`,
-                        icon: <AiIcons.AiFillFileAdd />
+                        icon: <AiIcons.AiTwotoneEdit />
                     },
                 ];
                 setSidebarData([
