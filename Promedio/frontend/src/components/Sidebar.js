@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, componentDidMount } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import * as FaIcons from "react-icons/fa";
@@ -135,7 +135,7 @@ const Sidebar = () => {
                     // ...courseSidebarData,
                     {
                         title: "Add Course",
-                        path: `"/home/${semesterData.name}/add"`,
+                        path: `/home/${semesterData.name}/add`,
                         icon: <AiIcons.AiFillFileAdd />
                     }
                 ];
@@ -184,17 +184,42 @@ const Sidebar = () => {
 
         post(`/user/${user._id}/semester`, {semesterName: semesterName})
             .then((res) => {
-                console.log(res);
+                // console.log(res);
+                const semesterData = res.data.semester;
+                const subNav = [
+                    // ...courseSidebarData,
+                    {
+                        title: "Add Course",
+                        path: `/home/${semesterData.name}/add`,
+                        icon: <AiIcons.AiFillFileAdd />
+                    }
+                ];
+                setSemesters([
+                    ...semesters,
+                    {
+                        title: semesterData.name,
+                        path: `home/semester/${semesterData.name}`,
+                        icon: <FaIcons.FaFolder />,
+                        iconClosed: <RiIcons.RiArrowDownSFill />,
+                        iconOpened: <RiIcons.RiArrowUpSFill />,
+                        subNav: subNav
+                    }
+                ]);
             })
             .catch((err) => {
                 console.log(err);
             });
     }
 
+    // componentDidMount(getSemesters);
+    useEffect(() => {
+        getSemesters();
+    }, []);
+
     return (
         <>
             <IconContext.Provider value={{ color: `${theme.colors.primary_light }` }}>
-                <Button onClick={getSemesters}>Press me!</Button>
+                {/* <Button onClick={getSemesters}>Press me!</Button> */}
                 <Nav>
                     <NavIcon to="#">
                         <FaIcons.FaBars onClick={showSidebar} />
