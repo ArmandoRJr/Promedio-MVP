@@ -43,6 +43,7 @@ export default function FormAddSemesterDialog(props) {
           <Button onClick={props.handleClose}>Cancel</Button>
           <Button onClick={() => {
             props.handleAddSemester(semesterName);
+            setSemesterName("");
           }}>Add Semester</Button>
         </DialogActions>
       </Dialog>

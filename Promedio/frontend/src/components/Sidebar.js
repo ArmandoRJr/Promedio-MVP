@@ -153,7 +153,10 @@ const Sidebar = () => {
 
         post(`/user/${user._id}/semester`, {semesterName: semesterName})
             .then((res) => {
-                setSemesters(...semesters, res.data.semester)
+                setSemesters([
+                    ...semesters, 
+                    res.data.semester
+                ])
                 const semesterData = res.data.semester;
 
                 // IDEALLY SHOULD REPOPULATE GIVEN SEMESTERS BUT WE'LL ALLOW
