@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 import theme from "../styles/theme"
-import FormDialog from './FormDialog';
+import FormAddSemesterDialog from './FormAddSemesterDialog';
 
 const SidebarLink = styled(Link)`
     display:flex;
@@ -77,7 +77,6 @@ const SubMenu = ({item, addNewSemester }) => {
     const [subnav, setSubnav] = useState(false)
 
     const showSubnav = () => setSubnav(!subnav)
-    // console.log(props);
 
     const handleAddCourse = () => {
         console.log("Add Course button clicked!");
@@ -85,34 +84,54 @@ const SubMenu = ({item, addNewSemester }) => {
 
     const handleAddSemester = () => {
         console.log("Add Semester button clicked!");
-        setIsOpenFDialog(true);
+        setIsOpenAddSemFDialog(true);
     }
 
-    //
-    const [isOpenFDialog, setIsOpenFDialog] = useState(false);
+    // *** ADD SEMESTER BUTTON STUFFS ***
+    const [isOpenAddSemFDialog, setIsOpenAddSemFDialog] = useState(false);
 
-    const handleFDClickOpen = () => {
-        setIsOpenFDialog(true);
+    const handleAddSemFDClickOpen = () => {
+        setIsOpenAddSemFDialog(true);
       };
     
-      const handleFDClose = () => {
-        setIsOpenFDialog(false);
+      const handleAddSemFDClose = () => {
+        setIsOpenAddSemFDialog(false);
       };
 
-    const handleFDAddSemester = (semesterName) => {
+    const handleAddSemFDAddSemester = (semesterName) => {
         // console.log(event)
         addNewSemester(semesterName);
-        handleFDClose();
+        handleAddSemFDClose();
     };
+
+    // *** ADD SEMESTER BUTTON STUFFS ***
+
+    // *** EDIT SEMESTER BUTTON STUFFS ***
+    const [isOpenEditSemFDialog, setIsOpenEditSemFDialog] = useState(false);
+
+    const handleEditSemFDClickOpen = () => {
+        setIsOpenEditSemFDialog(true);
+      };
+    
+      const handleEditSemFDClose = () => {
+        setIsOpenEditSemFDialog(false);
+      };
+
+    const handleEditSemFDEditSemester = (semesterName) => {
+        // console.log(event)
+        //addNewSemester(semesterName);     // EDIT SEMESTER
+        handleEditSemFDClose();
+    };
+    // *** EDIT SEMESTER BUTTON STUFFS ***
 
   return (
     <>
         {/* <SidebarLink to={item.path} onClick={item.subNav && showSubnav} > */}
-        <FormDialog 
-            open={isOpenFDialog}
-            handleClose={handleFDClose}
-            handleClickOpen={handleFDClickOpen}
-            handleAddSemester={handleFDAddSemester}
+        <FormAddSemesterDialog 
+            open={isOpenAddSemFDialog}
+            handleClose={handleAddSemFDClose}
+            handleClickOpen={handleAddSemFDClickOpen}
+            handleAddSemester={handleAddSemFDAddSemester}
         />
         <SidebarLink onClick={item.subNav && showSubnav} >
             <div>
@@ -152,13 +171,6 @@ const SubMenu = ({item, addNewSemester }) => {
                 
             );
         })}
-        {/* {subnav && item.addCourse.map(item => {
-            return (
-                <AddCourse>
-                    {item.icon}
-                </AddCourse>
-            );
-        }) } */}
     </>
   )
 }

@@ -9,16 +9,7 @@ import {
     DialogTitle
 } from "@mui/material";
 
-export default function FormDialog(props) {
-//   const [open, setOpen] = React.useState(false);
-
-//   const handleClickOpen = () => {
-//     setOpen(true);
-//   };
-
-//   const handleClose = () => {
-//     setOpen(false);
-//   };
+export default function FormAddSemesterDialog(props) {
 
   const [semesterName, setSemesterName] = React.useState("");
 
