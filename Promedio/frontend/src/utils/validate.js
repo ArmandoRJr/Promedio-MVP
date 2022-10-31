@@ -27,6 +27,10 @@ export const isCourseValid = (course) => {
         return false;
     }
 
+    if (!course.semester) {
+        return false;
+    }
+
     if (!course.description) {
         return false;
     }

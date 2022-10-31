@@ -1,17 +1,17 @@
-/*import React from "react";
-import { useNavigate, useParams } from "react-router";
+import React from "react";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { get, patch, post } from '../api/index';
-import { isCourseResponseValid } from "../utils/validate";
+import { get, patch, post, del } from '../api/index';
+import { isCourseValid } from "../utils/validate";
 
 const FullWidthDiv = styled.div`
-  width: 100%;
   background-color: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.white};
   padding: 100px 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 500px;
 `;
 
 const MarginTopRow = styled.div`
@@ -28,6 +28,7 @@ const UserButton = styled.button`
   cursor: pointer;
   padding: 10px 20px;
   border: none;
+  margin: 10px;
   border-radius: 5px;
   &:hover {
     opacity: 0.8;
@@ -45,7 +46,6 @@ const FormInput = styled.input`
   &:focus {
     outline: none;
   }
-  width: 500px;
 `;
 
 const FormTextArea = styled.textarea`
@@ -57,7 +57,6 @@ const FormTextArea = styled.textarea`
   &:focus {
     outline: none;
   }
-  width: 500px;
 `;
 const Heading = styled.h2`
   margin: 0;
@@ -69,16 +68,16 @@ const InfoContainer = styled.div`
   flex-direction: column;
 `;
 
-function Courses() {
+function Courses({handleClose, id}) {
   const navigate = useNavigate();
   const [formState, setFormState] = React.useState({
     _id: '',
     name: '',
     description: '',
     markGoal: '',
+    semester: '',
   });
   // id means there is an existing course that you are editing
-  const { id } = useParams();
   const [isEditable, setIsEditable] = React.useState(!id);
 
   const handleChangeFormState = (event) => {
@@ -91,7 +90,7 @@ function Courses() {
   React.useEffect(() => {
     if (id) {
       get(`/courses/${id}`).then((response) => {
-        if (isCourseResponseValid(response)) {
+        if (isCourseValid(response)) {
           setFormState({
             ...formState,
             ...response.data,
@@ -109,7 +108,7 @@ function Courses() {
     // TODO: Add validation
     if (id) {
       post(`/courses/${id}`, formState).then((response) => {
-        if (isCourseResponseValid(response)) {
+        if (isCourseValid(response)) {
           setFormState({
             ...formState,
             ...response.data,
@@ -118,7 +117,7 @@ function Courses() {
       });
     } else {
       patch('/courses', formState).then((response) => {
-        if (isCourseResponseValid(response)) {
+        if (isCourseValid(response)) {
           setFormState({
             ...formState,
             ...response.data,
@@ -129,10 +128,20 @@ function Courses() {
     }
   }
 
+  function handleDelete() {
+    del(`/courses/${id}`).then((response) => {
+      handleClose();
+    });
+  }
+
   if (!isEditable) {
     return (
       <FullWidthDiv>
         <h1>Course.</h1>
+        <InfoContainer>
+          <Heading>Semester</Heading>
+          <h3>{formState.semester}</h3>
+        </InfoContainer>
         <InfoContainer>
           <Heading>Name</Heading>
           <h3>{formState.name}</h3>
@@ -187,13 +196,15 @@ function Courses() {
       </InfoContainer>
       <MarginTopRow>
         <UserButton onClick={handleClick}>Save</UserButton>
+        {!!id &&
+        <UserButton onClick={handleDelete}>Delete</UserButton>}
         <UserButton onClick={() => {
           // If you're adding a new course and hit cancel
           // you should be redirected to the home page
           if (id) {
             setIsEditable(false);
           } else {
-            navigate('/home');
+            handleClose();
           }
         }}
       >Cancel</UserButton>
@@ -202,4 +213,4 @@ function Courses() {
   );
 }
 
-export default Courses;*/
+export default Courses;

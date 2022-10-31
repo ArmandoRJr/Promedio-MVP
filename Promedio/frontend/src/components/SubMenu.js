@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
-import theme from "../styles/theme"
 import FormAddSemesterDialog from './FormAddSemesterDialog';
 import FormEditDeleteSemesterDialog from './FormEditDeleteSemesterDialog';
+import FormCourseDialog from './FormCourseDialog';
 
 const SidebarLink = styled(Link)`
     display:flex;
@@ -109,78 +109,76 @@ const EditDeleteSemester = styled(Link)`
 `;
 
 const SubMenu = ({item, addNewSemester, editSemester, deleteSemester, semesterData }) => {
-    const [subnav, setSubnav] = useState(false)
+    const [subnav, setSubnav] = useState(false);
+    // TODO: Add the ability to select a course you want to delete
+    const [selectedCourseId, setSelectedCourseId] = useState(undefined);
 
     const showSubnav = () => setSubnav(!subnav)
 
-    const handleAddCourse = () => {
-        console.log("Add Course button clicked!");
-        setIsOpenEditDeleteSemFDialog(true);
-    }
-
-    // *** ADD SEMESTER BUTTON STUFFS ***
     const [isOpenAddSemFDialog, setIsOpenAddSemFDialog] = useState(false);
 
     const handleAddSemester = () => {
-        console.log("Add Semester button clicked!");
         setIsOpenAddSemFDialog(true);
     }
 
     const handleAddSemFDClickOpen = () => {
         setIsOpenAddSemFDialog(true);
       };
-    
+
       const handleAddSemFDClose = () => {
         setIsOpenAddSemFDialog(false);
       };
 
     const handleAddSemFDAddSemester = (semesterName) => {
-        // console.log(event)
         addNewSemester(semesterName);
         handleAddSemFDClose();
     };
 
-    // *** ADD SEMESTER BUTTON STUFFS ***
+    const [isOpenAddCourseFDialog, setIsOpenAddCourseFDialog] = useState(false);
 
-    // *** EDIT/DELETE SEMESTER BUTTON STUFFS ***
+    const handleAddCourse = () => {
+        setIsOpenAddCourseFDialog(true);
+    }
+
+    const handleAddCourseFDClose = () => {
+    setIsOpenAddCourseFDialog(false);
+    };
+
     const [isOpenEditDeleteSemFDialog, setIsOpenEditDeleteSemFDialog] = useState(false);
 
     const handleEditDeleteSemester = () => {
-        console.log("Edit/Delete Semester button clicked!");
         setIsOpenEditDeleteSemFDialog(true);
     }
 
     const handleEditDeleteSemFDClickOpen = () => {
         setIsOpenEditDeleteSemFDialog(true);
       };
-    
+
       const handleEditDeleteSemFDClose = () => {
         setIsOpenEditDeleteSemFDialog(false);
       };
 
     const handleEditDeleteSemFDEditSemester = (oldSemesterName, newSemesterName) => {
-        // console.log(event)
-        //addNewSemester(semesterName);     // EDIT SEMESTER
         editSemester(oldSemesterName, newSemesterName)
         handleEditDeleteSemFDClose();
     };
 
     const handleEditDeleteSemFDDeleteSemester = (semesterName) => {
-        // console.log(event)
-        //addNewSemester(semesterName);     // DELETE SEMESTER
         deleteSemester(semesterName)
         handleEditDeleteSemFDClose();
     };
-    // *** EDIT/DELETE SEMESTER BUTTON STUFFS ***
-
   return (
     <>
-        {/* <SidebarLink to={item.path} onClick={item.subNav && showSubnav} > */}
-        <FormAddSemesterDialog 
+        <FormAddSemesterDialog
             open={isOpenAddSemFDialog}
             handleClose={handleAddSemFDClose}
             handleClickOpen={handleAddSemFDClickOpen}
             handleAddSemester={handleAddSemFDAddSemester}
+        />
+        <FormCourseDialog
+            open={isOpenAddCourseFDialog}
+            id={selectedCourseId}
+            handleClose={handleAddCourseFDClose}
         />
         <FormEditDeleteSemesterDialog
             open={isOpenEditDeleteSemFDialog}
@@ -196,50 +194,48 @@ const SubMenu = ({item, addNewSemester, editSemester, deleteSemester, semesterDa
                 <SidebarLabel>{item.title}</SidebarLabel>
             </div>
             <div>
-                {item.subNav && subnav 
-                ? item.iconOpened 
-                : item.subNav 
-                ? item.iconClosed 
+                {item.subNav && subnav
+                ? item.iconOpened
+                : item.subNav
+                ? item.iconClosed
                 : null}
             </div>
         </SidebarLink>
         {subnav && item.subNav.map((item, index, navArray) => {
-            {/* console.log("penis", item, index, navArray); */}
             return (
 
                 index === navArray.length - 1 ? (
                     item.title === "Edit/Delete Course" ? (
-                        <EditDeleteCourse key={index} onClick={() => {}}> {/* <DropdownLink to={item.path} key={index}> */}
+                        <EditDeleteCourse key={index} onClick={handleAddCourse}>
                             {item.icon}
                             <SidebarLabel>{item.title}</SidebarLabel>
                         </EditDeleteCourse>
                     ) : (
-                        <EditDeleteSemester key={index} onClick={handleEditDeleteSemester}> {/* <DropdownLink to={item.path} key={index}> */}
+                        <EditDeleteSemester key={index} onClick={handleEditDeleteSemester}>
                             {item.icon}
                             <SidebarLabel>{item.title}</SidebarLabel>
                         </EditDeleteSemester>
                     )
                 ) : (
                 index === navArray.length - 2 ? (
-                    // Last item (for adding new course or semester)
                     item.title === "Add Course" ? (
-                        <AddCourse key={index} onClick={() => {}}> {/* <DropdownLink to={item.path} key={index}> */}
+                        <AddCourse key={index} onClick={handleAddCourse}>
                             {item.icon}
                             <SidebarLabel>{item.title}</SidebarLabel>
                         </AddCourse>
                     ) : (
-                        <AddSemester key={index} onClick={handleAddSemester}> {/* <DropdownLink to={item.path} key={index}> */}
+                        <AddSemester key={index} onClick={handleAddSemester}>
                             {item.icon}
                             <SidebarLabel>{item.title}</SidebarLabel>
                         </AddSemester>
                     )
                 ) : (
-                    <DropdownLink key={index}> {/* <DropdownLink to={item.path} key={index}> */}
+                    <DropdownLink key={index}>
                         {item.icon}
                         <SidebarLabel>{item.title}</SidebarLabel>
                     </DropdownLink>
                 ))
-                
+
             );
         })}
     </>
