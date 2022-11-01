@@ -158,13 +158,13 @@ const SubMenu = ({item, addNewSemester, editSemester, deleteSemester, semesterDa
         setIsOpenEditDeleteSemFDialog(false);
       };
 
-    const handleEditDeleteSemFDEditSemester = (oldSemesterName, newSemesterName) => {
-        editSemester(oldSemesterName, newSemesterName)
+    const handleEditDeleteSemFDEditSemester = (semesterId, newSemesterName) => {
+        editSemester(semesterId, newSemesterName)
         handleEditDeleteSemFDClose();
     };
 
-    const handleEditDeleteSemFDDeleteSemester = (semesterName) => {
-        deleteSemester(semesterName)
+    const handleEditDeleteSemFDDeleteSemester = (semesterId) => {
+        deleteSemester(semesterId)
         handleEditDeleteSemFDClose();
     };
   return (

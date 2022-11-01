@@ -88,7 +88,6 @@ export default function FormAddSemesterDialog(props) {
             value={semesterName}
             onChange={e => {
                 setSemesterName(e.target.value);
-                // console.log(e);
             }}
             sx={semesterSelectionName ? {display: {xs: 'block'}} : {display: {xs: 'none'}}}
           />
@@ -96,13 +95,13 @@ export default function FormAddSemesterDialog(props) {
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={() => {
-            props.handleEditSemester(semesterSelection.name, semesterName);
+            props.handleEditSemester(semesterSelection._id, semesterName);
             blankStates();
           }}
             sx={semesterSelectionName ? {display: {xs: 'block'}} : {display: {xs: 'none'}}}
           >Edit Semester</Button>
           <Button onClick={() => {
-            props.handleDeleteSemester(semesterSelection.name);
+            props.handleDeleteSemester(semesterSelection._id);
             blankStates();
           }}
             sx={semesterSelectionName ? {display: {xs: 'block'}} : {display: {xs: 'none'}}}

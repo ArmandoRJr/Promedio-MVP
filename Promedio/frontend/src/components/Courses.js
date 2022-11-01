@@ -107,7 +107,7 @@ function Courses({handleClose, id}) {
   function handleClick() {
     // TODO: Add validation
     if (id) {
-      post(`/courses/${id}`, formState).then((response) => {
+      patch(`course/${id}`, formState).then((response) => {
         if (isCourseValid(response)) {
           setFormState({
             ...formState,
@@ -116,7 +116,7 @@ function Courses({handleClose, id}) {
         }
       });
     } else {
-      patch('/courses', formState).then((response) => {
+      post('course', formState).then((response) => {
         if (isCourseValid(response)) {
           setFormState({
             ...formState,

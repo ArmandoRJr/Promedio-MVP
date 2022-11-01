@@ -58,9 +58,9 @@ const Sidebar = () => {
     const [sidebarData, setSidebarData] = useState([]);
 
     const getSemesters = () => {
-        const user = JSON.parse(localStorage.getItem('authUser'))
 
-        get(`/user/${user._id}/semester`).then((response) => {
+        get(`semester`).then((response) => {
+            console.log(response.data);
             setSemesters(response.data);
             makeSidebarData(response.data);
         }
@@ -120,9 +120,8 @@ const Sidebar = () => {
 
 
     const addSemester = (semesterName) => {
-        const user = JSON.parse(localStorage.getItem('authUser'));
 
-        post(`/user/${user._id}/semester`, {semesterName: semesterName})
+        post(`semester`, {semesterName: semesterName})
             .then((res) => {
                 setSemesters([
                     ...semesters,
@@ -159,13 +158,13 @@ const Sidebar = () => {
             });
     }
 
-    const editSemester = (oldSemesterName, newSemesterName) => {
-        const user = JSON.parse(localStorage.getItem('authUser'));
-
-        patch(`/user/${user._id}/semester/${oldSemesterName}`, {semesterName: newSemesterName})
+    const editSemester = (semesterId, newSemesterName) => {
+        patch(`semester/${semesterId}`, {semesterName: newSemesterName})
             .then((res) => {
+                const oldSemesterData = semesters.find(semester => semester._id === semesterId)
+
                 setSemesters(semesters.map((semester) => {
-                    if (semester.name === oldSemesterName) {
+                    if (semester._id === semesterId) {
                         return {
                             ...semester,
                             name: newSemesterName
@@ -175,7 +174,7 @@ const Sidebar = () => {
                 }))
 
                 setSidebarData(sidebarData.map((sidebarData) => {
-                    if (sidebarData.title === oldSemesterName) return {
+                    if (sidebarData.title === oldSemesterData.name) return {
                         ...sidebarData,
                         title: newSemesterName,
                     }
@@ -187,19 +186,19 @@ const Sidebar = () => {
             });
     }
 
-    const deleteSemester = (semesterName) => {
-        const user = JSON.parse(localStorage.getItem('authUser'));
+    const deleteSemester = (semesterId) => {
 
-        del(`/user/${user._id}/semester/${semesterName}`)
+        del(`semester/${semesterId}`)
             .then((res) => {
+                const semesterData = semesters.find(semester => semester._id === semesterId)
+
                 const semestersToSet = semesters.filter(semester =>
-                    semester.name !== semesterName)
+                    semester._id !== semesterData._id)
+                console.log(semestersToSet)
                 setSemesters(semestersToSet)
                 const sidebarDataToSet = sidebarData.filter(siderbarData =>
-                    siderbarData.title !== semesterName)
+                    siderbarData.title !== semesterData.name)
                 setSidebarData(sidebarDataToSet)
-
-
             })
             .catch((err) => {
                 console.log(err);
