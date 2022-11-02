@@ -35,10 +35,10 @@ const addCategory = (req, res, next) => {
 
 const editCategory = (req, res, next) => {
   const categoryId = req.body.id;
-  const courseId = req.body.name;
-  const categories = req.body.categories; // ['Exam', 'TT1', 'TT2']
-  const weight = req.body.weight; // ['30', '40', '50']
-  const mark = req.body.mark; // ['30', '40', '50']
+  const courseId = req.body.courseId;
+  const categories = req.body.categories;
+  const weight = req.body.weight;
+  const mark = req.body.mark;
 
   category.findByIdAndUpdate(
     categoryId,
