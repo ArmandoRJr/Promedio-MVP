@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components'
-import { get } from '../api';
+import { get, post } from '../api';
 
 const FullWidthDiv = styled.div`
   width: 100%;
@@ -17,6 +17,17 @@ const CenteredDiv = styled.div`
   flex-direction: column;
   align-items: center;
   height: 100%;
+`;
+
+const FormInput = styled.input`
+  background-color: ${({theme}) => theme.colors.white};
+  color: ${({theme}) => theme.colors.black};
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  font-weight: bold;
 `;
 
 const FlexRow = styled.div`
@@ -61,6 +72,10 @@ const SemesterCard = styled.div`
 function Welcome() {
   const navigate = useNavigate();
   const [semesters, setSemesters] = React.useState([]);
+  const [formState, setFormState] = React.useState({
+    name: '',
+  });
+  const [isEditing, setIsEditing] = React.useState(false);
 
   // on load make a get request to semesters
   React.useEffect(() => {
@@ -82,6 +97,27 @@ function Welcome() {
             </SemesterCard>
           ))}
         </FlexRow>
+        {isEditing ? (
+          <FlexRow>
+          <FormInput
+            type="text"
+            value={formState.name}
+            onChange={(e) => setFormState({...formState, name: e.target.value})}
+          />
+          <SemesterButton onClick={() => {
+              post(`semester`, {name: formState.name}).then((res) => {
+                get('semester').then((res) => {
+                  setSemesters(res.data);
+                });
+                setIsEditing(false);
+              });
+           }}>
+            Save
+           </SemesterButton>
+          </FlexRow>
+        ) : <SemesterButton onClick={() => { setIsEditing(true) }}>
+            Add Semester
+          </SemesterButton>}
       </CenteredDiv>
     </FullWidthDiv>
   );

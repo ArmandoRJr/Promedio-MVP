@@ -132,7 +132,7 @@ function Courses({handleClose, id, semester, course}) {
   }
 
   function handleDelete() {
-    del(`/courses/${id}`).then((response) => {
+    del(`course/${id}`).then((response) => {
       handleClose();
     });
   }

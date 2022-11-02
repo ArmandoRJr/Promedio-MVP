@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router';
 import styled from 'styled-components'
-import { get, patch } from '../api';
+import { get } from '../api';
 import Courses from '../components/EditCourseForm';
 
 const FullWidthDiv = styled.div`
@@ -36,15 +36,6 @@ const CenteredDiv = styled.div`
   height: 100%;
 `;
 
-const FlexRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-`;
-
 // create a thin text button that is a back button
 const BackButton = styled.button`
   background-color: transparent;
@@ -77,23 +68,9 @@ const CourseCard = styled.div`
   padding: 20px;
   margin: 20px;
   border-radius: 5px;
-  &:hover {
-    opacity: 0.8;
-  }
   font-size: 1.2rem;
   font-weight: bold;
-  cursor: pointer;
-`;
-
-const FormInput = styled.input`
-  background-color: ${({theme}) => theme.colors.white};
-  color: ${({theme}) => theme.colors.black};
-  padding: 10px 20px;
-  margin: 10px;
-  border: none;
-  border-radius: 5px;
-  font-size: 1.2rem;
-  font-weight: bold;
+  width: 80%;
 `;
 
 function CourseDetails() {
@@ -140,10 +117,9 @@ function CourseDetails() {
             }}
           />
         ) : (
-          <div>
-            <h1>Course</h1>
-            {course ? (
-              <>
+            course ? (
+              <CourseCard>
+                  <h1>Course</h1>
                   <InfoContainer>
                     <Heading>Name</Heading>
                     <h3>{course.name}</h3>
@@ -159,11 +135,10 @@ function CourseDetails() {
                   <CourseButton onClick={() => { setIsEditing(true) }}>
                     Edit Course
                   </CourseButton>
-                </>
+                </CourseCard>
             ) : (
               <h3>Course not found.</h3>
-            )}
-          </div>
+            )
         )}
       </CenteredDiv>
     </FullWidthDiv>

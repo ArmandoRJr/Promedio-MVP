@@ -107,7 +107,7 @@ const deleteAllSemesters = (req, res, next) => {
 
 ///// Requests Targetting a *** SPECIFIC *** Semester /////
 const createSemester = (req, res, next) => {
-  const semesterName = req.body.semesterName;
+  const semesterName = req.body.name;
   const userId = verifyUser(req.headers);
   if (!userId || !semesterName)
     {
