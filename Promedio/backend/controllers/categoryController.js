@@ -17,7 +17,7 @@ const addCategory = (req, res, next) => {
         res.json({
           message: "Category added successfully.",
           category: {
-            ...newUser.toObject(),
+            ...newCategory.toObject(),
           },
         });
       } else {
