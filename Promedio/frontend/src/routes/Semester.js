@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router';
 import styled from 'styled-components'
-import { get, patch } from '../api';
+import { del, get, patch } from '../api';
 import CourseModal from '../components/FormCourseDialog';
 
 const FullWidthDiv = styled.div`
@@ -82,6 +82,22 @@ const FormInput = styled.input`
   margin: 10px;
   border: none;
   border-radius: 5px;
+  font-size: 1.2rem;
+  font-weight: bold;
+`;
+
+// small red button to delete a course
+const DeleteButton = styled.button`
+  background-color: ${({theme}) => theme.colors.red};
+  color: ${({theme}) => theme.colors.white};
+  cursor: pointer;
+  padding: 5px 10px;
+  margin: 20px;
+  border: none;
+  border-radius: 3px;
+  &:hover {
+    opacity: 0.8;
+  }
   font-size: 1.2rem;
   font-weight: bold;
 `;
@@ -180,6 +196,14 @@ function SemesterDetails() {
             Add Course
           </SemesterButton>
         </FlexRow>
+        <DeleteButton onClick={() => {
+          del(`semester/${id}`).then((res) => {
+            navigate('/semesters');
+          }
+          );
+        }}>
+          Delete Semester
+          </DeleteButton>
       </CenteredDiv>
     </FullWidthDiv>
   );
