@@ -3,13 +3,14 @@ const router = express.Router();
 
 const SemesterController = require("../controllers/semesterController");
 
-router.route("/user/:userId/semester/:semesterName")
-    .get(SemesterController.getSemester)
-    .patch(SemesterController.updateSemester)
-    .delete(SemesterController.removeSemester)
-    
-router.route("/user/:userId/semester")
+router.route("/semester")
     .get(SemesterController.getAllSemesters)
     .post(SemesterController.createSemester)
+    .delete(SemesterController.deleteAllSemesters)
+
+router.route("/semester/:semesterId")
+    .get(SemesterController.getSingleSemester)
+    .patch(SemesterController.updateSemester)
+    .delete(SemesterController.deleteSingleSemester)
 
 module.exports = router;

@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { get, patch, post, del } from '../api/index';
+import { patch, post, del } from '../api/index';
 import { isCourseValid } from "../utils/validate";
 
 const FullWidthDiv = styled.div`
@@ -68,17 +68,14 @@ const InfoContainer = styled.div`
   flex-direction: column;
 `;
 
-function Courses({handleClose, id}) {
+function Courses({handleClose, id, semester, course}) {
   const navigate = useNavigate();
   const [formState, setFormState] = React.useState({
-    _id: '',
-    name: '',
-    description: '',
-    markGoal: '',
-    semester: '',
+    name: course?.name || "",
+    description: course?.description || "",
+    markGoal: course?.markGoal || "",
+    semester: semester,
   });
-  // id means there is an existing course that you are editing
-  const [isEditable, setIsEditable] = React.useState(!id);
 
   const handleChangeFormState = (event) => {
     setFormState({
@@ -88,77 +85,56 @@ function Courses({handleClose, id}) {
   };
 
   React.useEffect(() => {
-    if (id) {
-      get(`/courses/${id}`).then((response) => {
-        if (isCourseValid(response)) {
-          setFormState({
-            ...formState,
-            ...response.data,
-          });
-        }
-      }).catch((error) => {
-        console.log(error);
-        navigate('/home');
-        // Course not found
+    if (semester) {
+      setFormState({
+        ...formState,
+        semester: semester,
       });
     }
-  }, [formState, id, navigate]);
+  }, [semester]);
+
+
+  React.useEffect(() => {
+    if (course) {
+      setFormState({
+        ...formState,
+        name: course.name,
+        description: course.description,
+        markGoal: course.markGoal,
+      });
+    }
+  }, [course]);
 
   function handleClick() {
     // TODO: Add validation
     if (id) {
-      post(`/courses/${id}`, formState).then((response) => {
+      patch(`course/${id}`, formState).then((response) => {
         if (isCourseValid(response)) {
           setFormState({
             ...formState,
             ...response.data,
           });
         }
+        handleClose();
       });
     } else {
-      patch('/courses', formState).then((response) => {
+      post('course', formState).then((response) => {
         if (isCourseValid(response)) {
           setFormState({
             ...formState,
             ...response.data,
           });
         }
+        handleClose();
       }
       );
     }
   }
 
   function handleDelete() {
-    del(`/courses/${id}`).then((response) => {
+    del(`course/${id}`).then((response) => {
       handleClose();
     });
-  }
-
-  if (!isEditable) {
-    return (
-      <FullWidthDiv>
-        <h1>Course.</h1>
-        <InfoContainer>
-          <Heading>Semester</Heading>
-          <h3>{formState.semester}</h3>
-        </InfoContainer>
-        <InfoContainer>
-          <Heading>Name</Heading>
-          <h3>{formState.name}</h3>
-        </InfoContainer>
-        <InfoContainer>
-          <Heading>Description</Heading>
-          <h3>{formState.description}</h3>
-        </InfoContainer>
-        <InfoContainer>
-          <Heading>Mark Goal</Heading>
-          <h3>{formState.markGoal}</h3>
-        </InfoContainer>
-        <MarginTopRow>
-          <UserButton onClick={() => setIsEditable(true)}>Edit</UserButton>
-        </MarginTopRow>
-      </FullWidthDiv>
-    )
   }
 
   return (
@@ -199,13 +175,7 @@ function Courses({handleClose, id}) {
         {!!id &&
         <UserButton onClick={handleDelete}>Delete</UserButton>}
         <UserButton onClick={() => {
-          // If you're adding a new course and hit cancel
-          // you should be redirected to the home page
-          if (id) {
-            setIsEditable(false);
-          } else {
             handleClose();
-          }
         }}
       >Cancel</UserButton>
       </MarginTopRow>
