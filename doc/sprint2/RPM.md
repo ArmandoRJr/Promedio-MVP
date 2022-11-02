@@ -29,9 +29,9 @@ Sprint 2:
 Sprint 3:
 - Users are able to view courses in a list of all courses `(PROM-20)`
 - Users are able to view courses by Semester `(PROM-12)`
-- Users are able to add & view the preview of the sheet before adding a new category. `(PROM-10)`
+- Users are able to add a new category. `(PROM-10)`
+- Users are able to preview new category. `(PROM-25)`
 - Users are able to edit/delete categories. `(PROM-8)`
-- Users are able to add/edit/delete grades into specific sheets. `(PROM-9)`
 
 
 Sprint 4:
@@ -39,13 +39,14 @@ Sprint 4:
 - Users are able to view GPA for a select subset of courses. `(PROM-16)`
 - Users are able to view GPA for all courses or by semester. `(PROM-15)`
 - Users are able to view how much of a course they have completed. `(PROM-11)`
-- Users are able to graph their average grades by course/semester. `(PROM-21)`
+- Users are able to add/edit/delete grades into specific sheets. `(PROM-9)`
 
 
 To be deleted
 - Users are able to toggle between light/dark theme. 
 - Users are able share their progress in a course through URLs. 
 - Users are able to export sheets as raw CSV/Google Sheets/Excel files. 
+- Users are able to graph their average grades by course/semester. `(PROM-21)`
 
 ---
 ## Participants: 
