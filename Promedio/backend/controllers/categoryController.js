@@ -17,6 +17,28 @@ const addCategory = (req, res, next) => {
   });
 };
 
+
+const editCategory = (req, res, next) => {
+  const userId = req.body.id;
+  const courseId = req.body.name;
+  const categories = req.body.categories;
+  const weight = req.body.weight;
+  const mark = req.body.mark;
+
+  category.findByIdAndUpdate(
+    id,
+    { $set: { userId: userId, courseId: courseId, categories: categories, weight: weight, mark: mark } },
+    { new: true },
+    (err, doc) => {
+      if (err) {
+        console.log("Something wrong when updating data!");
+      }
+
+      console.log(doc);
+    }
+  ); 
+};
+
 module.exports = {
   addCategory,
   editCategory,
