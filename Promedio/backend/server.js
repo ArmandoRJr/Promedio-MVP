@@ -8,7 +8,6 @@ const server_port = process.env.SERVER_PORT || 5000;
 const { connectDatabase } = require("./config/database");
 const authRoute = require("./routes/authRoute");
 const updateRoute = require("./routes/updateRoute");
-const authRoute = require("./routes/authRoute");
 const categoryRoute = require("./routes/categoryRoute");
 
 connectDatabase();

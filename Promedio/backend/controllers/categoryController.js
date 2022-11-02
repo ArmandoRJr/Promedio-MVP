@@ -65,5 +65,4 @@ const editCategory = (req, res, next) => {
 module.exports = {
   addCategory,
   editCategory,
-  deleteCategory,
 };
