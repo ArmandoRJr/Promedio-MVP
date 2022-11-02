@@ -6,7 +6,7 @@ const user = require("../models/user");
   * Wrapper for searching for userId before even doing anything.
   * Necessary for semesters given they're inherently attached
   * to an existing user, and should only be modified by said user.
-  * 
+  *
   * Right now, we only check if it's existing, and NOT if the user
   * that is being passed is the currently logged in user, but
   * we'll fix...eventually.
@@ -17,7 +17,7 @@ const user = require("../models/user");
     else {
       if (foundUser){
 
-        // INSERT FUNCTION HERE!!!!! 
+        // INSERT FUNCTION HERE!!!!!
 
       } else {
         next({
@@ -27,11 +27,11 @@ const user = require("../models/user");
         });
     }
     }
-  }) 
+  })
 
   console.log(foundSemesters.map(semester => semester._id.toString()))
-            
-*/ 
+
+*/
 
 const verifyUser = (headers) => {
     return JSON.parse(headers.authorization)._id;
@@ -50,7 +50,7 @@ const getAllSemesters = (req, res, next) => {
         });
         return;
     }
-    
+
     semester.find({userId: userId}, (err, foundSemesters) => {
         if (err) { next(err); }
         else
@@ -58,11 +58,11 @@ const getAllSemesters = (req, res, next) => {
             res.send(foundSemesters)
         }
     })
-    
+
 }
 
 const deleteAllSemesters = (req, res, next) => {
-    
+
     const userId = verifyUser(req.headers);
     if (!userId)
     {
@@ -73,7 +73,7 @@ const deleteAllSemesters = (req, res, next) => {
         });
         return;
     }
-    
+
     semester.find({userId: userId}, (err, foundSemesters) => {
         if (err) { next(err); }
         else
@@ -118,7 +118,7 @@ const createSemester = (req, res, next) => {
         });
         return;
     }
-  
+
   user.findById(userId, (err, foundUser) => {
     if (err) { next(err); }
     else {
@@ -151,7 +151,7 @@ const createSemester = (req, res, next) => {
           })
           .catch(err => {
               next(err);
-          }) 
+          })
       } else {
         next({
             message: "User not found, cannot proceed with semester creation.",
@@ -179,7 +179,7 @@ const getSingleSemester = (req, res, next) => {
         });
         return;
     }
-  
+
   semester.findOne({userId: userId, _id: semesterId}, (err, foundSemester) => {
     if (err) { next(err); }
     else
@@ -204,7 +204,7 @@ const updateSemester = (req, res, next) => {
 
     const semesterId = req.params.semesterId;
     const userId = verifyUser(req.headers);
-    const semesterName = req.body.semesterName;
+    const semesterName = req.body.name;
 
 
     if (!userId || !semesterId || !semesterName)
@@ -221,7 +221,7 @@ const updateSemester = (req, res, next) => {
         {userId: userId, _id: semesterId},
         { $set : {name: semesterName} },
         (err, eventData) => {
-            if (err) 
+            if (err)
             {
                 next(err);
             }
@@ -270,7 +270,7 @@ const deleteSingleSemester = (req, res, next) => {
         });
         return;
     }
-  
+
   semester.deleteOne({_id: semesterId, userId: userId}, (err, eventData) => {
     if (err) { next(err); }
     else
@@ -342,7 +342,7 @@ module.exports = {
     getSingleSemester,
     getAllSemesters,
     updateSemester,
-    deleteSemester, 
+    deleteSemester,
     deleteSingleSemester,
     deleteAllSemesters,
     createSemester

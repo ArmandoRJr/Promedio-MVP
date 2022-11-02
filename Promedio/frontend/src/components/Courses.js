@@ -76,8 +76,6 @@ function Courses({handleClose, id, semester}) {
     markGoal: '',
     semester: semester,
   });
-  // id means there is an existing course that you are editing
-  const [isEditable, setIsEditable] = React.useState(!id);
 
   const handleChangeFormState = (event) => {
     setFormState({
@@ -105,8 +103,6 @@ function Courses({handleClose, id, semester}) {
           });
         }
       }).catch((error) => {
-        console.log(error);
-        navigate('/home');
         // Course not found
       });
     }
@@ -142,33 +138,6 @@ function Courses({handleClose, id, semester}) {
     del(`/courses/${id}`).then((response) => {
       handleClose();
     });
-  }
-
-  if (!isEditable) {
-    return (
-      <FullWidthDiv>
-        <h1>Course.</h1>
-        <InfoContainer>
-          <Heading>Semester</Heading>
-          <h3>{formState.semester}</h3>
-        </InfoContainer>
-        <InfoContainer>
-          <Heading>Name</Heading>
-          <h3>{formState.name}</h3>
-        </InfoContainer>
-        <InfoContainer>
-          <Heading>Description</Heading>
-          <h3>{formState.description}</h3>
-        </InfoContainer>
-        <InfoContainer>
-          <Heading>Mark Goal</Heading>
-          <h3>{formState.markGoal}</h3>
-        </InfoContainer>
-        <MarginTopRow>
-          <UserButton onClick={() => setIsEditable(true)}>Edit</UserButton>
-        </MarginTopRow>
-      </FullWidthDiv>
-    )
   }
 
   return (
@@ -209,13 +178,7 @@ function Courses({handleClose, id, semester}) {
         {!!id &&
         <UserButton onClick={handleDelete}>Delete</UserButton>}
         <UserButton onClick={() => {
-          // If you're adding a new course and hit cancel
-          // you should be redirected to the home page
-          if (id) {
-            setIsEditable(false);
-          } else {
             handleClose();
-          }
         }}
       >Cancel</UserButton>
       </MarginTopRow>

@@ -8,8 +8,9 @@ import {
 import App from "./routes/App";
 import Login from "./routes/Login";
 import Signup from "./routes/Signup";
-import Home from "./routes/Home";
 import Welcome from "./routes/Welcome";
+import AllSemesters from "./routes/AllSemesters";
+import Semester from "./routes/Semester";
 import "./styles/globals.css";
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import Globals from './styles/globals.css';
@@ -30,7 +31,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/welcome" element={<Welcome />} />
-              <Route path="/home" element={<Home />} />
+              <Route path="/semesters" element={<AllSemesters />} />
+              <Route path="/semesters/:id" element={<Semester />} />
               <Route path="/user" element={<User />} />
             </Route>
           </Routes>

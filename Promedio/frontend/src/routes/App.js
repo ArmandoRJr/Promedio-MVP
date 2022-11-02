@@ -3,6 +3,7 @@ import { Outlet, useNavigate } from 'react-router';
 import styled from 'styled-components'
 import { isAuthUserValid }from '../utils/validate';
 import { Navbar } from '../components/Navbar';
+import { authRoutes } from '../utils/config';
 
 const AppContainer = styled.div`
   display: flex;
@@ -22,7 +23,9 @@ function App() {
       const parsedUser = JSON.parse(localUser);
       if (isAuthUserValid(parsedUser)) {
         setAuthUser(parsedUser);
-        navigate('/home');
+        if (!authRoutes.includes(window.location.pathname)) {
+          navigate('/semesters');
+        }
       } else {
         localStorage.removeItem('authUser');
         navigate('/welcome');
@@ -36,7 +39,9 @@ function App() {
   React.useEffect(() => {
     if (isAuthUserValid(authUser)) {
       localStorage.setItem('authUser', JSON.stringify(authUser));
-      navigate('/home');
+      if (!authRoutes.includes(window.location.pathname)) {
+        navigate('/semesters');
+      }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authUser]);
