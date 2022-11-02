@@ -141,7 +141,7 @@ const SubMenu = ({item, addNewSemester, editSemester, deleteSemester, semesterDa
     }
 
     const handleAddCourseFDClose = () => {
-    setIsOpenAddCourseFDialog(false);
+        setIsOpenAddCourseFDialog(false);
     };
 
     const [isOpenEditDeleteSemFDialog, setIsOpenEditDeleteSemFDialog] = useState(false);
@@ -178,6 +178,7 @@ const SubMenu = ({item, addNewSemester, editSemester, deleteSemester, semesterDa
         <FormCourseDialog
             open={isOpenAddCourseFDialog}
             id={selectedCourseId}
+            semester={semesterData.length ? semesterData[0]._id : undefined}
             handleClose={handleAddCourseFDClose}
         />
         <FormEditDeleteSemesterDialog

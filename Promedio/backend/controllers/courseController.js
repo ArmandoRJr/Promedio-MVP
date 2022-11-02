@@ -1,32 +1,6 @@
 const course = require("../models/course");
 const semester = require("../models/semester");
 
-/* 
-    * Wrapper.
-
-
-    semester.findOne({userId: req.params.userId, name: req.params.semesterName},
-        (err, foundSemester) => {
-            if (err) { next(err); }
-            else {
-                if (foundSemester) {
-                    semesterId = foundSemester._id
-
-                    // FUNCTION HERE
-
-                } else {
-                    next({
-                        message: "Semester not found",
-                        status: 500,
-                        stack: "Semester not found",
-                    });
-                }
-            }
-        })
-
-
-*/ 
-
 const verifyUser = (headers) => {
     return JSON.parse(headers.authorization)._id;
 }
@@ -121,14 +95,22 @@ const getSingleCourse = (req, res, next) => {
         return;
     }
 
-    course.findOne({semesterId: semesterId, name: courseName}, (err, foundCourse) => {
+    course.findOne({
+        semesterId: semesterId,
+        name: courseName,
+    }, (err, foundCourse) => {
         if (err) { next(err); }
         else
         {
             if (foundCourse)
             {
                 const semesterId = foundCourse.semesterId
-                semester.findOne({userId: userId, _id: semesterId},
+                semester.findOne({
+                    userId: userId,
+                    _id: semesterId,
+                    description: description,
+                    markGoal: markGoal,
+                },
                     (err, foundSemester) => {
                         if (err) { next(err); }
                         else {
@@ -153,19 +135,21 @@ const getSingleCourse = (req, res, next) => {
                 });
             }
         }
-    })    
+    })
 }
 
 const createCourse = (req, res, next) => {
     const userId = verifyUser(req.headers);
-    const semesterId = req.query.semesterId;
-    const courseName = req.body.courseName;
+    const semesterId = req.body.semester;
+    const courseName = req.body.name;
+    const description = req.body.description;
+    const markGoal = req.body.markGoal;
     if (!userId || !semesterId || !courseName)
     {
         next({
             message: "Missing parameters.",
             status: 400,
-            stack: "Missing parameters.",
+            stack: "Missing parameters." + userId + semesterId + courseName,
         });
         return;
     }
@@ -177,9 +161,11 @@ const createCourse = (req, res, next) => {
                 if (foundSemester) {
                     let newCourse = new course({
                         name: courseName,
-                        semesterId: foundSemester._id
+                        semesterId: foundSemester._id,
+                        description: description,
+                        markGoal: markGoal,
                     });
-                
+
                     newCourse
                         .save()
                         .then(newCourse => {
@@ -213,7 +199,7 @@ const createCourse = (req, res, next) => {
                 }
             }
         })
-    
+
 }
 
 const updateCourse = (req, res, next) => {
@@ -221,6 +207,8 @@ const updateCourse = (req, res, next) => {
     const userId = verifyUser(req.headers);
     const courseName = req.body.courseName;
     const courseId = req.query.courseId;
+    const description = req.body.description;
+    const markGoal = req.body.markGoal;
     if (!userId || !courseName || !courseId)
     {
         next({
@@ -251,12 +239,16 @@ const updateCourse = (req, res, next) => {
                                         stack: "Course does not belong to the user.",
                                     });
                                 }
-                                
+
                                 course.updateOne(
                                     {_id: courseId},
-                                    { $set : {name: req.body.courseName} },
+                                    { $set : {
+                                        name: courseName,
+                                        description: description,
+                                        markGoal: markGoal,
+                                    } },
                                     (err, eventData) => {
-                                        if (err) 
+                                        if (err)
                                         {
                                             next(err);
                                         }
@@ -307,7 +299,7 @@ const updateCourse = (req, res, next) => {
                 });
             }
         }
-    }) 
+    })
 
 }
 
@@ -345,7 +337,7 @@ const deleteSingleCourse = (req, res, next) => {
                                         stack: "Course does not belong to the user.",
                                     });
                                 }
-                                
+
                                 course.deleteOne({_id: courseId}, (err, eventData) => {
                                     if (err) { next(err); }
                                     else
@@ -386,8 +378,8 @@ const deleteSingleCourse = (req, res, next) => {
                 });
             }
         }
-    }) 
-    
+    })
+
 }
 
 ///// Functions redirecting to corresponding function. /////

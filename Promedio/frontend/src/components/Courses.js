@@ -68,14 +68,13 @@ const InfoContainer = styled.div`
   flex-direction: column;
 `;
 
-function Courses({handleClose, id}) {
+function Courses({handleClose, id, semester}) {
   const navigate = useNavigate();
   const [formState, setFormState] = React.useState({
-    _id: '',
     name: '',
     description: '',
     markGoal: '',
-    semester: '',
+    semester: semester,
   });
   // id means there is an existing course that you are editing
   const [isEditable, setIsEditable] = React.useState(!id);
@@ -86,6 +85,15 @@ function Courses({handleClose, id}) {
       [event.target.name]: event.target.value,
     });
   };
+
+  React.useEffect(() => {
+    if (semester) {
+      setFormState({
+        ...formState,
+        semester: semester,
+      });
+    }
+  }, [semester]);
 
   React.useEffect(() => {
     if (id) {
@@ -113,6 +121,7 @@ function Courses({handleClose, id}) {
             ...formState,
             ...response.data,
           });
+          handleClose();
         }
       });
     } else {
@@ -122,6 +131,7 @@ function Courses({handleClose, id}) {
             ...formState,
             ...response.data,
           });
+          handleClose();
         }
       }
       );
