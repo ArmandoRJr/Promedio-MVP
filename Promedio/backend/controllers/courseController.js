@@ -95,35 +95,13 @@ const getSingleCourse = (req, res, next) => {
         return;
     }
 
-    course.findOne({
-        courseId: courseId,
-    }, (err, foundCourse) => {
+    course.findOne({userId: userId, _id: courseId}, (err, foundCourse) => {
         if (err) { next(err); }
         else
         {
             if (foundCourse)
             {
-                const semesterId = foundCourse.semesterId
-                semester.findOne({
-                    userId: userId,
-                    _id: semesterId,
-                    ...(foundCourse.description && {description: foundCourse.description}),
-                    ...(foundCourse.markGoal && {markGoal: foundCourse.markGoal}),
-                },
-                    (err, foundSemester) => {
-                        if (err) { next(err); }
-                        else {
-                            if (foundSemester) {
-                                res.json(foundCourse);
-                            } else {
-                                next({
-                                    message: "Semester attached to course not found.",
-                                    status: 404,
-                                    stack: "Semester attached to course not found.",
-                                });
-                            }
-                        }
-                    })
+                res.send(foundCourse);
             }
             else
             {
@@ -134,7 +112,8 @@ const getSingleCourse = (req, res, next) => {
                 });
             }
         }
-    })
+    }
+    )
 }
 
 const createCourse = (req, res, next) => {

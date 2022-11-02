@@ -76,26 +76,26 @@ const CourseCard = styled.div`
 function CourseDetails() {
   const navigate = useNavigate();
   // get id from react router
-  const { id, courseId } = useParams();
+  const { id: semesterId, courseId } = useParams();
   const [course, setCourse] = React.useState(undefined);
   const [isEditing, setIsEditing] = React.useState(false);
 
 
   // on load make a get request to courses
   React.useEffect(() => {
-    if (!id) {
+    if (!semesterId) {
       navigate('/semesters');
       return;
     }
     if (!courseId) {
-      navigate(`/semesters/${id}`);
+      navigate(`/semesters/${semesterId}`);
       return;
     }
     handleGetCourse();
   }, []);
 
   const handleGetCourse = () => {
-    get(`course/${id}`).then((res) => {
+    get(`course/${courseId}`).then((res) => {
       setCourse(res.data);
     });
   };
@@ -103,12 +103,12 @@ function CourseDetails() {
   return (
     <FullWidthDiv>
       <CenteredDiv>
-        <BackButton onClick={() => navigate(`/semesters/${id}`)}>Back</BackButton>
+        <BackButton onClick={() => navigate(`/semesters/${semesterId}`)}>Back</BackButton>
 
         {isEditing ? (
           <Courses
             id={courseId}
-            semester={id}
+            semester={semesterId}
             open={isEditing}
             course={course}
             handleClose={() => {
