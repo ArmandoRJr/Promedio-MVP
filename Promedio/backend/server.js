@@ -8,11 +8,13 @@ const server_port = process.env.SERVER_PORT || 5000;
 const { connectDatabase } = require("./config/database");
 const authRoute = require("./routes/authRoute");
 const updateRoute = require("./routes/updateRoute");
+const authRoute = require("./routes/authRoute");
+const categoryRoute = require("./routes/categoryRoute");
+
 connectDatabase();
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -28,6 +30,7 @@ app.use(cors(corsOptions));
 app.use("/api/sheets", require("./routes/sheetRoutes"));
 app.use("/api", authRoute);
 app.use("/api", updateRoute);
+app.use("/api", categoryRoute);
 const {
   logErrors,
   errorHandler,
