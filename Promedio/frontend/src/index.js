@@ -10,6 +10,7 @@ import Login from "./routes/Login";
 import Signup from "./routes/Signup";
 import Welcome from "./routes/Welcome";
 import AllSemesters from "./routes/AllSemesters";
+import AllCourses from "./routes/AllCourses";
 import Semester from "./routes/Semester";
 import "./styles/globals.css";
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
@@ -32,6 +33,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/welcome" element={<Welcome />} />
+              <Route path="/courses" element={<AllCourses />} />
               <Route path="/semesters" element={<AllSemesters />} />
               <Route path="/semesters/:id" element={<Semester />} />
               <Route path="/semesters/:id/courses/:courseId" element={<CourseDetails />} />
