@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { get, patch, post, del } from '../api/index';
+import { patch, post, del } from '../api/index';
 import { isCourseValid } from "../utils/validate";
 
 const FullWidthDiv = styled.div`
@@ -68,12 +68,12 @@ const InfoContainer = styled.div`
   flex-direction: column;
 `;
 
-function Courses({handleClose, id, semester}) {
+function Courses({handleClose, id, semester, course}) {
   const navigate = useNavigate();
   const [formState, setFormState] = React.useState({
-    name: '',
-    description: '',
-    markGoal: '',
+    name: course?.name || "",
+    description: course?.description || "",
+    markGoal: course?.markGoal || "",
     semester: semester,
   });
 
@@ -93,20 +93,17 @@ function Courses({handleClose, id, semester}) {
     }
   }, [semester]);
 
+
   React.useEffect(() => {
-    if (id) {
-      get(`/courses/${id}`).then((response) => {
-        if (isCourseValid(response)) {
-          setFormState({
-            ...formState,
-            ...response.data,
-          });
-        }
-      }).catch((error) => {
-        // Course not found
+    if (course) {
+      setFormState({
+        ...formState,
+        name: course.name,
+        description: course.description,
+        markGoal: course.markGoal,
       });
     }
-  }, [formState, id, navigate]);
+  }, [course]);
 
   function handleClick() {
     // TODO: Add validation

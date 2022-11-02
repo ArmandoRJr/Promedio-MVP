@@ -84,7 +84,7 @@ const deleteAllCourses = (req, res, next) => {
 const getSingleCourse = (req, res, next) => {
 
     const userId = verifyUser(req.headers);
-    const courseId = req.query.courseId;
+    const courseId = req.params.courseId;
     if (!userId || !courseId)
     {
         next({
@@ -96,8 +96,7 @@ const getSingleCourse = (req, res, next) => {
     }
 
     course.findOne({
-        semesterId: semesterId,
-        name: courseName,
+        courseId: courseId,
     }, (err, foundCourse) => {
         if (err) { next(err); }
         else
@@ -108,8 +107,8 @@ const getSingleCourse = (req, res, next) => {
                 semester.findOne({
                     userId: userId,
                     _id: semesterId,
-                    description: description,
-                    markGoal: markGoal,
+                    ...(foundCourse.description && {description: foundCourse.description}),
+                    ...(foundCourse.markGoal && {markGoal: foundCourse.markGoal}),
                 },
                     (err, foundSemester) => {
                         if (err) { next(err); }
@@ -162,8 +161,8 @@ const createCourse = (req, res, next) => {
                     let newCourse = new course({
                         name: courseName,
                         semesterId: foundSemester._id,
-                        description: description,
-                        markGoal: markGoal,
+                        ...(description && {description: description}),
+                        ...(markGoal && {markGoal: markGoal}),
                     });
 
                     newCourse
@@ -205,8 +204,8 @@ const createCourse = (req, res, next) => {
 const updateCourse = (req, res, next) => {
 
     const userId = verifyUser(req.headers);
-    const courseName = req.body.courseName;
-    const courseId = req.query.courseId;
+    const courseName = req.body.name;
+    const courseId = req.params.courseId;
     const description = req.body.description;
     const markGoal = req.body.markGoal;
     if (!userId || !courseName || !courseId)
@@ -306,7 +305,7 @@ const updateCourse = (req, res, next) => {
 const deleteSingleCourse = (req, res, next) => {
 
     const userId = verifyUser(req.headers);
-    const courseId = req.query.courseId;
+    const courseId = req.params.courseId;
     if (!userId || !courseId)
     {
         next({

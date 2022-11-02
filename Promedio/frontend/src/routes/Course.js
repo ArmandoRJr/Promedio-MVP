@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router';
 import styled from 'styled-components'
 import { get, patch } from '../api';
+import Courses from '../components/EditCourseForm';
 
 const FullWidthDiv = styled.div`
   width: 100%;
@@ -60,6 +61,16 @@ const BackButton = styled.button`
   font-weight: bold;
 `;
 
+const Heading = styled.h2`
+  margin: 0;
+`;
+
+const InfoContainer = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+`;
+
 const CourseCard = styled.div`
   background-color: ${({theme}) => theme.colors.white};
   color: ${({theme}) => theme.colors.black};
@@ -90,66 +101,70 @@ function CourseDetails() {
   // get id from react router
   const { id, courseId } = useParams();
   const [course, setCourse] = React.useState(undefined);
-  const [formState, setFormState] = React.useState({
-    name: '',
-  });
   const [isEditing, setIsEditing] = React.useState(false);
 
-  React.useEffect(() => {
-    if (course?.name) {
-      setFormState({
-        name: course?.name,
-      });
-    }
-  }, [course]);
 
   // on load make a get request to courses
   React.useEffect(() => {
     if (!id) {
       navigate('/semesters');
+      return;
     }
     if (!courseId) {
       navigate(`/semesters/${id}`);
+      return;
     }
+    handleGetCourse();
+  }, []);
+
+  const handleGetCourse = () => {
     get(`course/${id}`).then((res) => {
       setCourse(res.data);
     });
-  }, []);
+  };
 
   return (
     <FullWidthDiv>
       <CenteredDiv>
-        <BackButton onClick={() => navigate(`
-          /semesters/${id}
-        `)}>Back</BackButton>
+        <BackButton onClick={() => navigate(`/semesters/${id}`)}>Back</BackButton>
 
         {isEditing ? (
-          <FlexRow>
-          <FormInput
-            type="text"
-            value={formState.name}
-            onChange={(e) => setFormState({...formState, name: e.target.value})}
-          />
-          <CourseButton onClick={() => {
-            if (formState.name !== course.name) {
-              patch(`course/${id}`, {name: formState.name}).then((res) => {
-                setCourse({
-                  ...course,
-                  name: formState.name,
-                });
-                setIsEditing(false);
-              });
-            } else {
+          <Courses
+            id={courseId}
+            semester={id}
+            open={isEditing}
+            course={course}
+            handleClose={() => {
               setIsEditing(false);
-            }
-           }}>
-            Save
-           </CourseButton>
-          </FlexRow>
-        ) : <CourseButton onClick={() => { setIsEditing(true) }}>
-            Edit Course
-          </CourseButton>}
-        <h1>{course?.name}</h1>
+              handleGetCourse();
+            }}
+          />
+        ) : (
+          <div>
+            <h1>Course</h1>
+            {course ? (
+              <>
+                  <InfoContainer>
+                    <Heading>Name</Heading>
+                    <h3>{course.name}</h3>
+                  </InfoContainer>
+                  <InfoContainer>
+                    <Heading>Description</Heading>
+                    <h3>{course.description}</h3>
+                  </InfoContainer>
+                  <InfoContainer>
+                    <Heading>Mark Goal</Heading>
+                    <h3>{course.markGoal}</h3>
+                </InfoContainer>
+                  <CourseButton onClick={() => { setIsEditing(true) }}>
+                    Edit Course
+                  </CourseButton>
+                </>
+            ) : (
+              <h3>Course not found.</h3>
+            )}
+          </div>
+        )}
       </CenteredDiv>
     </FullWidthDiv>
   );

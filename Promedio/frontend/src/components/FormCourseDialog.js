@@ -4,7 +4,7 @@ import {
     DialogContent,
     DialogTitle
 } from "@mui/material";
-import Courses from './Courses';
+import Courses from './EditCourseForm';
 
 export default function FormCourseDialog({handleClose, open, id, semester}) {
   return (
