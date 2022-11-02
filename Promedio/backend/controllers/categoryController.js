@@ -1,23 +1,24 @@
-const user = require("../models/user");
+const category = require("../models/academicCategoryModel");
 
 // backend api controller to update a user's data based on their email
-const CategoryController = (req, res, next) => {
-  // user will be found using the email and the things that will be updated are the Name, Password, and GPA
-  const id = req.body.id; // if left empty then don't update
-  const email = req.body.email; // if left empty then don't update
-  const name = req.body.name; // if left empty then don't update
+const addCategory = (req, res, next) => {
+  const userId = req.body.id;
+  const courseId = req.body.name;
+  const categories = req.body.email;
+  const weight = req.body.email;
+  const mark = req.body.email;
 
-  user.findByIdAndUpdate(
-    id,
-    { $set: { email: email, name: name } },
-    { new: true },
-    (err, doc) => {
-      if (err) return console.log(err);
-      res.json(doc);
-    }
-  );
+  let newCategory = new category({
+    userId: req.body.userId,
+    courseId: req.body.courseId,
+    categories: req.body.courseId,
+    weight: req.body.weight,
+    mark: req.body.mark,
+  });
 };
 
 module.exports = {
-  CategoryController,
+  addCategory,
+  editCategory,
+  deleteCategory,
 };

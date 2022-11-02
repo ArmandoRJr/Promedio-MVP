@@ -18,18 +18,17 @@ let academicCategorySchema = new Schema(
     },
     categories: {
       // example: ['assignment 1', 'assignment 2']
-      type: List,
+      type: Array,
       required: true,
-      maxlength: 50,
     },
     weight: {
       // example: [20, 30, 30, 40]
-      type: Number,
+      type: Array,
       required: true,
     },
     mark: {
       // example: [20, 30, 40]
-      type: Number,
+      type: Array,
     },
   },
   { timestamps: true }
