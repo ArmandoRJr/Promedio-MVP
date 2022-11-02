@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router';
 import styled from 'styled-components'
 import { get, patch } from '../api';
-import CourseModal from '../components/FormCourseDialog';
 
 const FullWidthDiv = styled.div`
   width: 100%;
@@ -14,7 +13,7 @@ const FullWidthDiv = styled.div`
 `;
 
 
-const SemesterButton = styled.button`
+const CourseButton = styled.button`
   background-color: ${({theme}) => theme.colors.secondary};
   color: ${({theme}) => theme.colors.white};
   cursor: pointer;
@@ -61,7 +60,7 @@ const BackButton = styled.button`
   font-weight: bold;
 `;
 
-const SemesterCard = styled.div`
+const CourseCard = styled.div`
   background-color: ${({theme}) => theme.colors.white};
   color: ${({theme}) => theme.colors.black};
   padding: 20px;
@@ -86,58 +85,43 @@ const FormInput = styled.input`
   font-weight: bold;
 `;
 
-function SemesterDetails() {
+function CourseDetails() {
   const navigate = useNavigate();
   // get id from react router
-  const { id } = useParams();
-  const [semester, setSemester] = React.useState(undefined);
+  const { id, courseId } = useParams();
+  const [course, setCourse] = React.useState(undefined);
   const [formState, setFormState] = React.useState({
     name: '',
   });
-  const [courses, setCourses] = React.useState([]);
   const [isEditing, setIsEditing] = React.useState(false);
-  const [isAddCourseModalOpen, setIsAddCourseModalOpen] = React.useState(false);
 
   React.useEffect(() => {
-    if (semester?.name) {
+    if (course?.name) {
       setFormState({
-        name: semester?.name,
+        name: course?.name,
       });
     }
-  }, [semester]);
+  }, [course]);
 
   // on load make a get request to courses
   React.useEffect(() => {
     if (!id) {
-      navigate('/courses');
+      navigate('/semesters');
     }
-    get(`semester/${id}`).then((res) => {
-      setSemester(res.data);
+    if (!courseId) {
+      navigate(`/semesters/${id}`);
+    }
+    get(`course/${id}`).then((res) => {
+      setCourse(res.data);
     });
-    getCourses();
   }, []);
-
-  const getCourses = () => {
-
-    get('course').then((res) => {
-      setCourses(res.data.filter((course) => course.semesterId === id));
-    });
-  };
 
   return (
     <FullWidthDiv>
-      <CourseModal
-        handleClose={() => {
-          setIsAddCourseModalOpen(false);
-          // This isn't the best practice but it works to refresh the courses list
-          getCourses();
-        }}
-        open={isAddCourseModalOpen}
-        semester={id}
-        id={undefined}
-      />
       <CenteredDiv>
-        <BackButton onClick={() => navigate('/semesters')}>Back</BackButton>
+        <BackButton onClick={() => navigate(`
+          /semesters/${id}
+        `)}>Back</BackButton>
 
         {isEditing ? (
           <FlexRow>
@@ -146,11 +130,11 @@ function SemesterDetails() {
             value={formState.name}
             onChange={(e) => setFormState({...formState, name: e.target.value})}
           />
-          <SemesterButton onClick={() => {
-            if (formState.name !== semester.name) {
-              patch(`semester/${id}`, {name: formState.name}).then((res) => {
-                setSemester({
-                  ...semester,
+          <CourseButton onClick={() => {
+            if (formState.name !== course.name) {
+              patch(`course/${id}`, {name: formState.name}).then((res) => {
+                setCourse({
+                  ...course,
                   name: formState.name,
                 });
                 setIsEditing(false);
@@ -160,29 +144,15 @@ function SemesterDetails() {
             }
            }}>
             Save
-           </SemesterButton>
+           </CourseButton>
           </FlexRow>
-        ) : <SemesterButton onClick={() => { setIsEditing(true) }}>
-            Edit Semester
-          </SemesterButton>}
-        <h1>Courses for {semester?.name}</h1>
-        <FlexRow>
-          {courses.map((course) => (
-            <SemesterCard key={course._id} onClick={() => {
-              navigate(`/semesters/${id}/courses/${course._id}`);
-            }}>
-              {course.name}
-            </SemesterCard>
-          ))}
-          <SemesterButton onClick={() => {
-            setIsAddCourseModalOpen(true);
-          }}>
-            Add Course
-          </SemesterButton>
-        </FlexRow>
+        ) : <CourseButton onClick={() => { setIsEditing(true) }}>
+            Edit Course
+          </CourseButton>}
+        <h1>{course?.name}</h1>
       </CenteredDiv>
     </FullWidthDiv>
   );
 }
 
-export default SemesterDetails;
+export default CourseDetails;

@@ -16,6 +16,17 @@ function App() {
   const [authUser, setAuthUser] = React.useState(undefined);
   const navigate = useNavigate();
 
+  const isRouteAuth = (route) => {
+    // for every route in authRoutes, check if the route included
+    // in the current url is in authRoutes
+    for (let i = 0; i < authRoutes.length; i++) {
+      if (route.includes(authRoutes[i])) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   React.useEffect(() => {
     // get authUser from localStorage
     const localUser = localStorage.getItem('authUser');
@@ -23,7 +34,7 @@ function App() {
       const parsedUser = JSON.parse(localUser);
       if (isAuthUserValid(parsedUser)) {
         setAuthUser(parsedUser);
-        if (!authRoutes.includes(window.location.pathname)) {
+        if (!isRouteAuth(window.location.pathname)) {
           navigate('/semesters');
         }
       } else {
@@ -39,7 +50,7 @@ function App() {
   React.useEffect(() => {
     if (isAuthUserValid(authUser)) {
       localStorage.setItem('authUser', JSON.stringify(authUser));
-      if (!authRoutes.includes(window.location.pathname)) {
+      if (!isRouteAuth(window.location.pathname)) {
         navigate('/semesters');
       }
     }

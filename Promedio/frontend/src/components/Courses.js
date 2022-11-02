@@ -117,8 +117,8 @@ function Courses({handleClose, id, semester}) {
             ...formState,
             ...response.data,
           });
-          handleClose();
         }
+        handleClose();
       });
     } else {
       post('course', formState).then((response) => {
@@ -127,8 +127,8 @@ function Courses({handleClose, id, semester}) {
             ...formState,
             ...response.data,
           });
-          handleClose();
         }
+        handleClose();
       }
       );
     }
