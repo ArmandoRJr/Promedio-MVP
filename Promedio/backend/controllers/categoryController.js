@@ -5,7 +5,7 @@ const addCategory = (req, res, next) => {
   let newCategory = new category({
     userId: req.body.userId,
     courseId: req.body.courseId,
-    categories: req.body.courseId,
+    categories: req.body.categories,
     weight: req.body.weight,
     mark: req.body.mark,
   });
