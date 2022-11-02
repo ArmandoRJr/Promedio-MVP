@@ -34,20 +34,16 @@ const addCategory = (req, res, next) => {
 };
 
 const editCategory = (req, res, next) => {
-  const userId = req.body.id;
+  const categoryId = req.body.id;
   const courseId = req.body.name;
-  const categories = req.body.categories;
-  // ['Exam', 'TT1', 'TT2']
-  const weight = req.body.weight;
-  // ['30', '40', '50']
-  const mark = req.body.mark;
-  // ['30', '40', '50']
+  const categories = req.body.categories; // ['Exam', 'TT1', 'TT2']
+  const weight = req.body.weight; // ['30', '40', '50']
+  const mark = req.body.mark; // ['30', '40', '50']
 
   category.findByIdAndUpdate(
-    id,
+    categoryId,
     {
       $set: {
-        userId: userId,
         courseId: courseId,
         categories: categories,
         weight: weight,
@@ -59,13 +55,31 @@ const editCategory = (req, res, next) => {
       if (err) {
         console.log("Something wrong when updating data!");
       }
-
       console.log(doc);
+      res.status(200).json({
+        message: "Category deleted successfully.",
+      });
     }
   );
+};
+
+const deleteCategory = (req, res, next) => {
+  const categoryId = req.body.id;
+
+  category.deleteOne({ _id: categoryId }, (err, doc) => {
+    if (err) {
+      console.log("Something wrong when deleting data!");
+    }
+    console.log(doc);
+    // return 200 on success
+    res.status(200).json({
+      message: "Category deleted successfully.",
+    });
+  });
 };
 
 module.exports = {
   addCategory,
   editCategory,
+  deleteCategory,
 };
