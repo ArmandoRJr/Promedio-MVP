@@ -119,7 +119,7 @@ function User() {
     return (
       <FullWidthDiv>
         <Toaster
-          position="bottom-center"
+          position="top-center"
           reverseOrder={false}
         />
         <h1>User Profile.</h1>
@@ -141,7 +141,7 @@ function User() {
   return (
     <FullWidthDiv>
       <Toaster
-        position="bottom-center"
+        position="top-center"
         reverseOrder={false}
       />
       <h1>User Profile.</h1>

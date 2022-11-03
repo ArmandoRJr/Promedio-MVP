@@ -3,6 +3,7 @@ import { useOutletContext } from "react-router";
 import styled from "styled-components";
 import { post } from '../../src/api/index';
 import { isResponseValid, isAuthUserValid } from "../utils/validate";
+import { Toaster, toast } from "react-hot-toast";
 
 const FullWidthDiv = styled.div`
   width: 100%;
@@ -95,12 +96,17 @@ function Login() {
       },
       (error) => {
         console.log(error);
+        toast.error('Incorrect email or password.');
       }
     );
   }
 
   return (
     <FullWidthDiv>
+      <Toaster
+        position="bottom-center"
+        reverseOrder={false}
+      />
       <h1>Login.</h1>
       <InputContainer>
         <Label>Email</Label>

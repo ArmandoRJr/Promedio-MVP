@@ -3,11 +3,11 @@ const category = require("../models/academicCategoryModel");
 // backend api controller to update a user's data based on their email
 const addCategory = (req, res, next) => {
   let newCategory = new category({
-    userId: req.body.userId,
     courseId: req.body.courseId,
-    categories: req.body.categories,
+    name: req.body.name,
     weight: req.body.weight,
-    mark: req.body.mark,
+    numAssessments: req.body.numAssessments,
+    marks: req.body.marks,
   });
 
   newCategory
@@ -36,18 +36,20 @@ const addCategory = (req, res, next) => {
 const editCategory = (req, res, next) => {
   const categoryId = req.body.id;
   const courseId = req.body.courseId;
-  const categories = req.body.categories;
+  const name = req.body.name;
   const weight = req.body.weight;
-  const mark = req.body.mark;
+  const numAssessments = req.body.numAssessments;
+  const marks = req.body.marks;
 
   category.findByIdAndUpdate(
     categoryId,
     {
       $set: {
         courseId: courseId,
-        categories: categories,
+        name: name,
         weight: weight,
-        mark: mark,
+        numAssessments: numAssessments,
+        marks: marks,
       },
     },
     { new: true },
@@ -57,7 +59,7 @@ const editCategory = (req, res, next) => {
       }
       console.log(doc);
       res.status(200).json({
-        message: "Category deleted successfully.",
+        message: "Category edited successfully.",
       });
     }
   );
@@ -78,8 +80,30 @@ const deleteCategory = (req, res, next) => {
   });
 };
 
+const getCategories = (req, res, next) => {
+  const courseId = req.params.courseId;
+  if (!courseId)
+  {
+      next({
+          message: "Missing parameters.",
+          status: 400,
+          stack: "Missing parameters.",
+      });
+      return;
+  }
+
+  category.find({courseId: courseId}, (err, foundCategories) => {
+      if (err) { next(err); }
+      else
+      {
+          res.send(foundCategories);
+      }
+  })
+}
+
 module.exports = {
   addCategory,
   editCategory,
   deleteCategory,
+  getCategories,
 };

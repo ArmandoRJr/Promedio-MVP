@@ -6,27 +6,26 @@ const Schema = mongoose.Schema;
 
 let academicCategorySchema = new Schema(
   {
-    userId: {
-      // example: 6361be943cfe582be04b8168
-      type: String,
-      required: true,
-    },
     courseId: {
-      // example: "CSC309"
-      type: String,
-      required: true,
+      type: Schema.Types.ObjectId,
+      ref: "Course"
     },
-    categories: {
-      // example: ['assignment 1', 'assignment 2']
-      type: Array,
+    name: {
+      // example: 'Quiz
+      type: String,
       required: true,
     },
     weight: {
-      // example: [20, 30, 30, 40]
-      type: Array,
+      // example: 10
+      type: Number,
       required: true,
     },
-    mark: {
+    numAssessments: {
+      // example: 3
+      type: Number,
+      required: true
+    },
+    marks: {
       // example: [20, 30, 40]
       type: Array,
     },
