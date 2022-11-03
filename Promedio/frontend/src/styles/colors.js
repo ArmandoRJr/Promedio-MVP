@@ -5,6 +5,7 @@ const colors = {
     secondary_light: '#FFD894',
     white: '#FFFFFF',
     black: '#000000',
+    red: '#FF0000',
 }
 
 export default colors;

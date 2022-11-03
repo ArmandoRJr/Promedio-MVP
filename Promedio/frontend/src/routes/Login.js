@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate, useOutletContext } from "react-router";
+import { useOutletContext } from "react-router";
 import styled from "styled-components";
 import { post } from '../../src/api/index';
 import { isResponseValid, isAuthUserValid } from "../utils/validate";

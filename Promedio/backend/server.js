@@ -10,6 +10,8 @@ const authRoute = require("./routes/authRoute");
 const updateRoute = require("./routes/updateRoute");
 const categoryRoute = require("./routes/categoryRoute");
 
+const courseRoute = require("./routes/courseRoute");
+const semesterRoute = require("./routes/semesterRoute")
 connectDatabase();
 
 const app = express();
@@ -26,7 +28,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.use("/api/sheets", require("./routes/sheetRoutes"));
+// app.use("/api/sheets", require("./routes/sheetRoutes"));
 app.use("/api", authRoute);
 app.use("/api", updateRoute);
 app.use("/api", categoryRoute);
@@ -35,6 +37,9 @@ const {
   errorHandler,
   clientErrorHandler,
 } = require("./middleware/errorMiddleware");
+app.use("/api", courseRoute);
+app.use("/api", semesterRoute);
+const { logErrors, errorHandler, clientErrorHandler } = require("./middleware/errorMiddleware");
 app.use(logErrors);
 app.use(clientErrorHandler);
 app.use(errorHandler);
