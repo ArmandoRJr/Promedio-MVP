@@ -2,12 +2,11 @@ import axios from "axios";
 const API_ENDPOINT = process.env.API_ENDPOINT || `http://localhost:${process.env.SERVER_PORT || 4000}`;
 
 const authUserString = localStorage.getItem(`authUser`) ? localStorage.getItem(`authUser`) : undefined;
-const authUser = JSON.parse(authUserString);
+const authUser = authUserString != undefined ? JSON.parse(authUserString) : null;
 const token = authUser && authUser.token ? authUser.token : undefined;
 
 // make axios helper functions for get, post, put, delete, patch
 export const get = (url) => {
-    console.log(`This is a token!`, token);
     return axios.get(`${API_ENDPOINT}/api/${url}`, {
         headers: {
             Authorization: `${authUserString}`
