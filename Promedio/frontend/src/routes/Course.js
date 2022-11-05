@@ -242,8 +242,8 @@ function CourseDetails() {
             <CourseCard>
               <h1>{course.name}</h1>
               <InfoContainer>
-                <p>Description: <b>{course.markGoal}</b></p>
-                <p>Mark Goal: <b>{course.markGoal}</b></p>
+                <p>Description: <b>{course.description}</b></p>
+                <p>Mark Goal: <b>{course.markGoal}</b>%</p>
                 <p>Remaining: <b>90%</b></p>
               </InfoContainer>
               <InfoContainer>

@@ -142,7 +142,7 @@ function Category({handleClose, id, category, course}) {
         />
       </InfoContainer>
       <InfoContainer>
-        <Heading>Weight</Heading>
+        <Heading>Weight per assessment</Heading>
         <FormInput
           type="text"
           placeholder="i.e 10%"
@@ -152,7 +152,7 @@ function Category({handleClose, id, category, course}) {
         />
       </InfoContainer>
       <InfoContainer>
-        <Heading>Number of Assessments</Heading>
+        <Heading>Number of assessments</Heading>
         <FormInput
           type="text"
           placeholder="i.e. 10"
