@@ -71,7 +71,6 @@ function Category({handleClose, id, category, course}) {
   const navigate = useNavigate();
   const [formState, setFormState] = React.useState({
     name: category?.name || "",
-    weight: category?.weight || "",
     courseId: course,
     numAssessments: category?.numAssessments || "",
     id: id
@@ -99,8 +98,7 @@ function Category({handleClose, id, category, course}) {
       setFormState({
         ...formState,
         name: category.name,
-        weight: category.weight,
-        numAssessments: category.numAssessments
+        numAssessments: category.numAssessments,
       });
     }
   }, [category]);
@@ -116,14 +114,17 @@ function Category({handleClose, id, category, course}) {
         handleClose();
       });
     } else {
-      post('addCategory', formState).then((response) => {
+      post('addCategory', 
+      {...formState,
+        weights: new Array(parseInt(formState.numAssessments)).fill(-1),
+        grades: new Array(parseInt(formState.numAssessments)).fill(-1)
+      }).then((response) => {
         setFormState({
           ...formState,
           ...response.data,
         });
         handleClose();
-      }
-      );
+      });
     }
   }
 
@@ -142,17 +143,7 @@ function Category({handleClose, id, category, course}) {
         />
       </InfoContainer>
       <InfoContainer>
-        <Heading>Weight per assessment</Heading>
-        <FormInput
-          type="text"
-          placeholder="i.e 10%"
-          onChange={handleChangeFormState}
-          value={formState.weight}
-          name="weight"
-        />
-      </InfoContainer>
-      <InfoContainer>
-        <Heading>Number of assessments</Heading>
+        <Heading>Number of Assessments</Heading>
         <FormInput
           type="text"
           placeholder="i.e. 10"

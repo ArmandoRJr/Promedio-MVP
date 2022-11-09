@@ -15,17 +15,16 @@ let academicCategorySchema = new Schema(
       type: String,
       required: true,
     },
-    weight: {
-      // example: 10
-      type: Number,
-      required: true,
-    },
     numAssessments: {
       // example: 3
       type: Number,
       required: true
     },
-    marks: {
+    weights: {
+      // example: [10, 10, 10]
+      type: Array
+    },
+    grades: {
       // example: [20, 30, 40]
       type: Array,
     },
