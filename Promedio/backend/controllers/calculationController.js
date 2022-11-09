@@ -101,6 +101,7 @@ const getCourseCalculations = (req, res, next) => {
                                             filteredGrades.push(categoryGrade);
                                             filteredGradeWeights.push(categoryGradeWeight);
                                             filteredWeights.push(categoryWeight);
+                                        }
 
                                         for (let y = 0; y < filteredGrades.length; y++) {
                                             courseCompletion += filteredGradeWeights[y];
