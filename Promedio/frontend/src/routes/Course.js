@@ -155,6 +155,13 @@ function CourseDetails() {
   const [isAddCatModalOpen, setIsAddCatModalOpen] = React.useState(false);
   const [isEditCatModalOpen, setIsEditCatModalOpen] = React.useState(false);
   const [categories, setCategories] = React.useState([]);
+  const [calculations, setCalculations] = React.useState({
+    courseCompletion: 0,
+    currentMark: 0,
+    markGoal: 0,
+    remainingMark: 0,
+    summedMarks: 0
+  });
 
   // on load make a get request to courses
   React.useEffect(() => {
@@ -168,6 +175,7 @@ function CourseDetails() {
     }
     getCourse();
     getCategories();
+    getCalculations();
   }, []);
 
   const getCourse = () => {
@@ -180,6 +188,17 @@ function CourseDetails() {
     get(`categories/${courseId}`).then(
       (res) => {
         setCategories(res.data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  const getCalculations = () => {
+    get(`calculation/${courseId}`).then(
+      (res) => {
+        setCalculations(res.data);
       },
       (error) => {
         console.log(error);
@@ -222,7 +241,38 @@ function CourseDetails() {
   }
 
   const cellChangedListener = useCallback((event, key) => {
+    console.log(event);
+    let newValue = -1;
+    let index = event.node.rowIndex;
+    if (event.value != "") newValue = parseInt(event.value);
     
+    let categoryToChange = categories.find(category => category._id == key)
+    if (event.column.colId === "Weight %") {
+      categoryToChange = {
+        ...categoryToChange,
+        weights: categoryToChange.weights.slice(0, index).concat(
+          newValue, categoryToChange.weights.slice(index+1)
+        )
+      }
+    } else if (event.column.colId === "Grade %") {
+      categoryToChange = {
+        ...categoryToChange,
+        grades: categoryToChange.grades.slice(0, index).concat(
+          newValue, categoryToChange.grades.slice(index+1)
+        )
+      }
+    }
+
+    post(`editCategory/`, {
+      ...categoryToChange, id: categoryToChange._id
+    }).then((response) => {
+      setCategories(categories.map(category => {
+        if (category._id === categoryToChange._id) return categoryToChange;
+        else return category;
+      }))
+    });
+    console.log(categoryToChange);
+    getCalculations();
   });
 
 
@@ -249,12 +299,12 @@ function CourseDetails() {
               <h1>{course.name}</h1>
               <InfoContainer>
                 <p>Description: <b>{course.description}</b></p>
-                <p>Mark Goal: <b>{course.markGoal}</b>%</p>
-                <p>Remaining: <b>90%</b></p>
+                <p>Mark Goal: <b>{course.markGoal.toFixed(2)}</b>%</p>
+                <p>Average Needed: <b>{calculations.remainingMark.toFixed(2)}</b>%</p>
               </InfoContainer>
               <InfoContainer>
-                <p>GPA: <b>3.7</b></p>
-                <p>Course Completion: <b>40% out of 90%</b></p>
+                <p>Current Mark: <b>{calculations.currentMark.toFixed(2)}</b>%, GPA: <b>N/A</b></p>
+                <p>Course Completion: <b>{calculations.courseCompletion.toFixed(2)}% out of {calculations.summedMarks.toFixed(2)}%</b></p>
               </InfoContainer>
               <CourseButton onClick={() => { setIsEditing(true) }}>Edit Course</CourseButton>
             </CourseCard>
@@ -291,6 +341,7 @@ function CourseDetails() {
               handleClose={() => {
                 setIsAddCatModalOpen(false);
                 getCategories();
+                getCalculations();
               }}
               open={isAddCatModalOpen}
               course={courseId}
