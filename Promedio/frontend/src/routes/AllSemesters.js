@@ -81,6 +81,8 @@ function Welcome() {
   React.useEffect(() => {
     get('semester').then((res) => {
       setSemesters(res.data);
+    }, (err) => {
+      console.log(err);
     });
   }, []);
 
