@@ -35,7 +35,6 @@ const addCategory = (req, res, next) => {
 
 const editCategory = (req, res, next) => {
   const categoryId = req.body.id;
-  const courseId = req.body.courseId;
   const name = req.body.name;
   const numAssessments = req.body.numAssessments;
   const weights = req.body.weights;
@@ -46,7 +45,6 @@ const editCategory = (req, res, next) => {
     categoryId,
     {
       $set: {
-        courseId: courseId,
         name: name,
         numAssessments: numAssessments,
         weights: weights,
