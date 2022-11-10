@@ -79,6 +79,7 @@ export const Navbar = ({ authUser, logout }) => {
             <NavbarRight>
                 {!!authUser ? (
                     <>
+                        <NavbarLink to="/gpa">GPA</NavbarLink>
                         <NavbarLink to="/courses">All Courses</NavbarLink>
                         <NavbarLink to="/semesters">Semesters</NavbarLink>
                         <NavbarLink to="/user">Profile</NavbarLink>
