@@ -5,9 +5,9 @@ const addCategory = (req, res, next) => {
   let newCategory = new category({
     courseId: req.body.courseId,
     name: req.body.name,
-    weight: req.body.weight,
+    weights: req.body.weights,
     numAssessments: req.body.numAssessments,
-    marks: req.body.marks,
+    grades: req.body.grades,
   });
 
   newCategory
@@ -35,21 +35,20 @@ const addCategory = (req, res, next) => {
 
 const editCategory = (req, res, next) => {
   const categoryId = req.body.id;
-  const courseId = req.body.courseId;
   const name = req.body.name;
-  const weight = req.body.weight;
   const numAssessments = req.body.numAssessments;
-  const marks = req.body.marks;
+  const weights = req.body.weights;
+
+  const grades = req.body.grades;
 
   category.findByIdAndUpdate(
     categoryId,
     {
       $set: {
-        courseId: courseId,
         name: name,
-        weight: weight,
         numAssessments: numAssessments,
-        marks: marks,
+        weights: weights,
+        grades: grades,
       },
     },
     { new: true },

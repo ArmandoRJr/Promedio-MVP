@@ -12,6 +12,7 @@ const categoryRoute = require("./routes/categoryRoute");
 
 const courseRoute = require("./routes/courseRoute");
 const semesterRoute = require("./routes/semesterRoute")
+const calculationRoute = require("./routes/calculationRoute")
 connectDatabase();
 
 const app = express();
@@ -33,6 +34,7 @@ app.use("/api", updateRoute);
 app.use("/api", categoryRoute);
 app.use("/api", courseRoute);
 app.use("/api", semesterRoute);
+app.use("/api", calculationRoute);
 const { logErrors, errorHandler, clientErrorHandler } = require("./middleware/errorMiddleware");
 app.use(logErrors);
 app.use(clientErrorHandler);
