@@ -175,7 +175,6 @@ function CourseDetails() {
     }
     getCourse();
     getCategories();
-    getCalculations();
   }, []);
 
   const getCourse = () => {
@@ -196,9 +195,10 @@ function CourseDetails() {
   }
 
   const getCalculations = () => {
-    get(`calculation/${courseId}`).then(
+    get(`calculation?courseIds[]=${courseId}`).then(
       (res) => {
-        setCalculations(res.data);
+        setCalculations(res.data[0]);
+        console.log(res.data);
       },
       (error) => {
         console.log(error);
@@ -210,7 +210,6 @@ function CourseDetails() {
     post(`deleteCategory`, { id: id }).then(
       (res) => {
         getCategories();
-        console.log(res.data);
       },
       (error) => {
         console.log(error);
@@ -241,7 +240,6 @@ function CourseDetails() {
   }
 
   const cellChangedListener = useCallback((event, key) => {
-    console.log(event);
     let newValue = -1;
     let index = event.node.rowIndex;
     if (event.value != "") newValue = parseInt(event.value);
@@ -271,8 +269,6 @@ function CourseDetails() {
         else return category;
       }))
     });
-    console.log(categoryToChange);
-    getCalculations();
   });
 
 
@@ -341,7 +337,6 @@ function CourseDetails() {
               handleClose={() => {
                 setIsAddCatModalOpen(false);
                 getCategories();
-                getCalculations();
               }}
               open={isAddCatModalOpen}
               course={courseId}
