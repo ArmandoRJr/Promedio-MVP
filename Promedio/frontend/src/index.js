@@ -18,6 +18,7 @@ import Globals from './styles/globals.css';
 import theme from './styles/theme.js';
 import User from "./routes/User";
 import CourseDetails from "./routes/Course";
+import GPA from "./routes/GPA";
 
 const GlobalStyle = createGlobalStyle`${Globals}`;
 
@@ -38,6 +39,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route path="/semesters/:id" element={<Semester />} />
               <Route path="/semesters/:id/courses/:courseId" element={<CourseDetails />} />
               <Route path="/user" element={<User />} />
+              <Route path="/gpa" element={<GPA />} />
             </Route>
           </Routes>
         </BrowserRouter>
