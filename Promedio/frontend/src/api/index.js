@@ -6,8 +6,9 @@ const authUser = authUserString != undefined ? JSON.parse(authUserString) : null
 const token = authUser && authUser.token ? authUser.token : undefined;
 
 // make axios helper functions for get, post, put, delete, patch
-export const get = (url) => {
+export const get = (url, params) => {
     return axios.get(`${API_ENDPOINT}/api/${url}`, {
+        params,
         headers: {
             Authorization: `${authUserString}`
         }

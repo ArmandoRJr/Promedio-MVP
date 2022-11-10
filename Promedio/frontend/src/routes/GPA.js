@@ -69,7 +69,7 @@ function GPA() {
   };
 
   const calculateGPA = () => {
-    get(`calculations`, {courses: selectedCoursesIds}).then((res) => {
+    get(`calculations`, selectedCoursesIds).then((res) => {
       setMessage(`Your GPA is ${res.data.gpa}`);
     }).catch((err) => {
       setMessage(err.response.data.message ?? 'Something went wrong');
