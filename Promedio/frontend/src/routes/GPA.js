@@ -69,11 +69,15 @@ function GPA() {
   };
 
   const calculateGPA = () => {
-    get(`calculations`, selectedCoursesIds).then((res) => {
-      setMessage(`Your GPA is ${res.data.gpa}`);
-    }).catch((err) => {
-      setMessage(err.response.data.message ?? 'Something went wrong');
-    });
+    if (selectedCoursesIds.length === 0) {setMessage(`No courses selected.`)}
+    else {
+      const queryArray = selectedCoursesIds.map(courseId => { return `courseIds[]=${courseId}` }).join("&")
+      get(`calculations?${queryArray}`).then((res) => {
+        setMessage(`Your GPA is: ${res.data.GPA}`);
+      }).catch((err) => {
+        setMessage(err.response.data.message ?? 'Something went wrong');
+      });
+    }
   };
 
   return (
@@ -88,10 +92,10 @@ function GPA() {
                 type="checkbox"
                 onChange={(e) => {
                   if (e.target.checked) {
-                    setSelectedCoursesIds([...selectedCoursesIds, course.id]);
+                    setSelectedCoursesIds([...selectedCoursesIds, course._id]);
                   }
                   else {
-                    setSelectedCoursesIds(selectedCoursesIds.filter((id) => id !== course.id));
+                    setSelectedCoursesIds(selectedCoursesIds.filter((id) => id !== course._id));
                   }
                 }}
               />

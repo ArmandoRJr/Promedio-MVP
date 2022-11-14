@@ -79,14 +79,13 @@ function SemesterDetails() {
 
     get('course').then((res) => {
       setCourses(res.data);
-    });
-
-    get(`calculations`).then((res) => {
-      if (res.data.cGPA) {
-        setGpa(res.data.cGPA);
+      if (res.data.length > 0) {
+        get(`calculations`).then((res) => {
+          setGpa(res.data.GPA);
+        }).catch((err) => {
+          setGpa('N/A');
+        });
       }
-    }).catch((err) => {
-      setGpa('N/A');
     });
   };
 

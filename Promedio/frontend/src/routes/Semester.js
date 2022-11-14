@@ -132,20 +132,25 @@ function SemesterDetails() {
       setSemester(res.data);
     });
     getCourses();
-    const courseIds = courses.map((course) => course._id);
-    get(`calculations`, courseIds).then((res) => {
-      if (res.data.cGPA) {
-        setGpa(res.data.cGPA);
-      }
-    }).catch((err) => {
-      setGpa('N/A');
-    });
+    
   }, []);
 
   const getCourses = () => {
 
     get('course').then((res) => {
-      setCourses(res.data.filter((course) => course.semesterId === id));
+      const coursesToAdd = res.data.filter((course) => course.semesterId === id)
+      setCourses(coursesToAdd);
+      const courseIds = coursesToAdd.map((course) => course._id);
+
+      if (res.data.length === 0) {setGpa(`N/A`)}
+      else {
+        const queryArray = courseIds.map(courseId => { return `courseIds[]=${courseId}` }).join("&")
+        get(`calculations?${queryArray}`).then((res) => {
+          setGpa(res.data.GPA);
+        }).catch((err) => {
+          setGpa('N/A')
+        });
+      }
     });
   };
 
