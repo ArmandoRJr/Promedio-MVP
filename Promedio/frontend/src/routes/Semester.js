@@ -111,6 +111,7 @@ function SemesterDetails() {
     name: '',
   });
   const [courses, setCourses] = React.useState([]);
+  const [gpa, setGpa] = React.useState('[Loading...]');
   const [isEditing, setIsEditing] = React.useState(false);
   const [isAddCourseModalOpen, setIsAddCourseModalOpen] = React.useState(false);
 
@@ -131,12 +132,25 @@ function SemesterDetails() {
       setSemester(res.data);
     });
     getCourses();
+    
   }, []);
 
   const getCourses = () => {
 
     get('course').then((res) => {
-      setCourses(res.data.filter((course) => course.semesterId === id));
+      const coursesToAdd = res.data.filter((course) => course.semesterId === id)
+      setCourses(coursesToAdd);
+      const courseIds = coursesToAdd.map((course) => course._id);
+
+      if (coursesToAdd.length === 0) {setGpa(`N/A`)}
+      else {
+        const queryArray = courseIds.map(courseId => { return `courseIds[]=${courseId}` }).join("&")
+        get(`calculations?${queryArray}`).then((res) => {
+          setGpa(res.data.GPA);
+        }).catch((err) => {
+          setGpa('N/A')
+        });
+      }
     });
   };
 
@@ -154,7 +168,8 @@ function SemesterDetails() {
       />
       <CenteredDiv>
         <BackButton onClick={() => navigate('/semesters')}>Back</BackButton>
-
+        <h1>{semester?.name}</h1>
+        <h2>sGPA: {gpa}</h2>
         {isEditing ? (
           <FlexRow>
           <FormInput
@@ -181,7 +196,7 @@ function SemesterDetails() {
         ) : <SemesterButton onClick={() => { setIsEditing(true) }}>
             Edit Semester
           </SemesterButton>}
-        <h1>Courses for {semester?.name}</h1>
+        <h2>Courses for {semester?.name}</h2>
         <FlexRow>
           {courses.map((course) => (
             <SemesterCard key={course._id} onClick={() => {

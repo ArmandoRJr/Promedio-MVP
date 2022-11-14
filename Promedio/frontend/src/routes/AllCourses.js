@@ -64,6 +64,7 @@ function SemesterDetails() {
   // get id from react router
   const { id } = useParams();
   const [courses, setCourses] = React.useState([]);
+  const [gpa, setGpa] = React.useState('[Loading...]');
   const [isAddCourseModalOpen, setIsAddCourseModalOpen] = React.useState(false);
 
   // on load make a get request to courses
@@ -78,6 +79,13 @@ function SemesterDetails() {
 
     get('course').then((res) => {
       setCourses(res.data);
+      if (res.data.length > 0) {
+        get(`calculations`).then((res) => {
+          setGpa(res.data.GPA);
+        }).catch((err) => {
+          setGpa('N/A');
+        });
+      }
     });
   };
 
@@ -95,6 +103,7 @@ function SemesterDetails() {
       />
       <CenteredDiv>
         <h1>All Courses</h1>
+        <h2>cGPA: {gpa}</h2>
         <FlexRow>
           {courses.map((course) => (
             <SemesterCard key={course._id} onClick={() => {
