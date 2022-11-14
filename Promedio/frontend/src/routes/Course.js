@@ -155,13 +155,6 @@ function CourseDetails() {
   const [isAddCatModalOpen, setIsAddCatModalOpen] = React.useState(false);
   const [isEditCatModalOpen, setIsEditCatModalOpen] = React.useState(false);
   const [categories, setCategories] = React.useState([]);
-  const [calculations, setCalculations] = React.useState({
-    courseCompletion: 0,
-    currentMark: 0,
-    markGoal: 0,
-    remainingMark: 0,
-    summedMarks: 0
-  });
 
   // on load make a get request to courses
   React.useEffect(() => {
@@ -175,7 +168,6 @@ function CourseDetails() {
     }
     getCourse();
     getCategories();
-    getCalculations();
   }, []);
 
   const getCourse = () => {
@@ -196,23 +188,11 @@ function CourseDetails() {
     );
   }
 
-  const getCalculations = () => {
-    get(`calculation?courseIds[]=${courseId}`).then(
-      (res) => {
-        setCalculations(res.data[0]);
-        console.log(res.data);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-
   function handleDelete(id) {
     post(`deleteCategory`, { id: id }).then(
       (res) => {
         getCategories();
-        getCalculations();
+        getCourse();
       },
       (error) => {
         console.log(error);
@@ -274,7 +254,7 @@ function CourseDetails() {
     });
 
     getCategories();
-    getCalculations();
+    getCourse();
   });
 
 
@@ -302,11 +282,11 @@ function CourseDetails() {
               <InfoContainer>
                 <p>Description: <b>{course.description}</b></p>
                 <p>Mark Goal: <b>{course.markGoal.toFixed(2)}</b>%</p>
-                <p>Average Needed: <b>{calculations.remainingMark.toFixed(2)}</b>%</p>
+                <p>Average Needed: <b>{course.remainingMark.toFixed(2)}</b>%</p>
               </InfoContainer>
               <InfoContainer>
-                <p>Current Mark: <b>{calculations.currentMark.toFixed(2)}</b>%, GPA: <b>N/A</b></p>
-                <p>Course Completion: <b>{calculations.courseCompletion.toFixed(2)}% out of {calculations.summedMarks.toFixed(2)}%</b></p>
+                <p>Current Mark: <b>{course.currentMark.toFixed(2)}</b>%, GPA: <b>N/A</b></p>
+                <p>Course Completion: <b>{course.courseCompletion.toFixed(2)}% out of {course.summedMarks.toFixed(2)}%</b></p>
               </InfoContainer>
               <CourseButton onClick={() => { setIsEditing(true) }}>Edit Course</CourseButton>
             </CourseCard>
@@ -331,7 +311,7 @@ function CourseDetails() {
                       handleClose={() => {
                         setIsEditCatModalOpen(false);
                         getCategories();
-                        getCalculations();
+                        getCourse();
                       }}
                       open={isEditCatModalOpen}
                       course={courseId}
@@ -344,7 +324,7 @@ function CourseDetails() {
               handleClose={() => {
                 setIsAddCatModalOpen(false);
                 getCategories();
-                getCalculations();
+                getCourse();
               }}
               open={isAddCatModalOpen}
               course={courseId}
