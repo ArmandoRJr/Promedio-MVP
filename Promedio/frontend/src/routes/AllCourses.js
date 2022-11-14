@@ -87,6 +87,14 @@ function SemesterDetails() {
         });
       }
     });
+
+    get(`calculations`).then((res) => {
+      if (res.data.cGPA) {
+        setGpa(res.data.cGPA);
+      }
+    }).catch((err) => {
+      setGpa('N/A');
+    });
   };
 
   return (
