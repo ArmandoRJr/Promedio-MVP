@@ -111,7 +111,7 @@ function SemesterDetails() {
     name: '',
   });
   const [courses, setCourses] = React.useState([]);
-  const [gpa, setGpa] = React.useState('N/A');
+  const [gpa, setGpa] = React.useState('[Loading...]');
   const [isEditing, setIsEditing] = React.useState(false);
   const [isAddCourseModalOpen, setIsAddCourseModalOpen] = React.useState(false);
 
@@ -142,7 +142,7 @@ function SemesterDetails() {
       setCourses(coursesToAdd);
       const courseIds = coursesToAdd.map((course) => course._id);
 
-      if (res.data.length === 0) {setGpa(`N/A`)}
+      if (coursesToAdd.length === 0) {setGpa(`N/A`)}
       else {
         const queryArray = courseIds.map(courseId => { return `courseIds[]=${courseId}` }).join("&")
         get(`calculations?${queryArray}`).then((res) => {

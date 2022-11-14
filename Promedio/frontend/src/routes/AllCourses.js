@@ -64,7 +64,7 @@ function SemesterDetails() {
   // get id from react router
   const { id } = useParams();
   const [courses, setCourses] = React.useState([]);
-  const [gpa, setGpa] = React.useState('N/A');
+  const [gpa, setGpa] = React.useState('[Loading...]');
   const [isAddCourseModalOpen, setIsAddCourseModalOpen] = React.useState(false);
 
   // on load make a get request to courses
