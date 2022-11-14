@@ -151,6 +151,7 @@ function CourseDetails() {
   // get id from react router
   const { id: semesterId, courseId } = useParams();
   const [course, setCourse] = React.useState(undefined);
+  const [courseGPA, setCourseGPA] = React.useState("N/A");
   const [isEditing, setIsEditing] = React.useState(false);
   const [isAddCatModalOpen, setIsAddCatModalOpen] = React.useState(false);
   const [isEditCatModalOpen, setIsEditCatModalOpen] = React.useState(false);
@@ -172,8 +173,13 @@ function CourseDetails() {
 
   const getCourse = () => {
     get(`course/${courseId}`).then((res) => {
-      console.log(res.data)
       setCourse(res.data);
+    });
+
+    get(`calculations?courseIds[]=${courseId}`).then((res) => {
+      setCourseGPA(res.data.GPA);
+    }).catch((err) => {
+      setCourseGPA('N/A');
     });
   };
 
@@ -285,7 +291,7 @@ function CourseDetails() {
                 <p>Average Needed: <b>{course.remainingMark.toFixed(2)}</b>%</p>
               </InfoContainer>
               <InfoContainer>
-                <p>Current Mark: <b>{course.currentMark.toFixed(2)}</b>%, GPA: <b>N/A</b></p>
+                <p>Current Mark: <b>{course.currentMark.toFixed(2)}</b>%, GPA: <b>{courseGPA}</b></p>
                 <p>Course Completion: <b>{course.courseCompletion.toFixed(2)}% out of {course.summedMarks.toFixed(2)}%</b></p>
               </InfoContainer>
               <CourseButton onClick={() => { setIsEditing(true) }}>Edit Course</CourseButton>
