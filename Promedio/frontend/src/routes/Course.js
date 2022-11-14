@@ -175,10 +175,12 @@ function CourseDetails() {
     }
     getCourse();
     getCategories();
+    getCalculations();
   }, []);
 
   const getCourse = () => {
     get(`course/${courseId}`).then((res) => {
+      console.log(res.data)
       setCourse(res.data);
     });
   };
@@ -210,6 +212,7 @@ function CourseDetails() {
     post(`deleteCategory`, { id: id }).then(
       (res) => {
         getCategories();
+        getCalculations();
       },
       (error) => {
         console.log(error);
@@ -269,6 +272,9 @@ function CourseDetails() {
         else return category;
       }))
     });
+
+    getCategories();
+    getCalculations();
   });
 
 
@@ -325,6 +331,7 @@ function CourseDetails() {
                       handleClose={() => {
                         setIsEditCatModalOpen(false);
                         getCategories();
+                        getCalculations();
                       }}
                       open={isEditCatModalOpen}
                       course={courseId}
@@ -337,6 +344,7 @@ function CourseDetails() {
               handleClose={() => {
                 setIsAddCatModalOpen(false);
                 getCategories();
+                getCalculations();
               }}
               open={isAddCatModalOpen}
               course={courseId}
