@@ -62,7 +62,6 @@ The table below displays who worked on which task during this sprint.
 | PROM-15       | Users are able to view GPA for all courses or by semester.                                             | Tegh Mehta |
 | PROM-16       | Users are able to view GPA for a select subset of courses. | Tegh Mehta                            |
 | PROM-14       | Users are able to view current average grade for each.                                                                                | Armando Rojas                                           |
-| PROM-10       | As a user, I should be able to add a new category to the cGPA calculation of a specific course.                                      | Gabriel Vainer, Maaz Hashmi, Preyansh, Dutta         |
 | PROM-11        | Users are able to view how much of a course they have completed.                            | Armando         |
 | PROM-9       | Users are able to add/edit/delete grades into specific sheets.                                                               | Maaz                                       |
 
