@@ -16,6 +16,6 @@ We made use of Trello’s tacking board to keep track of the progress for each u
 
 - (PROM-14) Users are able to view current average grade for each course
 
-- (PROM-11) - Users are able to view how much of a course they have completed.
+- (PROM-11) Users are able to view how much of a course they have completed.
 
-- (PROM-9) - Users are able to add/edit/delete grades into specific sheets.
+- (PROM-9) Users are able to add/edit/delete grades into specific sheets.
