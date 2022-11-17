@@ -11,13 +11,13 @@
 
 ## Meeting Dates:
 
-- First stand-up (2022/10/24)
+- First stand-up (2022/11/07)
 
-- Second stand-up (2022/10/27)
+- Second stand-up (2022/11/10)
 
-- Third stand-up (2022/20/31)
+- Third stand-up (2022/11/14)
 
-- Fourth stand-up (2022/11/03)
+- Fourth stand-up (2022/11/17)
 
 ---
 
