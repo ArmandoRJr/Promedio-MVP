@@ -133,6 +133,7 @@ function Courses({handleClose, id, semester, course}) {
 
   function handleDelete() {
     del(`course/${id}`).then((response) => {
+      navigate(`/semesters/${semester}`);
       handleClose();
     });
   }
