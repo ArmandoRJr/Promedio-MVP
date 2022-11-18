@@ -112,11 +112,14 @@ function SemesterDetails() {
               {course.name}
             </SemesterCard>
           ))}
+          {/* 
+          // LEGACY CODE... DOESN'T MAKE SENSE TO ADD COURSE IN 'ALL COURSES'
+          // SECTION SINCE COURSE NEEDS TO BE MAPPED TO A SPECIFIC SEMESTER!
           <SemesterButton onClick={() => {
             setIsAddCourseModalOpen(true);
           }}>
             Add Course
-          </SemesterButton>
+          </SemesterButton> */}
         </FlexRow>
       </CenteredDiv>
     </FullWidthDiv>
