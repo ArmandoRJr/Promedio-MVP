@@ -123,7 +123,6 @@ const createSemester = (req, res, next) => {
     if (err) { next(err); }
     else {
       if (foundUser){
-        console.log(`User found, proceeding with semester creation.`)
         let newSemester = new semester({
           name: semesterName,
           userId: userId
@@ -259,8 +258,6 @@ const deleteSingleSemester = (req, res, next) => {
     const semesterId = req.params.semesterId
     const userId = verifyUser(req.headers);
 
-    console.log(semesterId, userId);
-    console.log(req.headers);
     if (!userId || !semesterId)
     {
         next({

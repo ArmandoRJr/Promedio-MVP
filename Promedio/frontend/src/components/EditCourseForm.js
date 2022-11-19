@@ -133,6 +133,7 @@ function Courses({handleClose, id, semester, course}) {
 
   function handleDelete() {
     del(`course/${id}`).then((response) => {
+      navigate(`/semesters/${semester}`);
       handleClose();
     });
   }
@@ -161,10 +162,10 @@ function Courses({handleClose, id, semester, course}) {
         />
       </InfoContainer>
       <InfoContainer>
-        <Heading>Mark Goal</Heading>
+        <Heading>Mark Goal %</Heading>
         <FormInput
           type="text"
-          placeholder="i.e 80%"
+          placeholder="i.e 80"
           onChange={handleChangeFormState}
           value={formState.markGoal}
           name="markGoal"

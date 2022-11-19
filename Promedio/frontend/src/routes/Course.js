@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import styled from 'styled-components'
 import { post, get } from '../api';
@@ -92,17 +92,6 @@ const CourseCard = styled.div`
   width: 100%;
 `;
 
-const SheetContainer = styled.div`
-  width: 90%;
-  background-color: ${({theme}) => theme.colors.white };
-  color: ${({theme}) => theme.colors.black};
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 40px;
-`;
-
 const CategoryButton = styled.button`
     background-color: ${({theme}) => theme.colors.primary};
     color: ${({theme}) => theme.colors.white};
@@ -119,9 +108,22 @@ const CategoryButton = styled.button`
     border-radius: 20px;
 `;
 
+const SheetContainer = styled.div`
+  width: 90%;
+  height: 100%;
+  background-color: ${({theme}) => theme.colors.white };
+  color: ${({theme}) => theme.colors.black};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 40px;
+`;
+
 const CategoryContainer = styled.div`
-    width: 80vw;
-    height: 50vh;
+    width: 50%;
+    height: 100%;
+    height: fit-content;
     display: flex;
     flex-direction: column;
 `;
@@ -149,6 +151,7 @@ function CourseDetails() {
   // get id from react router
   const { id: semesterId, courseId } = useParams();
   const [course, setCourse] = React.useState(undefined);
+  const [courseGPA, setCourseGPA] = React.useState("N/A");
   const [isEditing, setIsEditing] = React.useState(false);
   const [isAddCatModalOpen, setIsAddCatModalOpen] = React.useState(false);
   const [isEditCatModalOpen, setIsEditCatModalOpen] = React.useState(false);
@@ -164,13 +167,19 @@ function CourseDetails() {
       navigate(`/semesters/${semesterId}`);
       return;
     }
-    handleGetCourse();
+    getCourse();
     getCategories();
   }, []);
 
-  const handleGetCourse = () => {
+  const getCourse = () => {
     get(`course/${courseId}`).then((res) => {
       setCourse(res.data);
+    });
+
+    get(`calculations?courseIds[]=${courseId}`).then((res) => {
+      setCourseGPA(res.data.GPA);
+    }).catch((err) => {
+      setCourseGPA('N/A');
     });
   };
 
@@ -189,7 +198,7 @@ function CourseDetails() {
     post(`deleteCategory`, { id: id }).then(
       (res) => {
         getCategories();
-        console.log(res.data);
+        getCourse();
       },
       (error) => {
         console.log(error);
@@ -198,8 +207,8 @@ function CourseDetails() {
 
   const columnDefs = [
     {field: 'Assessment'},
-    {field: 'Weight'},
-    {field: 'Grade', editable: true},
+    {field: 'Weight %', editable: true},
+    {field: 'Grade %', editable: true},
   ]
   
 
@@ -209,15 +218,50 @@ function CourseDetails() {
       if (categories[i]._id == id) {
         for (let j = 0; j < categories[i].numAssessments; j++) {
             let row = {};
-            row.Assessment = categories[i].name + " " + (j + 1);
-            row.Weight = categories[i].weight + "%";
-            categories[i].marks.length != 0 ? row.Grade = categories[i].marks + "%" : row.Grade = 0 + "%";
+            row['Assessment'] = categories[i].name + " " + (j + 1);
+            categories[i].weights[j] != -1 ? row['Weight %'] = categories[i].weights[j] : row['Weight %'] = "";
+            categories[i].grades[j] != -1 ? row['Grade %'] = categories[i].grades[j] : row['Grade %'] = "";
             rowData.push(row);
         }
       }
     }
     return rowData;
   }
+
+  const cellChangedListener = useCallback((event, key) => {
+    let newValue = -1;
+    let index = event.node.rowIndex;
+    if (event.value != "") newValue = parseInt(event.value);
+    
+    let categoryToChange = categories.find(category => category._id == key)
+    if (event.column.colId === "Weight %") {
+      categoryToChange = {
+        ...categoryToChange,
+        weights: categoryToChange.weights.slice(0, index).concat(
+          newValue, categoryToChange.weights.slice(index+1)
+        )
+      }
+    } else if (event.column.colId === "Grade %") {
+      categoryToChange = {
+        ...categoryToChange,
+        grades: categoryToChange.grades.slice(0, index).concat(
+          newValue, categoryToChange.grades.slice(index+1)
+        )
+      }
+    }
+
+    post(`editCategory/`, {
+      ...categoryToChange, id: categoryToChange._id
+    }).then((response) => {
+      setCategories(categories.map(category => {
+        if (category._id === categoryToChange._id) return categoryToChange;
+        else return category;
+      }))
+    });
+
+    getCategories();
+    getCourse();
+  });
 
 
   return (
@@ -232,7 +276,7 @@ function CourseDetails() {
             course={course}
             handleClose={() => {
               setIsEditing(false);
-              handleGetCourse();
+              getCourse();
             }}
           />
         ) : (
@@ -243,28 +287,27 @@ function CourseDetails() {
               <h1>{course.name}</h1>
               <InfoContainer>
                 <p>Description: <b>{course.description}</b></p>
-                <p>Mark Goal: <b>{course.markGoal}</b>%</p>
-                <p>Remaining: <b>90%</b></p>
+                <p>Mark Goal: <b>{course.markGoal.toFixed(2)}</b>%</p>
+                <p>Average Needed: <b>{course.remainingMark.toFixed(2)}</b>%</p>
               </InfoContainer>
               <InfoContainer>
-                <p>GPA: <b>3.7</b></p>
-                <p>Course Completion: <b>40% out of 90%</b></p>
+                <p>Current Mark: <b>{course.currentMark.toFixed(2)}</b>%, GPA: <b>{courseGPA}</b></p>
+                <p>Course Completion: <b>{course.courseCompletion.toFixed(2)}% out of {course.summedMarks.toFixed(2)}%</b></p>
               </InfoContainer>
-              <CourseButton onClick={() => { setIsEditing(true) }}>
-                Edit Course
-              </CourseButton>
+              <CourseButton onClick={() => { setIsEditing(true) }}>Edit Course</CourseButton>
             </CourseCard>
             <ButtonContainer>
               <CategoryButton onClick={() => setIsAddCatModalOpen(true)}>Add Category + </CategoryButton>
             </ButtonContainer>
             <SheetContainer>
                 {categories.map((category) => (
-                  <CategoryContainer key={category._id}>
+                  <CategoryContainer key={category._id} className='ag-theme-alpine'>
                     <h1>{category.name + " (s)"}</h1>
-                    <AgGridReact className='ag-theme-alpine'
-                      style={{height: '500px', width: '200px'}}
+                    <AgGridReact 
+                      onCellValueChanged={(e) => { cellChangedListener(e, category._id) } } 
                       rowData={getRows(category._id)}
                       columnDefs={columnDefs}
+                      domLayout='autoHeight'
                     />
                     <ButtonsContainer>
                       <CategoryButton onClick={() => setIsEditCatModalOpen(true)}>Edit</CategoryButton>
@@ -274,6 +317,7 @@ function CourseDetails() {
                       handleClose={() => {
                         setIsEditCatModalOpen(false);
                         getCategories();
+                        getCourse();
                       }}
                       open={isEditCatModalOpen}
                       course={courseId}
@@ -286,6 +330,7 @@ function CourseDetails() {
               handleClose={() => {
                 setIsAddCatModalOpen(false);
                 getCategories();
+                getCourse();
               }}
               open={isAddCatModalOpen}
               course={courseId}
